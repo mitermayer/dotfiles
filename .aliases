@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# My custom alias
+alias update='sudo apt-get update && sudo apt-get upgrade -y'
+alias svnreloc='svn switch --relocate'
+alias desligar='sudo shutdown -h now'
+alias reiniciar='sudo shutdown -r now'
+
+#colors
+txtred=$(tput setaf 1) # Red
+txtgrn=$(tput setaf 2) # Green
+txtylw=$(tput setaf 3) # Yellow
+txtblu=$(tput setaf 4) # Blue
+txtpur=$(tput setaf 5) # Purple
+txtcyn=$(tput setaf 6) # Cyan
+txtwht=$(tput setaf 7) # White
+txtrst=$(tput sgr0) # Text reset
+
+txtund=$(tput sgr 0 1)          # Underline
+txtbld=$(tput bold)             # Bold
+

@@ -1,0 +1,142 @@
+function informacao()
+{
+    echo "${txtund}$1${txtrst}"
+}
+
+function sucesso()
+{
+    echo "${txtbld}${txtgrn}$1${txtrst}"
+}
+
+function aviso()
+{
+    echo "${txtbld}${txtred}$1${txtrst}"
+}
+
+function pergunta()
+{
+    echo "${txtbld}${txtylw}$1${txtrst}"
+}
+
+
+# List bash possible colors
+function cores()
+{
+    echo
+    echo -e "$(tput bold) reg  bld  und   tput-command-colors$(tput sgr0)"
+
+    for i in $(seq 1 7); do
+      echo " $(tput setaf $i)Text$(tput sgr0) $(tput bold)$(tput setaf $i)Text$(tput sgr0) $(tput sgr 0 1)$(tput setaf $i)Text$(tput sgr0)  \$(tput setaf $i)"
+    done
+
+    echo ' Bold            $(tput bold)'
+    echo ' Underline       $(tput sgr 0 1)'
+    echo ' Reset           $(tput sgr0)'
+    echo
+}
+
+# change permissions recurssively
+function permitir() 
+{
+    aviso "Changing permissions.."
+    if [ $1 ]; then
+        sudo chmod -R 775 $1 
+    else
+        sudo chmod -R 775 . 
+    fi
+    sucesso "Done!"
+}
+
+function br() 
+{
+    echo "${txtred} Opening bashrc.. ${txtrst}"
+    sudo vim ~/.bashrc
+}
+
+# source this file
+function sr() 
+{
+    echo "${txtred} Reading bashrc.. ${txtrst}"
+    source ~/.bashrc
+}
+
+# search and rename files, ignore svn
+function renomear() 
+{
+    aviso "Searching all folders for for word: ${txtwht}'$1'${txtred} and renaming to ${txtwht}'$2'${txtred}"
+    # first rename folders
+    find . -depth -path '*/.svn' -prune -o -type d -execdir rename "s/$1/$2/g" {} \;
+    # rename files  
+    find . -depth -path '*/.svn' -prune -o -type f -exec rename "s/$1/$2/g" {} \;
+    sucesso "Done!"
+}
+
+# search and replace files, ignore svn
+function mudar() 
+{ 
+    aviso "Searching all files and replacing all instances of word: ${txtwht}'$1'${txtred} to ${txtwht}'$2'${txtred}"
+    find . -depth -path '*/.svn' -prune -o -type f -exec sed -i "s/$1/$2/g" {} + 
+    sucesso "Done!"
+}
+
+function refatora()
+{
+    informacao "You are about to rename Directories, Files recurrsivelly for the any instance of word $1 to $2" 
+    pergunta "Are you sure about that ?"
+    read a
+    if [[ $a == "Y" || $a == "y" || $a == "yes" || $a == "Yes" ]]; then
+        echo "Starting..."
+        mudar $1 $2
+        renomear $1 $2
+    else
+        aviso "No changes were made"
+    fi
+}
+
+# find files and print output
+function achar() 
+{
+    aviso "Searching for ${txtwht}'$1'${txtred}"
+    find . -depth -path '*/.svn' -prune -o -type f -exec grep "$1" {} \; -print
+    sucesso "Done!"
+}
+
+# list files or grep and highlight match
+function l() 
+{
+    if [ $1 ]; then
+        ls -laGph | grep "$1"
+    else
+        ls -laGph
+    fi
+}   
+
+function svnRemover()
+{
+    aviso "Removing all ${txtwht}'.svn'${txtred} folders..."
+    find . -depth -name ".svn" -type d  -exec rm -rf {} \;
+    sucesso "Done!"
+}
+
+function gitRemover()
+{
+    aviso "Removing all ${txtwht}'.git'${txtred} folders..."
+    find . -depth -name ".git" -type d  -exec rm -rf {} \;
+    sucesso "Done!"
+}
+
+function svnIgnorar() 
+{
+    aviso "Adding to svn ignore list file ${txtwht} $1 ${txtred} ..."
+    svn propset svn:ignore $1 .
+    svn ci -m"Adding to ignore list file '$1'" $1
+    informacao "Displaying current ignored files.."
+    svn propget svn:ignore .
+    sucesso "Done!"
+}
+
+function svnFora() 
+{
+    aviso "The following files are currently ${txtwht} NOT IN svn ${txtred}:"
+    svn st | grep ^\? | awk '{print $2}'
+}
