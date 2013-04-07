@@ -1,10 +1,50 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => General
-" http://amix.dk/vim/vimrc.html
+set nocompatible               " be iMproved
+filetype off                   " required!
+
+
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+" vundle, where magic happens
+Bundle 'gmarik/vundle'
+
+" file tree
+Bundle 'scrooloose/nerdtree'
+
+" easy comment
+Bundle 'scrooloose/nerdcommenter'
+
+" syntax highlight
+Bundle 'scrooloose/syntastic'
+Bundle 'cakebaker/scss-syntax.vim'
+Bundle 'vim-scripts/JSON.vim'
+
+" snippets
+Bundle 'msanders/snipmate.vim'
+
+" color schemes
+Bundle 'flazz/vim-colorschemes'
+
+" git wrapper
+Bundle 'tpope/vim-fugitive'
+
+" zendcoding
+Bundle 'mattn/zencoding-vim'
+
+" taglist
+Bundle 'majutsushi/tagbar'
+
+" use tab for autocomplete
+Bundle 'ervandew/supertab'
+
+" easy surround of tags
+Bundle 'tpope/vim-surround'
+
+filetype plugin indent on     " required!
 syntax on
 
-filetype plugin on
-filetype indent on
+colorscheme 256-jungle
 
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
@@ -18,9 +58,9 @@ nmap <leader>w :w!<cr>
 map <leader>e :e! ~/.vimrc<cr>
 
 " When vimrc is edited, reload it
-autocmd! bufwritepost vimrc source ~/.vim_runtime/vimrc
+autocmd! bufwritepost vimrc source ~/.vimrc
 
-set history=200
+set history=1000
 set autoread " Watch files changes		
 set number " Add lines	
 set scrolloff=5 " keep at least 5 lines above/below
@@ -29,10 +69,20 @@ set noerrorbells
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Pluggins
 "Nertree plgguin
+map <F2> :TagbarToggle<CR>
 map <F3> :NERDTreeToggle <CR>
-map <F2> :TlistToggle <CR>
 se pastetoggle=<F5>
 let g:user_zen_leader_key = '<c-k>'
+" scss text highlight
+au BufRead,BufNewFile *.scss set filetype=scss
+
+nmap <silent> <F7>
+    \ :!jsctags .<CR>
+
+nmap <silent> <F8>
+    \ :!ctags -R
+    \ --languages=php .<CR>
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Text, tab and indent related
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -58,21 +108,5 @@ set mat=2
 set nobackup
 set nowb
 set noswapfile
-set tags=~/tags
-" This is the file specific changes
-"-------------------------------------------------------------------------------
-" PYTHON 
-autocmd FileType python compiler pylint
-autocmd BufWritePre *.py normal m`:%s/\s\+$//e ``
-autocmd BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class 
-au FileType python inoremap <buffer> $r return
-au FileType python inoremap <buffer> $i import
-au FileType python inoremap <buffer> $p print
-au BufNewFile,BufRead *.less set filetype=css
-" PHP
-autocmd FileType php setlocal expandtab shiftwidth=4 tabstop=4 softtabstop=4
-" X?HTML & XML
-autocmd FileType html,xhtml,xml setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
-" CSS
-autocmd FileType css setlocal expandtab shiftwidth=4 tabstop=4 softtabstop=4
-" *****************************************************************************
+
+set tags=./tags,tags;
