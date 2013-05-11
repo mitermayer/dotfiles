@@ -1,103 +1,115 @@
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set nocompatible               " be iMproved
-filetype off                   " required!
+"""""""""""""""""""""""""""""""""""""
+" Mitermayer Reis - Vim configuration
+"
+" mitermayer.reis@gmail.com
+" ---------------------------------
+" Using vundle to manage bundles.
+"""""""""""""""""""""""""""""""""""""
+" => Bootstrap
+""""""""""""""""""""""""""""""""""""
 
-
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
-
-" vundle, where magic happens
-Bundle 'gmarik/vundle'
-
-" file tree
-Bundle 'scrooloose/nerdtree'
-
-" easy comment
-Bundle 'scrooloose/nerdcommenter'
-
-" syntax highlight
-Bundle 'scrooloose/syntastic'
-Bundle 'cakebaker/scss-syntax.vim'
-Bundle 'vim-scripts/JSON.vim'
-
-" snippets
-Bundle 'msanders/snipmate.vim'
-
-" color schemes
-Bundle 'flazz/vim-colorschemes'
-
-" git wrapper
-Bundle 'tpope/vim-fugitive'
-
-" zendcoding
-Bundle 'mattn/zencoding-vim'
-
-" taglist
-Bundle 'majutsushi/tagbar'
-
-" use tab for autocomplete
-Bundle 'ervandew/supertab'
-
-" easy surround of tags
-Bundle 'tpope/vim-surround'
-
-filetype plugin indent on     " required!
 syntax on
 
-colorscheme 256-jungle
+set nocompatible               
+filetype off  
 
-" With a map leader it's possible to do extra key combinations
-" like <leader>w saves the current file
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()  
+
+""""""""""""""""""""""""""""""""""""
+" => Bundles
+""""""""""""""""""""""""""""""""""""            
+
+Bundle "gmarik/vundle"
+Bundle "scrooloose/nerdtree"
+Bundle "scrooloose/nerdcommenter"
+Bundle "majutsushi/tagbar"
+Bundle "scrooloose/syntastic"
+Bundle "cakebaker/scss-syntax.vim"
+Bundle "tpope/vim-fugitive"
+Bundle "flazz/vim-colorschemes"
+Bundle "mattn/zencoding-vim"
+Bundle "tpope/vim-surround"
+Bundle "msanders/snipmate.vim"
+Bundle "ervandew/supertab"
+Bundle "pangloss/vim-javascript"
+Bundle "vim-scripts/JSON.vim"
+
+""""""""""""""""""""""""""""""""""""
+" => Leader keys, color schemes
+""""""""""""""""""""""""""""""""""""
+
 let mapleader = ","
 let g:mapleader = ","
-
-" Fast saving
-nmap <leader>w :w!<cr>
-
-" Fast editing of the .vimrc
-map <leader>e :e! ~/.vimrc<cr>
-
-" When vimrc is edited, reload it
-autocmd! bufwritepost vimrc source ~/.vimrc
-
-set history=1000
-set autoread " Watch files changes		
-set number " Add lines	
-set scrolloff=5 " keep at least 5 lines above/below
-set backspace=indent,eol,start
-set noerrorbells
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Pluggins
-"Nertree plgguin
-map <F2> :TagbarToggle<CR>
-map <F3> :NERDTreeToggle <CR>
-se pastetoggle=<F5>
 let g:user_zen_leader_key = '<c-k>'
-" scss text highlight
-au BufRead,BufNewFile *.scss set filetype=scss
 
+colorscheme dante
+" colorscheme 256-jungle
+
+""""""""""""""""""""""""""""""""""""
+" => Keys shortcuts mapping
+""""""""""""""""""""""""""""""""""""
+
+" => Toggle tags
+map <F2> :TagbarToggle<CR>
+
+" => Toggle file tree
+map <F3> :NERDTreeToggle <CR>
+
+" => Allow to paste without auto indent
+se pastetoggle=<F5>
+
+" => Create javascript tags
 nmap <silent> <F7>
     \ :!jsctags .<CR>
 
+" => Create php tags
 nmap <silent> <F8>
     \ :!ctags -R
     \ --languages=php .<CR>
+    
+""""""""""""""""""""""""""""""""""""
+" => General settings
+""""""""""""""""""""""""""""""""""""
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set history=1000
+set autoread	
+set number
+set scrolloff=5
+set backspace=indent,eol,start
+set noerrorbells
+
+set ruler
+set ignorecase 
+set hlsearch
+set incsearch
+set showmatch
+set mat=2
+
+set nobackup
+set nowb
+set noswapfile
+
+set tags=~/tags,./tags,tags;
+
+""""""""""""""""""""""""""""""""""""
 " => Text, tab and indent related
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set expandtab
+""""""""""""""""""""""""""""""""""""
+
 set shiftwidth=4
 set tabstop=4
+set expandtab
 set smarttab
 set lbr
 set tw=500
 set ai "Auto indent
 set si "Smart indet
 set wrap "Wrap lines
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+""""""""""""""""""""""""""""""""""""
 " => VIM user interface
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""
+
 set ruler "Always show current position
 set ignorecase "Ignore case when searching
 set hlsearch "Highlight search things
@@ -108,5 +120,26 @@ set mat=2
 set nobackup
 set nowb
 set noswapfile
+set tags=~/tags
+" This is the file specific changes
 
-set tags=./tags,tags;
+""""""""""""""""""""""""""""""""""""
+" => Filetype specifics
+""""""""""""""""""""""""""""""""""""
+
+" => Python
+autocmd FileType python compiler pylint
+autocmd BufWritePre *.py normal m`:%s/\s\+$//e ``
+autocmd BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class 
+au FileType python inoremap <buffer> $r return
+au FileType python inoremap <buffer> $i import
+au FileType python inoremap <buffer> $p print
+
+" => Scss, Less
+au BufRead,BufNewFile *.scss set filetype=scss
+au BufNewFile,BufRead *.less set filetype=scss
+
+" => Html, Xml
+autocmd FileType html,xhtml,xml setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
+
+""""""""""""""""""""""""""""""""""""
