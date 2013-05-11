@@ -16,6 +16,8 @@ filetype off
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()  
 
+filetype plugin indent on
+
 """"""""""""""""""""""""""""""""""""
 " => Bundles
 """"""""""""""""""""""""""""""""""""            
@@ -43,8 +45,7 @@ let mapleader = ","
 let g:mapleader = ","
 let g:user_zen_leader_key = '<c-k>'
 
-colorscheme dante
-" colorscheme 256-jungle
+colorscheme 256-jungle
 
 """"""""""""""""""""""""""""""""""""
 " => Keys shortcuts mapping
@@ -110,18 +111,15 @@ set wrap "Wrap lines
 " => VIM user interface
 """"""""""""""""""""""""""""""""""""
 
-set ruler "Always show current position
-set ignorecase "Ignore case when searching
-set hlsearch "Highlight search things
-set incsearch "Make search act like search in modern browsers
+set ruler
+set ignorecase 
+set hlsearch 
+set incsearch
 set showmatch
 set mat=2
-" Turn backup off, since most stuff is in SVN, git anyway...
 set nobackup
 set nowb
 set noswapfile
-set tags=~/tags
-" This is the file specific changes
 
 """"""""""""""""""""""""""""""""""""
 " => Filetype specifics
