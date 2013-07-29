@@ -32,10 +32,12 @@ Bundle "tpope/vim-fugitive"
 Bundle "flazz/vim-colorschemes"
 Bundle "mattn/zencoding-vim"
 Bundle "tpope/vim-surround"
-Bundle "msanders/snipmate.vim"
 Bundle "ervandew/supertab"
 Bundle "pangloss/vim-javascript"
 Bundle "vim-scripts/JSON.vim"
+Bundle "MarcWeber/vim-addon-mw-utils"
+Bundle "tomtom/tlib_vim"
+Bundle "garbas/vim-snipmate"
 
 """"""""""""""""""""""""""""""""""""
 " => Leader keys, color schemes
@@ -74,7 +76,7 @@ nmap <silent> <F8>
 """"""""""""""""""""""""""""""""""""
 
 set history=1000
-set autoread	
+set autoread    
 set number
 set scrolloff=5
 set backspace=indent,eol,start
