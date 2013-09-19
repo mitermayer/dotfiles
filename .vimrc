@@ -22,32 +22,34 @@ filetype plugin indent on
 " => Bundles
 """"""""""""""""""""""""""""""""""""
 
-Bundle "gmarik/vundle"
-Bundle "scrooloose/nerdtree"
-Bundle "scrooloose/nerdcommenter"
-Bundle "majutsushi/tagbar"
-Bundle "scrooloose/syntastic"
 Bundle "cakebaker/scss-syntax.vim"
-Bundle "tpope/vim-fugitive"
-Bundle "flazz/vim-colorschemes"
-Bundle "mattn/zencoding-vim"
-Bundle "tpope/vim-surround"
 Bundle "ervandew/supertab"
-Bundle "pangloss/vim-javascript"
-Bundle "vim-scripts/JSON.vim"
-Bundle "MarcWeber/vim-addon-mw-utils"
-Bundle "tomtom/tlib_vim"
+Bundle "flazz/vim-colorschemes"
 Bundle "garbas/vim-snipmate"
+Bundle "gmarik/vundle"
+Bundle "majutsushi/tagbar"
+Bundle "marcWeber/vim-addon-mw-utils"
+Bundle "mattn/zencoding-vim"
+Bundle "pangloss/vim-javascript"
+Bundle "scrooloose/nerdcommenter"
+Bundle "scrooloose/nerdtree"
+Bundle "scrooloose/syntastic"
+Bundle "tomtom/tlib_vim"
+Bundle "tpope/vim-fugitive"
+Bundle "tpope/vim-surround"
+Bundle "vim-scripts/JSON.vim"
+Bundle 'einars/js-beautify'
+Bundle 'maksimr/vim-jsbeautify'
 
 """"""""""""""""""""""""""""""""""""
 " => Leader keys, color schemes
 """"""""""""""""""""""""""""""""""""
 
 let mapleader = ","
-let g:mapleader = ","
-let g:user_zen_leader_key = '<c-k>'
 let g:EclimMakeLCD = 1
 let g:EclimShowCurrentError = 1
+let g:mapleader = ","
+let g:user_zen_leader_key = '<c-k>'
 
 colorscheme 256-jungle
 
@@ -86,23 +88,23 @@ map <F10> :JavaImportOrganize  <CR>
 " => General settings
 """"""""""""""""""""""""""""""""""""
 
-set history=1000
 set autoread
+set backspace=indent,eol,start
+set history=1000
+set noerrorbells
 set number
 set scrolloff=5
-set backspace=indent,eol,start
-set noerrorbells
 
-set ruler
-set ignorecase
 set hlsearch
+set ignorecase
 set incsearch
-set showmatch
 set mat=2
+set ruler
+set showmatch
 
 set nobackup
-set nowb
 set noswapfile
+set nowb
 
 set tags=~/tags,./tags,tags;
 
@@ -110,29 +112,29 @@ set tags=~/tags,./tags,tags;
 " => Text, tab and indent related
 """"""""""""""""""""""""""""""""""""
 
-set shiftwidth=4
-set tabstop=4
-set expandtab
-set smarttab
-set lbr
-set tw=500
 set ai "Auto indent
+set expandtab
+set lbr
+set shiftwidth=4
 set si "Smart indet
+set smarttab
+set tabstop=4
+set tw=500
 set wrap "Wrap lines
 
 """"""""""""""""""""""""""""""""""""
 " => VIM user interface
 """"""""""""""""""""""""""""""""""""
 
-set ruler
-set ignorecase
 set hlsearch
+set ignorecase
 set incsearch
-set showmatch
 set mat=2
 set nobackup
-set nowb
 set noswapfile
+set nowb
+set ruler
+set showmatch
 
 """"""""""""""""""""""""""""""""""""
 " => Filetype specifics
@@ -155,6 +157,16 @@ au BufNewFile,BufRead *.less set filetype=scss
 
 " => Html, Xml
 autocmd FileType html,xhtml,xml setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
+autocmd FileType html noremap <buffer> <c-f> :call HtmlBeautify()<cr>
+
+" => css
+autocmd FileType css noremap <buffer> <c-f> :call CSSBeautify()<cr>
+
+" => Javascript
+map <c-f> :call JsBeautify()<cr>
+autocmd FileType javascript noremap <buffer>  <c-f> :call JsBeautify()<cr>
+
+" for css or scss
 
 " => Java auto complete with eclim
 autocmd FileType java compiler javac
