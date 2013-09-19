@@ -18,6 +18,8 @@ call vundle#rc()
 
 filetype plugin indent on
 
+set foldmethod=syntax
+
 """"""""""""""""""""""""""""""""""""
 " => Bundles
 """"""""""""""""""""""""""""""""""""
@@ -38,8 +40,9 @@ Bundle "tomtom/tlib_vim"
 Bundle "tpope/vim-fugitive"
 Bundle "tpope/vim-surround"
 Bundle "vim-scripts/JSON.vim"
-Bundle 'einars/js-beautify'
-Bundle 'maksimr/vim-jsbeautify'
+Bundle "einars/js-beautify"
+Bundle "maksimr/vim-jsbeautify"
+Bundle "duganchen/vim-soy"
 
 """"""""""""""""""""""""""""""""""""
 " => Leader keys, color schemes
@@ -151,9 +154,10 @@ au FileType python inoremap <buffer> $r return
 au FileType python inoremap <buffer> $i import
 au FileType python inoremap <buffer> $p print
 
-" => Scss, Less
+" => Scss, Less, soy
 au BufRead,BufNewFile *.scss set filetype=scss
 au BufNewFile,BufRead *.less set filetype=scss
+au BufNewFile,BufRead *.soy set filetype=soy
 
 " => Html, Xml
 autocmd FileType html,xhtml,xml setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
