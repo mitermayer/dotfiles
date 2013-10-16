@@ -1,0 +1,51 @@
+" Goals are to being able to import multi-module projects using eclim
+
+" - run mvn eclipse:clean eclipse:eclipse
+" - delete .project and .classpath on root if exists ( this will be generated later )
+" - find all instances of .project and for each import as a project on eclipse with a prefix of the root project folder name example 'myfoldername_inner-module'
+" - create a new project with all the previously created projects as its dependencie
+" - wrappeverything in a function ":ProjectImportMultiModule"
+
+
+" Return a list with all projects (Folders that have '.project') based from the root folder
+function! GetEclimProjectList()
+    return substitute(globpath('.', '**/.project'), '\/.project', '','g')
+endfunction
+
+function! GetProjectName(projectPath)
+    return substitute(a:projectPath, '[/.a-zA-Z]*\/', '','g')
+endfunction
+
+" Import all projects from '.' or specified by the argument
+function! ProjectImportRecursive(project)
+
+    " import project with eclim
+    let project = a:project
+
+    " get the project name to later on add on createProject
+    let projectName = GetProjectName(project)
+
+    " call eclim#project#util#ProjectImport(project)
+
+    echo projectName
+    return projectName
+endfunction
+
+" exec a function on each line of the output
+function! DoForEachLine(list, func)
+
+  let item = split(a:list, "\r")
+
+  for line in item
+    call a:func(line)
+  endfor
+
+endfunction
+
+
+nnoremap <F12> :call ProjectCreateMvnMultiModule()<CR>
+command! -nargs=1 ProjectCreateMvnMultiModule call s:ProjectCreateMvnMultiModule(<f-args>)
+
+function! ProjectCreateMvnMultiModule()
+  call DoForEachLine(GetEclimProjectList(), function("ProjectImportRecursive"))
+endfunction
