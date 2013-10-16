@@ -26,20 +26,27 @@ function! ProjectImportRecursive(project)
     let projectName = GetProjectName(project)
 
     " call eclim#project#util#ProjectImport(project)
+    echo "ProjectImport " . project
 
-    echo projectName
     return projectName
 endfunction
 
 " exec a function on each line of the output
 function! DoForEachLine(list, func)
+  let responseList = ""
 
   let item = split(a:list, "\r")
 
   for line in item
-    call a:func(line)
+    " do func on each item also store the response of each item on a list
+    let responseList = responseList . a:func(line)
   endfor
 
+  return responseList
+endfunction
+
+function! CreateProjectWithDependencyList(folder, projectName, list)
+    echo "ProjectCreate " . a:folder . " -p " . a:projectName . " -n java" .  " -d " . a:list
 endfunction
 
 
@@ -47,5 +54,8 @@ nnoremap <F12> :call ProjectCreateMvnMultiModule()<CR>
 command! -nargs=1 ProjectCreateMvnMultiModule call s:ProjectCreateMvnMultiModule(<f-args>)
 
 function! ProjectCreateMvnMultiModule()
-  call DoForEachLine(GetEclimProjectList(), function("ProjectImportRecursive"))
+  let responseList = DoForEachLine(GetEclimProjectList(), function("ProjectImportRecursive"))
+  let projectDependencies = substitute(responseList, "\n", ' ', 'g')
+
+  call CreateProjectWithDependencyList(".", "miter", projectDependencies)
 endfunction
