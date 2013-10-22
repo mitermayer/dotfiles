@@ -13,7 +13,9 @@ function! GetEclimProjectList()
 endfunction
 
 function! GetProjectName(projectPath)
-    return substitute(a:projectPath, '[/.a-zA-Z]*\/', '','g')
+    let l:projectName = substitute(a:projectPath, '.*\/', '','g')
+
+    return projectName
 endfunction
 
 " Import all projects from '.' or specified by the argument
