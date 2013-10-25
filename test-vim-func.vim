@@ -7,34 +7,77 @@
 " - wrappeverything in a function ":ProjectImportMultiModule"
 
 
-" Return a list with all projects (Folders that have '.project') based from the root folder
+""
+" Get a list of all eclipse projects that are in the same folder by checking
+" for the existend of '.project' and than returning the path to the the containing directory.
+"
+" @return {String} Return folders that has a '.project' on them.
+"
 function! GetEclimProjectList()
     return substitute(globpath('.', '**/.project'), '\/.project', '','g')
 endfunction
 
+
+""
+" Get the name of the directory
+"
+" @return {String} Return folders that has a '.project' on them.
+"
 function! GetProjectName(projectPath)
     let l:projectName = substitute(a:projectPath, '.*\/', '','g')
 
     return projectName
 endfunction
 
+" Rename project with a prefix and return new name
+function! AddPrefixToProject(projectName, prefix)
+    l:separator = '_'
+    l:newProjectName = a:prefix . separator . a:projectName
+
+    echo "ProjectRename " . a:project " " . newProjectName
+
+    execute "ProjectRename " . a:project " " . newProjectName
+
+    return  newProjectName
+endfunction
+
+" Import all projects from '.' or specified by the argument
+function! ProjectRemoveRecursive(project)
+
+    " import project with eclim
+    let l:project = a:project
+
+    " get the project name to later on add on createProject
+    let l:projectName = GetProjectName(project)
+
+    echo "ProjectDelete " . project
+
+    try
+        "execute "ProjectDelete " . project
+    catch
+        " project already imported
+        echo "Failed to remove project, maybe it doesn't exists or already have been deleted."
+    endtry
+
+    return projectName . " "
+endfunction
+
 " Import all projects from '.' or specified by the argument
 function! ProjectImportRecursive(project)
 
     " import project with eclim
-    let project = a:project
+    let l:project = a:project
 
     " get the project name to later on add on createProject
-    let projectName = GetProjectName(project)
+    let l:projectName = GetProjectName(project)
 
-    " call eclim#project#util#ProjectImport(project)
-    "echo "ProjectImport " . project
+    echo "ProjectImport " . project
 
     try
-        execute "ProjectImport " . project
+        "execute "ProjectImport " . project
     catch
         " project already imported
-        "echo "Failed to import project, maybe its already imported"
+        echo "Failed to import project, maybe its already imported"
     endtry
 
     return projectName . " "
@@ -55,11 +98,11 @@ endfunction
 
 function! CreateProjectWithDependencyList(folder, projectName, list)
     try
-        "echo "Running command: ProjectCreate " . a:folder . " -p " . a:projectName . " -n java" .  " -d " . a:list
-        execute "ProjectCreate " . a:folder . " -p " . a:projectName . " -n java" .  " -d " . a:list
-        "echo "Project succesfuly created as: " . a:projectName
+        echo "Running command: ProjectCreate " . a:folder . " -p " . a:projectName . " -n java" .  " -d " . a:list
+        "execute "ProjectCreate " . a:folder . " -p " . a:projectName . " -n java" .  " -d " . a:list
+        echo "Project succesfuly created as: " . a:projectName
     catch
-        "echo "Failed to create project"
+        echo "Failed to create project"
     endtry
 endfunction
 
@@ -71,6 +114,5 @@ function! ProjectCreateMvnMultiModule()
   let responseList = DoForEachLine(GetEclimProjectList(), function("ProjectImportRecursive"))
   let projectDependencies = substitute(responseList, "\n", ' ', 'g')
 
-  "echo projectDependencies
   call CreateProjectWithDependencyList(".", "miter", projectDependencies)
 endfunction
