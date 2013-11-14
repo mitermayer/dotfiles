@@ -20,17 +20,21 @@ filetype plugin indent on
 
 set foldmethod=syntax
 
+
 """"""""""""""""""""""""""""""""""""
 " => Bundles
 """"""""""""""""""""""""""""""""""""
 
 Bundle "cakebaker/scss-syntax.vim"
+Bundle "duganchen/vim-soy"
+Bundle "einars/js-beautify"
 Bundle "ervandew/supertab"
 Bundle "flazz/vim-colorschemes"
 Bundle "garbas/vim-snipmate"
 Bundle "gmarik/vundle"
 Bundle "majutsushi/tagbar"
-Bundle "MarcWeber/vim-addon-mw-utils"
+Bundle "maksimr/vim-jsbeautify"
+Bundle "marcWeber/vim-addon-mw-utils"
 Bundle "mattn/zencoding-vim"
 Bundle "pangloss/vim-javascript"
 Bundle "scrooloose/nerdcommenter"
@@ -40,9 +44,7 @@ Bundle "tomtom/tlib_vim"
 Bundle "tpope/vim-fugitive"
 Bundle "tpope/vim-surround"
 Bundle "vim-scripts/JSON.vim"
-Bundle "einars/js-beautify"
-Bundle "maksimr/vim-jsbeautify"
-Bundle "duganchen/vim-soy"
+Bundle 'kchmck/vim-coffee-script'
 
 """"""""""""""""""""""""""""""""""""
 " => Leader keys, color schemes
@@ -143,13 +145,16 @@ set showmatch
 " => Filetype specifics
 """"""""""""""""""""""""""""""""""""
 
+" Unfold when opening files
+au BufWinEnter * normal zR
+
 " Removes whitespace when saving the file
-autocmd BufWritePre * :%s/\s\+$//e
+au BufWritePre * :%s/\s\+$//e
 
 " => Python
-autocmd FileType python compiler pylint
-autocmd BufWritePre *.py normal m`:%s/\s\+$//e ``
-autocmd BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
+au FileType python compiler pylint
+au BufWritePre *.py normal m`:%s/\s\+$//e ``
+au BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
 au FileType python inoremap <buffer> $r return
 au FileType python inoremap <buffer> $i import
 au FileType python inoremap <buffer> $p print
@@ -160,34 +165,34 @@ au BufNewFile,BufRead *.less set filetype=scss
 au BufNewFile,BufRead *.soy set filetype=soy
 
 " => Html, Xml
-autocmd FileType html,xhtml,xml setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
-autocmd FileType html noremap <buffer> <c-f> :call HtmlBeautify()<cr>
+au FileType html,xhtml,xml setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
+au FileType html noremap <buffer> <c-f> :call HtmlBeautify()<cr>
 
 " => css
-autocmd FileType css noremap <buffer> <c-f> :call CSSBeautify()<cr>
+au FileType css noremap <buffer> <c-f> :call CSSBeautify()<cr>
 
 " => Javascript
 map <c-f> :call JsBeautify()<cr>
-autocmd FileType javascript noremap <buffer>  <c-f> :call JsBeautify()<cr>
+au FileType javascript noremap <buffer>  <c-f> :call JsBeautify()<cr>
 
 " for css or scss
 
 " => Java auto complete with eclim
-autocmd FileType java compiler javac
-autocmd FileType java set makeprg=mvn\ compile
-autocmd FileType java set errorformat=\[ERROR]\ %f:%l:\ %m,%-G%.%#
+au FileType java compiler javac
+au FileType java set makeprg=mvn\ compile
+au FileType java set errorformat=\[ERROR]\ %f:%l:\ %m,%-G%.%#
 
 " Import the class under the cursor
-autocmd FileType java nnoremap <silent> <buffer> <leader>i :JavaImport<cr>
+au FileType java nnoremap <silent> <buffer> <leader>i :JavaImport<cr>
 
 " Search for the javadocs of the element under the cursor
-autocmd FileType java nnoremap <silent> <buffer> <leader>d :JavaDocSearch -x declarations<cr>
+au FileType java nnoremap <silent> <buffer> <leader>d :JavaDocSearch -x declarations<cr>
 
 " Perform a context sensitive search of the element under the cursor
-autocmd FileType java nnoremap <silent> <buffer> <cr> :JavaSearchContext<cr>
+au FileType java nnoremap <silent> <buffer> <cr> :JavaSearchContext<cr>
 
 " Download sources and create tags file
-autocmd FileType java map <silent> <F8>
+au FileType java map <silent> <F8>
     \ :ProjectLCD <CR>
     \ :!mvn dependency:unpack-dependencies -Dclassifier=sources -Dmdep.failOnMissingClassifierArtifact=false;
     \ mvn eclipse:eclipse;
