@@ -8,14 +8,13 @@
 " => Bootstrap
 """"""""""""""""""""""""""""""""""""
 
-syntax on
-
 set nocompatible
 filetype off
 
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
+syntax enable
 filetype plugin indent on
 
 set foldmethod=syntax
@@ -174,6 +173,9 @@ au FileType css noremap <buffer> <c-f> :call CSSBeautify()<cr>
 " => Javascript
 map <c-f> :call JsBeautify()<cr>
 au FileType javascript noremap <buffer>  <c-f> :call JsBeautify()<cr>
+
+" => CoffeeScript
+au BufRead,BufNewFile *.coffee set filetype=coffee
 
 " for css or scss
 
