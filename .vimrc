@@ -55,7 +55,7 @@ let g:EclimShowCurrentError = 1
 let g:mapleader = ","
 let g:user_zen_leader_key = '<c-k>'
 
-colorscheme 256-jungle
+colorscheme desert
 
 """"""""""""""""""""""""""""""""""""
 " => Keys shortcuts mapping
