@@ -8,33 +8,40 @@
 " => Bootstrap
 """"""""""""""""""""""""""""""""""""
 
-set nocompatible
-filetype off
-
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
-
-syntax enable
-filetype plugin indent on
-
+syntax on
 set foldmethod=syntax
 
+" Leader key Mapping
+let mapleader = ","
+let g:mapleader = ","
+
+" Large files are any file over 10 megabytes
+let g:LargeFile=10
+
+" Required for eclim compatibility
+let g:EclimMakeLCD = 1
+let g:EclimShowCurrentError = 1
+
+" Ensures that colorscheme is the same on terminal and X servers
+colorscheme desert
 
 """"""""""""""""""""""""""""""""""""
 " => Bundles
 """"""""""""""""""""""""""""""""""""
 
+set nocompatible " be IMproved, required for vundle
+filetype off " required for vundle
+
+set rtp+=~/.vim/bundle/vundle/
+call vundle#begin()
+
 Bundle "cakebaker/scss-syntax.vim"
-Bundle "duganchen/vim-soy"
-Bundle "einars/js-beautify"
 Bundle "ervandew/supertab"
-Bundle "flazz/vim-colorschemes"
 Bundle "garbas/vim-snipmate"
 Bundle "gmarik/vundle"
 Bundle "majutsushi/tagbar"
-Bundle "maksimr/vim-jsbeautify"
-Bundle "marcWeber/vim-addon-mw-utils"
-Bundle "mattn/zencoding-vim"
+Bundle "MarcWeber/vim-addon-mw-utils"
+Bundle "mattn/emmet-vim"
 Bundle "pangloss/vim-javascript"
 Bundle "scrooloose/nerdcommenter"
 Bundle "scrooloose/nerdtree"
@@ -43,23 +50,22 @@ Bundle "tomtom/tlib_vim"
 Bundle "tpope/vim-fugitive"
 Bundle "tpope/vim-surround"
 Bundle "vim-scripts/JSON.vim"
-Bundle 'kchmck/vim-coffee-script'
+Bundle "einars/js-beautify"
+Bundle "maksimr/vim-jsbeautify"
+Bundle "duganchen/vim-soy"
+Bundle "LargeFile"
+Bundle "heavenshell/vim-jsdoc"
+Bundle "briancollins/vim-jst"
 
-""""""""""""""""""""""""""""""""""""
-" => Leader keys, color schemes
-""""""""""""""""""""""""""""""""""""
-
-let mapleader = ","
-let g:EclimMakeLCD = 1
-let g:EclimShowCurrentError = 1
-let g:mapleader = ","
-let g:user_zen_leader_key = '<c-k>'
-
-colorscheme desert
+call vundle#end()
+filetype plugin indent on " required for vundle
 
 """"""""""""""""""""""""""""""""""""
 " => Keys shortcuts mapping
 """"""""""""""""""""""""""""""""""""
+
+" => Press from insert mode to exit
+imap jk <Esc>
 
 " => Toggle tags
 map <F2> :TagbarToggle<CR>
@@ -144,16 +150,13 @@ set showmatch
 " => Filetype specifics
 """"""""""""""""""""""""""""""""""""
 
-" Unfold when opening files
-au BufWinEnter * normal zR
-
 " Removes whitespace when saving the file
-au BufWritePre * :%s/\s\+$//e
+autocmd BufWritePre * :%s/\s\+$//e
 
 " => Python
-au FileType python compiler pylint
-au BufWritePre *.py normal m`:%s/\s\+$//e ``
-au BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
+autocmd FileType python compiler pylint
+autocmd BufWritePre *.py normal m`:%s/\s\+$//e ``
+autocmd BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
 au FileType python inoremap <buffer> $r return
 au FileType python inoremap <buffer> $i import
 au FileType python inoremap <buffer> $p print
@@ -164,37 +167,35 @@ au BufNewFile,BufRead *.less set filetype=scss
 au BufNewFile,BufRead *.soy set filetype=soy
 
 " => Html, Xml
-au FileType html,xhtml,xml setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
-au FileType html noremap <buffer> <c-f> :call HtmlBeautify()<cr>
+au BufNewFile,BufRead *.ejs set filetype=html
+autocmd FileType html,xhtml,xml setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
+autocmd FileType html noremap <buffer> <c-f> :call HtmlBeautify()<cr>
 
 " => css
-au FileType css noremap <buffer> <c-f> :call CSSBeautify()<cr>
+autocmd FileType css noremap <buffer> <c-f> :call CSSBeautify()<cr>
 
 " => Javascript
 map <c-f> :call JsBeautify()<cr>
-au FileType javascript noremap <buffer>  <c-f> :call JsBeautify()<cr>
-
-" => CoffeeScript
-au BufRead,BufNewFile *.coffee set filetype=coffee
+autocmd FileType javascript noremap <buffer>  <c-f> :call JsBeautify()<cr>
 
 " for css or scss
 
 " => Java auto complete with eclim
-au FileType java compiler javac
-au FileType java set makeprg=mvn\ compile
-au FileType java set errorformat=\[ERROR]\ %f:%l:\ %m,%-G%.%#
+autocmd FileType java compiler javac
+autocmd FileType java set makeprg=mvn\ compile
+autocmd FileType java set errorformat=\[ERROR]\ %f:%l:\ %m,%-G%.%#
 
 " Import the class under the cursor
-au FileType java nnoremap <silent> <buffer> <leader>i :JavaImport<cr>
+autocmd FileType java nnoremap <silent> <buffer> <leader>i :JavaImport<cr>
 
 " Search for the javadocs of the element under the cursor
-au FileType java nnoremap <silent> <buffer> <leader>d :JavaDocSearch -x declarations<cr>
+autocmd FileType java nnoremap <silent> <buffer> <leader>d :JavaDocSearch -x declarations<cr>
 
 " Perform a context sensitive search of the element under the cursor
-au FileType java nnoremap <silent> <buffer> <cr> :JavaSearchContext<cr>
+autocmd FileType java nnoremap <silent> <buffer> <cr> :JavaSearchContext<cr>
 
 " Download sources and create tags file
-au FileType java map <silent> <F8>
+autocmd FileType java map <silent> <F8>
     \ :ProjectLCD <CR>
     \ :!mvn dependency:unpack-dependencies -Dclassifier=sources -Dmdep.failOnMissingClassifierArtifact=false;
     \ mvn eclipse:eclipse;
