@@ -9,29 +9,39 @@
 """"""""""""""""""""""""""""""""""""
 
 syntax on
-
-set nocompatible
-filetype off
-
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
-
-filetype plugin indent on
-
 set foldmethod=syntax
+
+" Leader key Mapping
+let mapleader = ","
+let g:mapleader = ","
+
+" Large files are any file over 10 megabytes
+let g:LargeFile=10
+
+" Required for eclim compatibility
+let g:EclimMakeLCD = 1
+let g:EclimShowCurrentError = 1
+
+" Ensures that colorscheme is the same on terminal and X servers
+colorscheme desert
 
 """"""""""""""""""""""""""""""""""""
 " => Bundles
 """"""""""""""""""""""""""""""""""""
 
+set nocompatible " be IMproved, required for vundle
+filetype off " required for vundle
+
+set rtp+=~/.vim/bundle/vundle/
+call vundle#begin()
+
 Bundle "cakebaker/scss-syntax.vim"
 Bundle "ervandew/supertab"
-Bundle "flazz/vim-colorschemes"
 Bundle "garbas/vim-snipmate"
 Bundle "gmarik/vundle"
 Bundle "majutsushi/tagbar"
 Bundle "MarcWeber/vim-addon-mw-utils"
-Bundle "mattn/zencoding-vim"
+Bundle "mattn/emmet-vim"
 Bundle "pangloss/vim-javascript"
 Bundle "scrooloose/nerdcommenter"
 Bundle "scrooloose/nerdtree"
@@ -43,22 +53,19 @@ Bundle "vim-scripts/JSON.vim"
 Bundle "einars/js-beautify"
 Bundle "maksimr/vim-jsbeautify"
 Bundle "duganchen/vim-soy"
+Bundle "LargeFile"
+Bundle "heavenshell/vim-jsdoc"
+Bundle "briancollins/vim-jst"
 
-""""""""""""""""""""""""""""""""""""
-" => Leader keys, color schemes
-""""""""""""""""""""""""""""""""""""
-
-let mapleader = ","
-let g:EclimMakeLCD = 1
-let g:EclimShowCurrentError = 1
-let g:mapleader = ","
-let g:user_zen_leader_key = '<c-k>'
-
-colorscheme 256-jungle
+call vundle#end()
+filetype plugin indent on " required for vundle
 
 """"""""""""""""""""""""""""""""""""
 " => Keys shortcuts mapping
 """"""""""""""""""""""""""""""""""""
+
+" => Press from insert mode to exit
+imap jk <Esc>
 
 " => Toggle tags
 map <F2> :TagbarToggle<CR>
@@ -160,6 +167,7 @@ au BufNewFile,BufRead *.less set filetype=scss
 au BufNewFile,BufRead *.soy set filetype=soy
 
 " => Html, Xml
+au BufNewFile,BufRead *.ejs set filetype=html
 autocmd FileType html,xhtml,xml setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType html noremap <buffer> <c-f> :call HtmlBeautify()<cr>
 
