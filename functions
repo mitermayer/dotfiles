@@ -18,6 +18,13 @@ function pergunta()
     echo "${txtbld}${txtylw}$1${txtrst}"
 }
 
+function fgit() {
+    if [ -n "$1" ]; then
+        git config diff.renameLimit 0 && git config merge.renameLimit 0 && git log -S"${1}" --source --all --decorate
+    else
+        echo "No parameter provided"
+    fi
+}
 
 # List bash possible colors
 function cores()
