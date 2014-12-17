@@ -9,7 +9,7 @@
 """"""""""""""""""""""""""""""""""""
 
 function! JavascriptTags(...)
-  :!echo "Generating javascript tags" && find . -name "*.js" -not -path "./node_modules/*" -exec jsctags {} -f \; | sed '/^$/d' | sort > tags
+  :!find . -name "*.js" -not -path "./node_modules/*" -exec jsctags {} -f \; | sed '/^$/d' | sort > tags
 endfunction
 
 syntax on
