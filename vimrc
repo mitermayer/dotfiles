@@ -8,6 +8,10 @@
 " => Bootstrap
 """"""""""""""""""""""""""""""""""""
 
+function! JavascriptTags(...)
+  :!echo "Generating javascript tags" && find . -name "*.js" -not -path "./node_modules/*" -exec jsctags {} -f \; | sed '/^$/d' | sort > tags
+endfunction
+
 syntax on
 set foldmethod=syntax
 
@@ -176,6 +180,7 @@ autocmd FileType css noremap <buffer> <c-f> :call CSSBeautify()<cr>
 " => Javascript
 map <c-f> :call JsBeautify()<cr>
 autocmd FileType javascript noremap <buffer>  <c-f> :call JsBeautify()<cr>
+au BufWritePost *.js silent! call JavascriptTags()
 
 " for css or scss
 
@@ -193,8 +198,7 @@ autocmd FileType java nnoremap <silent> <buffer> <leader>d :JavaDocSearch -x dec
 " Perform a context sensitive search of the element under the cursor
 autocmd FileType java nnoremap <silent> <buffer> <cr> :JavaSearchContext<cr>
 
-map <silent> <F7>
-    \ :!echo "Generating javascript tags" && find . -name "*.js" -not -path "./node_modules/*" -exec jsctags {} -f \; \| sed '/^$/d' \| sort > tags <CR>
+map <silent> <F7> :call JavascriptTags() <CR>
 
 " Download sources and create tags file
 autocmd FileType java map <silent> <F8>
