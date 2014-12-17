@@ -22,6 +22,12 @@ let g:LargeFile=10
 let g:EclimMakeLCD = 1
 let g:EclimShowCurrentError = 1
 
+" Used for ctrp
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+
+let g:ycm_path_to_python_interpreter = '/usr/bin/python'
+
 " Ensures that colorscheme is the same on terminal and X servers
 colorscheme desert
 
@@ -36,7 +42,6 @@ set rtp+=~/.vim/bundle/vundle/
 call vundle#begin()
 
 Bundle "cakebaker/scss-syntax.vim"
-Bundle "ervandew/supertab"
 Bundle "garbas/vim-snipmate"
 Bundle "gmarik/vundle"
 Bundle "majutsushi/tagbar"
@@ -56,6 +61,9 @@ Bundle "duganchen/vim-soy"
 Bundle "LargeFile"
 Bundle "heavenshell/vim-jsdoc"
 Bundle "briancollins/vim-jst"
+Bundle "kien/ctrlp.vim"
+Bundle "marijnh/tern_for_vim"
+Bundle "Valloric/YouCompleteMe"
 
 call vundle#end()
 filetype plugin indent on " required for vundle
@@ -78,15 +86,6 @@ map <F4> :BuffersToggle <CR>
 
 " => Allow to paste without auto indent
 se pastetoggle=<F5>
-
-" => Create javascript tags
-map <silent> <F7>
-    \ :!jsctags .<CR>
-
-" => Create java tags
-map <silent> <F8>
-    \ :!ctags -R
-    \ --languages=php .<CR>
 
 " => locate file
 map <F9> :LocateFile  <CR>
