@@ -193,6 +193,9 @@ autocmd FileType java nnoremap <silent> <buffer> <leader>d :JavaDocSearch -x dec
 " Perform a context sensitive search of the element under the cursor
 autocmd FileType java nnoremap <silent> <buffer> <cr> :JavaSearchContext<cr>
 
+map <silent> <F7>
+    \ :!echo "Generating javascript tags" && find . -name "*.js" -exec jsctags {} -f \; \| sed '/^$/d' \| sort > tags <CR>
+
 " Download sources and create tags file
 autocmd FileType java map <silent> <F8>
     \ :ProjectLCD <CR>

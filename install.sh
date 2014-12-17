@@ -50,6 +50,9 @@ echo "Installing VIM plugging tern dependencies"
 cd .vim/bundle/tern_for_vim
 npm install
 
+echo "Installing jsctags"
+npm install -g git://github.com/ramitos/jsctags.git
+
 echo "Installing VIM plugging YCM dependencies"
 cd ~/.vim/bundle/YouCompleteMe
 
