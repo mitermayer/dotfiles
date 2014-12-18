@@ -12,6 +12,9 @@ function! JavascriptTags(...)
   :!find . -name "*.js" -not -path "./node_modules/*" -exec jsctags {} -f \; | sed '/^$/d' | sort > tags
 endfunction
 
+set encoding=utf-8
+scriptencoding utf-8
+
 syntax on
 set foldmethod=syntax
 
@@ -32,8 +35,15 @@ let g:ctrlp_cmd = 'CtrlP'
 
 let g:ycm_path_to_python_interpreter = '/usr/bin/python'
 
+if !has('gui_running')
+  set t_Co=256
+endif
+
 " Ensures that colorscheme is the same on terminal and X servers
 colorscheme desert
+
+" always have the status bar visible
+set laststatus=2
 
 """"""""""""""""""""""""""""""""""""
 " => Bundles
@@ -68,6 +78,7 @@ Bundle "briancollins/vim-jst"
 Bundle "kien/ctrlp.vim"
 Bundle "marijnh/tern_for_vim"
 Bundle "Valloric/YouCompleteMe"
+Bundle "bling/vim-airline"
 
 call vundle#end()
 filetype plugin indent on " required for vundle
