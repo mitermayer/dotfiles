@@ -50,29 +50,6 @@ if [ "$TERMINAL_OVERRIDE" != "" ]; then
     export TERM=$TERMINAL_OVERRIDE
 fi
 
-# Tango palette for framebuffers
-function color_palette () {
-    echo -en "\e]P02e3436" #black
-    echo -en "\e]P8555753" #darkgray
-    echo -en "\e]P1cc0000" #darkred
-    echo -en "\e]P9ef2929" #red
-    echo -en "\e]P24e9a06" #darkgreen
-    echo -en "\e]PA8ae234" #green
-    echo -en "\e]P3c4a000" #brown
-    echo -en "\e]PBfce94f" #yellow
-    echo -en "\e]P43465a4" #darkblue
-    echo -en "\e]PC729fcf" #blue
-    echo -en "\e]P575507b" #darkmagenta
-    echo -en "\e]PDad7fa8" #magenta
-    echo -en "\e]P606989a" #darkcyan
-    echo -en "\e]PE34e2e2" #cyan
-    echo -en "\e]P7ffffff" #lightgray
-    echo -en "\e]PFeeeeec" #white
-}
-if [ "$TERM" == "linux" ]; then
-    color_palette
-fi
-
 if [ "$TERM" == "screen-bce" ]; then
     # I use screen under 256-color-supportive things
     # far more often than not, so give me 256-colors
