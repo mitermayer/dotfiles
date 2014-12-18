@@ -35,6 +35,9 @@ let g:ctrlp_cmd = 'CtrlP'
 
 let g:ycm_path_to_python_interpreter = '/usr/bin/python'
 
+" Buffer bar
+let g:airline#extensions#tabline#enabled = 1
+
 if !has('gui_running')
   set t_Co=256
 endif
@@ -107,6 +110,10 @@ map <F9> :LocateFile  <CR>
 
 " => removed unused imports
 map <F10> :JavaImportOrganize  <CR>
+
+" navigate buffers
+nnoremap <C-h> :bprevious<CR>
+nnoremap <C-l> :bnext<CR>
 
 """"""""""""""""""""""""""""""""""""
 " => General settings
