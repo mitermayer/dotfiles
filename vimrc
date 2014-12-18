@@ -12,11 +12,12 @@ function! JavascriptTags(...)
   :!find . -name "*.js" -not -path "./node_modules/*" -exec jsctags {} -f \; | sed '/^$/d' | sort > tags
 endfunction
 
-set encoding=utf-8
-scriptencoding utf-8
-
 syntax on
 set foldmethod=syntax
+
+if !has('gui_running')
+  set t_Co=256
+endif
 
 " Leader key Mapping
 let mapleader = ","
@@ -38,15 +39,11 @@ let g:ycm_path_to_python_interpreter = '/usr/bin/python'
 " Buffer bar
 let g:airline#extensions#tabline#enabled = 1
 
-if !has('gui_running')
-  set t_Co=256
-endif
-
 " Ensures that colorscheme is the same on terminal and X servers
 colorscheme desert
 
-" always have the status bar visible
-set laststatus=2
+" ignore matches on those folders
+let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist|target|bin)|(\.(swp|ico|git|svn))$'
 
 """"""""""""""""""""""""""""""""""""
 " => Bundles
@@ -87,37 +84,14 @@ call vundle#end()
 filetype plugin indent on " required for vundle
 
 """"""""""""""""""""""""""""""""""""
-" => Keys shortcuts mapping
-""""""""""""""""""""""""""""""""""""
-
-" => Press from insert mode to exit
-imap jk <Esc>
-
-" => Toggle tags
-map <F2> :TagbarToggle<CR>
-
-" => Toggle file tree
-map <F3> :NERDTreeToggle <CR>
-
-" => Toggle buffers
-map <F4> :BuffersToggle <CR>
-
-" => Allow to paste without auto indent
-se pastetoggle=<F5>
-
-" => locate file
-map <F9> :LocateFile  <CR>
-
-" => removed unused imports
-map <F10> :JavaImportOrganize  <CR>
-
-" navigate buffers
-nnoremap <C-h> :bprevious<CR>
-nnoremap <C-l> :bnext<CR>
-
-""""""""""""""""""""""""""""""""""""
 " => General settings
 """"""""""""""""""""""""""""""""""""
+
+" always have the status bar visible
+set laststatus=2
+
+set encoding=utf-8
+scriptencoding utf-8
 
 set autoread
 set backspace=indent,eol,start
@@ -166,6 +140,36 @@ set noswapfile
 set nowb
 set ruler
 set showmatch
+
+""""""""""""""""""""""""""""""""""""
+" => Keys shortcuts mapping
+""""""""""""""""""""""""""""""""""""
+
+" => Press from insert mode to exit
+imap jk <Esc>
+
+" => Toggle tags
+map <F2> :TagbarToggle<CR>
+
+" => Toggle file tree
+map <F3> :NERDTreeToggle <CR>
+
+" => Toggle buffers
+map <F4> :BuffersToggle <CR>
+
+" => Allow to paste without auto indent
+se pastetoggle=<F5>
+
+" => locate file
+map <F9> :LocateFile  <CR>
+
+" => removed unused imports
+map <F10> :JavaImportOrganize  <CR>
+
+" navigate buffers
+nnoremap <C-h> :bprevious<CR>
+nnoremap <C-l> :bnext<CR>
+
 
 """"""""""""""""""""""""""""""""""""
 " => Filetype specifics
