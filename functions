@@ -13,6 +13,11 @@ function aviso()
     echo "${txtbld}${txtred}$1${txtrst}"
 }
 
+function workOnTTY()
+{
+    exec fbterm -- bash -c 'TERM=fbterm screen'
+}
+
 function pergunta()
 {
     echo "${txtbld}${txtylw}$1${txtrst}"
@@ -43,52 +48,52 @@ function cores()
 }
 
 # change permissions recurssively
-function permitir() 
+function permitir()
 {
     aviso "Changing permissions.."
     if [ $1 ]; then
-        sudo chmod -R 775 $1 
+        sudo chmod -R 775 $1
     else
-        sudo chmod -R 775 . 
+        sudo chmod -R 775 .
     fi
     sucesso "Done!"
 }
 
-function br() 
+function br()
 {
     echo "${txtred} Opening bashrc.. ${txtrst}"
     sudo vim ~/.bashrc
 }
 
 # source this file
-function sr() 
+function sr()
 {
     echo "${txtred} Reading bashrc.. ${txtrst}"
     source ~/.bashrc
 }
 
 # search and rename files, ignore svn
-function renomear() 
+function renomear()
 {
     aviso "Searching all folders for for word: ${txtwht}'$1'${txtred} and renaming to ${txtwht}'$2'${txtred}"
     # first rename folders
     find . -depth -path '*/.svn' -prune -o -type d -execdir rename "s/$1/$2/g" {} \;
-    # rename files  
+    # rename files
     find . -depth -path '*/.svn' -prune -o -type f -exec rename "s/$1/$2/g" {} \;
     sucesso "Done!"
 }
 
 # search and replace files, ignore svn
-function mudar() 
-{ 
+function mudar()
+{
     aviso "Searching all files and replacing all instances of word: ${txtwht}'$1'${txtred} to ${txtwht}'$2'${txtred}"
-    find . -depth -path '*/.svn' -prune -o -type f -exec sed -i "s/$1/$2/g" {} + 
+    find . -depth -path '*/.svn' -prune -o -type f -exec sed -i "s/$1/$2/g" {} +
     sucesso "Done!"
 }
 
 function refatora()
 {
-    informacao "You are about to rename Directories, Files recurrsivelly for the any instance of word $1 to $2" 
+    informacao "You are about to rename Directories, Files recurrsivelly for the any instance of word $1 to $2"
     pergunta "Are you sure about that ?"
     read a
     if [[ $a == "Y" || $a == "y" || $a == "yes" || $a == "Yes" ]]; then
@@ -101,7 +106,7 @@ function refatora()
 }
 
 # find files and print output
-function achar() 
+function achar()
 {
     aviso "Searching for ${txtwht}'$1'${txtred}"
     find . -depth -path '*/.svn' -prune -o -type f -exec grep "$1" {} \; -print
@@ -109,14 +114,14 @@ function achar()
 }
 
 # list files or grep and highlight match
-function l() 
+function l()
 {
     if [ $1 ]; then
         ls -laGph | grep "$1"
     else
         ls -laGph
     fi
-}   
+}
 
 function svnRemover()
 {
@@ -132,7 +137,7 @@ function gitRemover()
     sucesso "Done!"
 }
 
-function svnIgnorar() 
+function svnIgnorar()
 {
     aviso "Adding to svn ignore list file ${txtwht} $1 ${txtred} ..."
     svn propset svn:ignore $1 .
@@ -142,7 +147,7 @@ function svnIgnorar()
     sucesso "Done!"
 }
 
-function svnFora() 
+function svnFora()
 {
     aviso "The following files are currently ${txtwht} NOT IN svn ${txtred}:"
     svn st | grep ^\? | awk '{print $2}'
