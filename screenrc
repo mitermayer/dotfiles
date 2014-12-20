@@ -1,3 +1,4 @@
 attrcolor b ".I"
-termcapinfo xterm 'Co@256:AB=\E[48;5;%dm:AF=\E38;5%dm'
 defbce "on"
+termcapinfo xterm 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
+term screen-256color
