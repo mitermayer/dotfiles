@@ -50,3 +50,5 @@ fi
 
 source ~/.aliases
 source ~/.functions
+
+cat ~/.banner_art

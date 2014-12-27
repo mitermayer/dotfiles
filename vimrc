@@ -167,8 +167,8 @@ map <F9> :LocateFile  <CR>
 map <F10> :JavaImportOrganize  <CR>
 
 " navigate buffers
-nnoremap <C-h> :bprevious<CR>
-nnoremap <C-l> :bnext<CR>
+nnoremap <C-k> :bprevious<CR>
+nnoremap <C-j> :bnext<CR>
 
 
 """"""""""""""""""""""""""""""""""""
