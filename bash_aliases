@@ -51,4 +51,4 @@ fi
 source ~/.aliases
 source ~/.functions
 
-cat ~/.banner_art
+verse | cowsay -n -f ~/.banner_art

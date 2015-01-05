@@ -37,7 +37,7 @@ for file in $files; do
 done
 
 # Installing dependencies
-sudo apt-get update && sudo apt-get install vim-nox clang-3.5 python-dev libboost-dev python-py++ -y
+sudo apt-get update && sudo apt-get install vim-nox clang-3.5 python-dev libboost-dev python-py++ verse cowsay -y
 
 # installing vundle
 echo "Installing vundle"
