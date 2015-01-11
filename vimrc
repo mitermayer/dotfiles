@@ -29,6 +29,7 @@ let g:LargeFile=10
 " Required for eclim compatibility
 let g:EclimMakeLCD = 1
 let g:EclimShowCurrentError = 1
+let g:EclimCompletionMethod = 'omnifunc'
 
 " Used for ctrp
 let g:ctrlp_map = '<c-p>'
@@ -55,11 +56,21 @@ filetype off " required for vundle
 set rtp+=~/.vim/bundle/vundle/
 call vundle#begin()
 
+Bundle "LargeFile"
+Bundle "MarcWeber/vim-addon-mw-utils"
+Bundle "Valloric/YouCompleteMe"
+Bundle "bling/vim-airline"
+Bundle "briancollins/vim-jst"
 Bundle "cakebaker/scss-syntax.vim"
+Bundle "duganchen/vim-soy"
+Bundle "einars/js-beautify"
 Bundle "garbas/vim-snipmate"
 Bundle "gmarik/vundle"
+Bundle "heavenshell/vim-jsdoc"
+Bundle "kien/ctrlp.vim"
 Bundle "majutsushi/tagbar"
-Bundle "MarcWeber/vim-addon-mw-utils"
+Bundle "maksimr/vim-jsbeautify"
+Bundle "marijnh/tern_for_vim"
 Bundle "mattn/emmet-vim"
 Bundle "pangloss/vim-javascript"
 Bundle "scrooloose/nerdcommenter"
@@ -69,16 +80,6 @@ Bundle "tomtom/tlib_vim"
 Bundle "tpope/vim-fugitive"
 Bundle "tpope/vim-surround"
 Bundle "vim-scripts/JSON.vim"
-Bundle "einars/js-beautify"
-Bundle "maksimr/vim-jsbeautify"
-Bundle "duganchen/vim-soy"
-Bundle "LargeFile"
-Bundle "heavenshell/vim-jsdoc"
-Bundle "briancollins/vim-jst"
-Bundle "kien/ctrlp.vim"
-Bundle "marijnh/tern_for_vim"
-Bundle "Valloric/YouCompleteMe"
-Bundle "bling/vim-airline"
 
 call vundle#end()
 filetype plugin indent on " required for vundle
