@@ -278,6 +278,6 @@ autocmd FileType java map <silent> <F8>
 
 
 command UpdateTags call UpdateTags()
-autocmd BufWritePost *.js call UpdateTags()
+autocmd BufWritePost *.js,*.java call UpdateTags()
 
 """"""""""""""""""""""""""""""""""""
