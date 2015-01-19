@@ -14,7 +14,7 @@ while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symli
 done
 DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 olddir=~/dotfiles_old             # old dotfiles backup directory
-files="vimrc bash_aliases aliases functions screenrc banner_art i3status.conf"    # list of files/folders to symlink in homedir
+files="vimrc bash_aliases aliases functions screenrc banner_art i3status.conf ctags"    # list of files/folders to symlink in homedir
 
 ##########
 
@@ -37,7 +37,7 @@ for file in $files; do
 done
 
 # Installing dependencies
-sudo apt-get update && sudo apt-get install vim-nox clang-3.5 python-dev libboost-dev python-py++ verse cowsay -y
+sudo apt-get update && sudo apt-get install vim-nox clang-3.5 python-dev libboost-dev python-py++ verse cowsay uuid-runtime -y
 
 # installing vundle
 echo "Installing vundle"
@@ -49,9 +49,6 @@ vim +BundleInstall! +qall
 echo "Installing VIM plugging tern dependencies"
 cd .vim/bundle/tern_for_vim
 npm install
-
-echo "Installing jsctags"
-npm install -g git://github.com/ramitos/jsctags.git
 
 echo "Installing VIM plugging YCM dependencies"
 cd ~/.vim/bundle/YouCompleteMe
