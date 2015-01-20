@@ -1,0 +1,6 @@
+# increase heap size
+-Xmx1024m
+
+# increase perm gen size
+-XX:PermSize=512m
+-XX:MaxPermSize=1024m
