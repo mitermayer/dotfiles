@@ -3,7 +3,82 @@
 "
 " mitermayer.reis@gmail.com
 " ---------------------------------
-" Using vundle to manage bundles.
+" Using vundle to manage Plugins.
+""""""""""""""""""""""""""""""""""""
+" => Plugins
+""""""""""""""""""""""""""""""""""""
+
+set nocompatible " be IMproved, required for vundle
+filetype off " required for vundle
+
+set rtp+=~/.vim/bundle/vundle/
+call vundle#begin()
+
+Plugin 'LargeFile'
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'bling/vim-airline'
+Plugin 'briancollins/vim-jst'
+Plugin 'cakebaker/scss-syntax.vim'
+Plugin 'duganchen/vim-soy'
+Plugin 'einars/js-beautify'
+Plugin 'gmarik/vundle'
+Plugin 'heavenshell/vim-jsdoc'
+Plugin 'kien/ctrlp.vim'
+Plugin 'majutsushi/tagbar'
+Plugin 'maksimr/vim-jsbeautify'
+Plugin 'marijnh/tern_for_vim'
+Plugin 'mattn/emmet-vim'
+Plugin 'pangloss/vim-javascript'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/syntastic'
+Plugin 'tomtom/tlib_vim'
+Plugin 'tpope/vim-fugitive'
+Plugin 'vim-scripts/JSON.vim'
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+
+call vundle#end()
+filetype plugin indent on " required for vundle
+
+""""""""""""""""""""""""""""""""""""
+" => Plugin settings
+""""""""""""""""""""""""""""""""""""
+
+" Leader key Mapping
+let mapleader = ","
+let g:mapleader = ","
+
+" Large files are any file over 10 megabytes
+let g:LargeFile=10
+
+" Required for eclim compatibility
+let g:EclimMakeLCD = 1
+let g:EclimShowCurrentError = 1
+let g:EclimCompletionMethod = 'omnifunc'
+
+" Used for ctrp
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+
+let g:ycm_path_to_python_interpreter = '/usr/bin/python'
+
+" Buffer bar
+let g:airline#extensions#tabline#enabled = 1
+
+" ignore matches on those folders
+let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist|target|bin)|(\.(swp|ico|git|svn))$'
+
+" Triggers selected option from menu
+let g:UltiSnipsExpandTrigger="<CR>"
+
+" Navigation between variables from the snippet
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" New line bracers for java snippets
+let g:ultisnips_java_brace_style="nl"
 """""""""""""""""""""""""""""""""""""
 " => Bootstrap
 """"""""""""""""""""""""""""""""""""
@@ -64,78 +139,16 @@ endfunction
 syntax on
 set foldmethod=syntax
 
+" more colors for vim when in X server
 if !has('gui_running')
   set t_Co=256
 endif
 
-" Leader key Mapping
-let mapleader = ","
-let g:mapleader = ","
-
-" Large files are any file over 10 megabytes
-let g:LargeFile=10
-
-" Required for eclim compatibility
-let g:EclimMakeLCD = 1
-let g:EclimShowCurrentError = 1
-let g:EclimCompletionMethod = 'omnifunc'
-
-" Used for ctrp
-let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlP'
-
-let g:ycm_path_to_python_interpreter = '/usr/bin/python'
-
-" Buffer bar
-let g:airline#extensions#tabline#enabled = 1
-
-" Ensures that colorscheme is the same on terminal and X servers
-colorscheme desert
-
-" ignore matches on those folders
-let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist|target|bin)|(\.(swp|ico|git|svn))$'
-
-""""""""""""""""""""""""""""""""""""
-" => Bundles
-""""""""""""""""""""""""""""""""""""
-
-set nocompatible " be IMproved, required for vundle
-filetype off " required for vundle
-
-set rtp+=~/.vim/bundle/vundle/
-call vundle#begin()
-
-Bundle "LargeFile"
-Bundle "MarcWeber/vim-addon-mw-utils"
-Bundle "Valloric/YouCompleteMe"
-Bundle "bling/vim-airline"
-Bundle "briancollins/vim-jst"
-Bundle "cakebaker/scss-syntax.vim"
-Bundle "duganchen/vim-soy"
-Bundle "einars/js-beautify"
-Bundle "garbas/vim-snipmate"
-Bundle "gmarik/vundle"
-Bundle "heavenshell/vim-jsdoc"
-Bundle "kien/ctrlp.vim"
-Bundle "majutsushi/tagbar"
-Bundle "maksimr/vim-jsbeautify"
-Bundle "marijnh/tern_for_vim"
-Bundle "mattn/emmet-vim"
-Bundle "pangloss/vim-javascript"
-Bundle "scrooloose/nerdcommenter"
-Bundle "scrooloose/nerdtree"
-Bundle "scrooloose/syntastic"
-Bundle "tomtom/tlib_vim"
-Bundle "tpope/vim-fugitive"
-Bundle "tpope/vim-surround"
-Bundle "vim-scripts/JSON.vim"
-
-call vundle#end()
-filetype plugin indent on " required for vundle
-
 """"""""""""""""""""""""""""""""""""
 " => General settings
 """"""""""""""""""""""""""""""""""""
+" Ensures that colorscheme is the same on terminal and X servers
+colorscheme desert
 
 " always have the status bar visible
 set laststatus=2
@@ -275,7 +288,6 @@ autocmd FileType java map <silent> <F8>
     \ :!mvn dependency:unpack-dependencies -Dclassifier=sources -Dmdep.failOnMissingClassifierArtifact=false;
     \ mvn eclipse:eclipse;
     \ ctags -R --languages=java .; <CR>
-
 
 command UpdateTags call UpdateTags()
 autocmd BufWritePost *.js,*.java call UpdateTags()
