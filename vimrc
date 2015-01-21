@@ -70,15 +70,18 @@ let g:airline#extensions#tabline#enabled = 1
 " ignore matches on those folders
 let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist|target|bin)|(\.(swp|ico|git|svn))$'
 
+" we dont want the preview window to be open with the definition
+let g:ycm_autoclose_preview_window_after_completion = 1
+
 " Triggers selected option from menu
-let g:UltiSnipsExpandTrigger="<CR>"
+let g:UltiSnipsExpandTrigger = "<c-b>"
 
 " Navigation between variables from the snippet
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+let g:UltiSnipsJumpForwardTrigger = "<c-b>"
+let g:UltiSnipsJumpBackwardTrigger = "<c-z>"
 
 " New line bracers for java snippets
-let g:ultisnips_java_brace_style="nl"
+let g:ultisnips_java_brace_style = "nl"
 """""""""""""""""""""""""""""""""""""
 " => Bootstrap
 """"""""""""""""""""""""""""""""""""
