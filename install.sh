@@ -14,7 +14,7 @@ while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symli
 done
 DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 olddir=~/dotfiles_old             # old dotfiles backup directory
-files="vimrc bash_aliases aliases functions screenrc banner_art i3status.conf ctags eclimrc"    # list of files/folders to symlink in homedir
+files="vimrc bash_aliases aliases functions screenrc banner_art i3status.conf ctags eclimrc xinitrc"    # list of files/folders to symlink in homedir
 
 ##########
 
@@ -35,6 +35,17 @@ for file in $files; do
     echo "Creating symlink to $file in home directory."
     ln -s $DIR/$file ~/.$file
 done
+
+echo "Moving i3 config file to $olddir"
+
+# in case a i3 config folder doest not exist
+mkdir -p ~/.i3/
+
+mv ~/.i3/config ~/dotfiles_old/
+
+echo "Creating symlink to ~/.i3/config file in home directory."
+
+ln -s $DIR/i3config ~/.i3/config
 
 # Installing dependencies
 sudo apt-get update && sudo apt-get install vim-nox clang-3.5 python-dev libboost-dev python-py++ verse cowsay uuid-runtime -y
