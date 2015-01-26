@@ -72,6 +72,7 @@ let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist|target|bin)|(\.(swp
 
 " we dont want the preview window to be open with the definition
 let g:ycm_autoclose_preview_window_after_completion = 1
+let g:ycm_add_preview_to_completeopt = 1
 
 " Triggers selected option from menu
 let g:UltiSnipsExpandTrigger = "<c-b>"
@@ -82,6 +83,7 @@ let g:UltiSnipsJumpBackwardTrigger = "<c-z>"
 
 " New line bracers for java snippets
 let g:ultisnips_java_brace_style = "nl"
+
 """""""""""""""""""""""""""""""""""""
 " => Bootstrap
 """"""""""""""""""""""""""""""""""""
