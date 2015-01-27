@@ -48,7 +48,7 @@ echo "Creating symlink to ~/.i3/config file in home directory."
 ln -s $DIR/i3config ~/.i3/config
 
 # Installing dependencies
-sudo apt-get update && sudo apt-get install vim-nox clang-3.5 python-dev libboost-dev python-py++ verse cowsay uuid-runtime -y
+sudo apt-get update && sudo apt-get install vim-nox clang-3.5 python-dev libboost-dev python-py++ verse cowsay uuid-runtime i3 i3lock i3status pm-utils -y
 
 # installing vundle
 echo "Installing vundle"

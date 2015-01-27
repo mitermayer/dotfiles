@@ -152,8 +152,3 @@ function svnFora()
     aviso "The following files are currently ${txtwht} NOT IN svn ${txtred}:"
     svn st | grep ^\? | awk '{print $2}'
 }
-
-function lockMe()
-{
-    i3lock -c 000000
-}
