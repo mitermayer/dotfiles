@@ -152,6 +152,9 @@ bar {
         status_command i3status
 }
 
+# hide title bar
+for_window [class="^.*"] border pixel 1
+
 # Volume contols
 bindsym XF86AudioRaiseVolume exec amixer -q -c 0 set Speaker 2+ unmute
 bindsym XF86AudioLowerVolume exec amixer -q -c 0 set Speaker 2- unmute
