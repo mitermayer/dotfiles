@@ -48,6 +48,8 @@ fi
 # virtualenv settings
 #export WORKON_HOME=$HOME/.virtualenvs
 
+eval $(ssh-agent)
+
 source ~/.aliases
 source ~/.functions
 

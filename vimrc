@@ -33,10 +33,11 @@ Plugin 'pangloss/vim-javascript'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
+Plugin 'SirVer/ultisnips'
+Plugin 'rking/ag.vim'
 Plugin 'tomtom/tlib_vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'vim-scripts/JSON.vim'
-Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 
 call vundle#end()
@@ -224,6 +225,9 @@ map <F3> :NERDTreeToggle <CR>
 
 " => Toggle buffers
 map <F4> :BuffersToggle <CR>
+
+" => Search for all occurances of the word
+map <A-F7> :execute 'Ag '.expand('<cword>') <Bar> cw<CR>
 
 " => Allow to paste without auto indent
 se pastetoggle=<F5>
