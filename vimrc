@@ -68,6 +68,9 @@ let g:ycm_path_to_python_interpreter = '/usr/bin/python'
 " Buffer bar
 let g:airline#extensions#tabline#enabled = 1
 
+" Show just the filename
+let g:airline#extensions#tabline#fnamemod = ':t'
+
 " ignore matches on those folders
 let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist|target|bin)|(\.(swp|ico|git|svn))$'
 
@@ -84,6 +87,9 @@ let g:UltiSnipsJumpBackwardTrigger = "<c-z>"
 
 " New line bracers for java snippets
 let g:ultisnips_java_brace_style = "nl"
+
+" Sets working directory to the nearest source control files .git .hg .svn .bzr _darcs
+let g:ctrlp_working_path_mode = 'ra'
 
 """""""""""""""""""""""""""""""""""""
 " => Bootstrap
@@ -224,7 +230,7 @@ map <F2> :TagbarToggle<CR>
 map <F3> :NERDTreeToggle <CR>
 
 " => Toggle buffers
-map <F4> :BuffersToggle <CR>
+map <F4> :CtrlPBuffer<CR>
 
 " => Search for all occurances of the word
 map <A-F7> :execute 'Ag '.expand('<cword>') <Bar> cw<CR>
@@ -239,8 +245,8 @@ map <F9> :LocateFile  <CR>
 map <F10> :JavaImportOrganize  <CR>
 
 " navigate buffers
-nnoremap <C-k> :bprevious<CR>
-nnoremap <C-j> :bnext<CR>
+nnoremap <C-h> :bprevious<CR>
+nnoremap <C-l> :bnext<CR>
 
 
 """"""""""""""""""""""""""""""""""""
