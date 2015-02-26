@@ -186,6 +186,8 @@ set nobackup
 set noswapfile
 set nowb
 
+set hidden
+
 set tags=~/tags,./tags,tags;
 
 """"""""""""""""""""""""""""""""""""
@@ -247,6 +249,7 @@ map <F10> :JavaImportOrganize  <CR>
 " navigate buffers
 nnoremap <C-h> :bprevious<CR>
 nnoremap <C-l> :bnext<CR>
+nnoremap <C-d> :bd<CR>
 
 
 """"""""""""""""""""""""""""""""""""
