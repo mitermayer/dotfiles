@@ -54,3 +54,5 @@ source ~/.aliases
 source ~/.functions
 
 verse | cowsay -n -f ~/.banner_art
+
+set bell-style none
