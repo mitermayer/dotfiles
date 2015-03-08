@@ -1,4 +1,4 @@
-xterm*font: *-fixed-*-*-*-18-*
+xterm*font: *-fixed-*-*-*-36-*
 xterm*scrollBar: false
 xterm*rightScrollBar: false
 xterm*vt100*geometry: 80x50
