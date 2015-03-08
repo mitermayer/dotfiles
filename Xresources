@@ -1,7 +1,7 @@
 URxvt*background: #000000
 URxvt*foreground: #FFFFFF
-URxvt*font: xft:Monospace:pixelsize=16
-URxvt*boldFont: xft:Monospace:bold:pixelsize=16
+URxvt*font: xft:Monospace:pixelsize=24
+URxvt*boldFont: xft:Monospace:bold:pixelsize=24
 URxvt*saveLines: 12000
 URxvt*scrollBar: false
 URxvt*scrollstyle: rxvt
