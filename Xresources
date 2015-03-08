@@ -1,3 +1,4 @@
+! General settings
 URxvt*background: #000000
 URxvt*foreground: #FFFFFF
 URxvt*font: xft:Monospace:pixelsize=24
