@@ -1,0 +1,9 @@
+xterm*font: *-fixed-*-*-*-18-*
+xterm*scrollBar: false
+xterm*rightScrollBar: false
+xterm*vt100*geometry: 80x50
+xterm*saveLines: 2000
+xterm*foreground: rgb:ff/ff/ff
+xterm*background: rgb:00/00/00
+*customization: -color
+xterm*termName: xterm-256color
