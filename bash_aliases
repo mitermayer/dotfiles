@@ -54,3 +54,13 @@ source ~/.functions
 verse | cowsay -n -f ~/.banner_art
 
 set bell-style none
+
+# setup keychain for ssh key management
+KEYCHAIN_KEYS_FILE=~/.key_chain_key
+if [ -f $KEYCHAIN_KEYS_FILE ]; then
+    source $HOME/.keychain/$HOSTNAME-sh 2>/dev/null
+
+    while read line; do
+        keychain $line 2>/dev/null
+    done < $KEYCHAIN_KEYS_FILE
+fi
