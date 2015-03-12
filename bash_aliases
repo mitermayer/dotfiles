@@ -48,8 +48,11 @@ fi
 # virtualenv settings
 #export WORKON_HOME=$HOME/.virtualenvs
 
+source ~/.nvm/nvm.sh
 source ~/.aliases
 source ~/.functions
+
+nvm use stable 2>/dev/null
 
 verse | cowsay -n -f ~/.banner_art
 

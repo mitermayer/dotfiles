@@ -14,7 +14,7 @@ while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symli
 done
 DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 olddir=~/dotfiles_old             # old dotfiles backup directory
-files="vimrc bash_aliases aliases functions screenrc banner_art i3status.conf ctags eclimrc xinitrc Xresources inputrc"    # list of files/folders to symlink in homedir
+files="vimrc bash_aliases aliases functions screenrc banner_art i3status.conf ctags eclimrc xinitrc Xresources inputrc XresourcesHIDPI"    # list of files/folders to symlink in homedir
 
 ##########
 
@@ -59,7 +59,10 @@ vim +BundleInstall! +qall
 
 # installing node
 curl https://raw.githubusercontent.com/creationix/nvm/v0.23.3/install.sh | bash
-. ~/.nvm/nvm.sh
+source ~/.nvm/nvm.sh
+
+echo "Installing global node modules"
+npm install -g tern gulp grunt-cli karma phantomjs
 
 echo "Installing VIM plugging tern dependencies"
 cd ~/.vim/bundle/tern_for_vim
