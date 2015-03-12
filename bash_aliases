@@ -58,6 +58,8 @@ verse | cowsay -n -f ~/.banner_art
 
 set bell-style none
 
+xset b off
+
 # setup keychain for ssh key management
 KEYCHAIN_KEYS_FILE=~/.key_chain_key
 if [ -f $KEYCHAIN_KEYS_FILE ]; then

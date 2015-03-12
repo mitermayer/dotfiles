@@ -10,6 +10,7 @@ URxvt*perl-ext-common: default,matcher
 URxvt*urlLauncher: chrome
 URxvt*matcher.button: 1
 URxvt*colorUL: #86a2be
+URxvt*urgentOnBell:False
 
 ! black
 URxvt*color0  : #2E3436

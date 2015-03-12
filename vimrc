@@ -235,7 +235,7 @@ map <F3> :NERDTreeToggle <CR>
 map <F4> :CtrlPBuffer<CR>
 
 " => Search for all occurances of the word
-map <A-F7> :execute 'Ag '.expand('<cword>') <Bar> cw<CR>
+map <F7> :execute 'Ag '.expand('<cword>') <Bar> cw<CR>
 
 " => Allow to paste without auto indent
 se pastetoggle=<F5>
