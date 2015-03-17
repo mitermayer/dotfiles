@@ -52,7 +52,7 @@ source ~/.nvm/nvm.sh
 source ~/.aliases
 source ~/.functions
 
-nvm use stable 2>/dev/null
+nvm use stable &> /dev/null
 
 verse | cowsay -n -f ~/.banner_art
 
