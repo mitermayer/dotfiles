@@ -172,6 +172,7 @@ set autoread
 set backspace=indent,eol,start
 set history=1000
 set noerrorbells
+set visualbell
 set number
 set scrolloff=5
 
