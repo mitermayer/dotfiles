@@ -47,6 +47,12 @@ filetype plugin indent on " required for vundle
 " => Plugin settings
 """"""""""""""""""""""""""""""""""""
 
+" Disable default mapping to avoind CTRL+L to trigger doc when trying to navigate buffers
+let g:jsdoc_default_mapping = 0
+
+" Allow jsdoc prompts
+let g:jsdoc_allow_input_prompt = 1
+
 " Leader key Mapping
 let mapleader = ","
 let g:mapleader = ","
@@ -71,12 +77,15 @@ let g:airline#extensions#tabline#enabled = 1
 " Show just the filename
 let g:airline#extensions#tabline#fnamemod = ':t'
 
-" ignore matches on those folders
+" Ignore matches on those folders
 let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist|target|bin)|(\.(swp|ico|git|svn))$'
 
-" we dont want the preview window to be open with the definition
+" We dont want the preview window to be open with the definition
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_add_preview_to_completeopt = 1
+
+" Allow ymc to use tags
+let g:ycm_collect_identifiers_from_tags_files = 1
 
 " Triggers selected option from menu
 let g:UltiSnipsExpandTrigger = "<c-b>"
@@ -282,8 +291,8 @@ autocmd FileType html noremap <buffer> <c-f> :call HtmlBeautify()<cr>
 autocmd FileType css noremap <buffer> <c-f> :call CSSBeautify()<cr>
 
 " => Javascript
-map <c-f> :call JsBeautify()<cr>
-autocmd FileType javascript noremap <buffer>  <c-f> :call JsBeautify()<cr>
+autocmd FileType javascript noremap <buffer> <c-f> :call JsBeautify()<cr>
+autocmd FileType javascript noremap <silent> <buffer> <leader> <cr>:JsDoc<cr>
 
 " for css or scss
 

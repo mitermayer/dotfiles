@@ -62,7 +62,7 @@ curl https://raw.githubusercontent.com/creationix/nvm/v0.23.3/install.sh | bash
 source ~/.nvm/nvm.sh
 
 echo "Installing global node modules"
-npm install -g tern gulp grunt-cli karma phantomjs
+npm install -g tern gulp grunt-cli karma phantomjs jslint
 
 echo "Installing VIM plugging tern dependencies"
 cd ~/.vim/bundle/tern_for_vim
