@@ -166,3 +166,6 @@ bindsym XF86MonBrightnessUp exec xbacklight -steps 1 -time 0 -inc 5
 
 # lock computer
 bindsym Control+Mod1+l exec "sudo pm-suspend | i3lock -c 000000"
+
+# toggle mult monitor
+bindsym $mod +m exec "autoxrandr"
