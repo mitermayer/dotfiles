@@ -50,7 +50,7 @@ ln -s $DIR/i3config ~/.i3/config
 ln -s $DIR/autoxrandr ~/bin/autoxrandr
 
 # Installing dependencies
-sudo apt-get update && sudo apt-get install curl exuberant-ctags git cmake vim-nox clang-3.5 python-dev libboost-dev python-py++ verse cowsay uuid-runtime silversearcher-ag i3 i3lock i3status pm-utils keychain ssh -y
+sudo apt-get update && sudo apt-get install curl exuberant-ctags git cmake vim-nox clang-3.5 python-dev libboost-dev python-py++ verse cowsay uuid-runtime silversearcher-ag i3 i3lock i3status pm-utils keychain ssh mutt calcurse -y
 
 # installing vundle
 echo "Installing vundle"
