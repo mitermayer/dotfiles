@@ -29,7 +29,6 @@ Plugin 'majutsushi/tagbar'
 Plugin 'maksimr/vim-jsbeautify'
 Plugin 'marijnh/tern_for_vim'
 Plugin 'mattn/emmet-vim'
-Plugin 'pangloss/vim-javascript'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
@@ -39,6 +38,7 @@ Plugin 'tomtom/tlib_vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'vim-scripts/JSON.vim'
 Plugin 'honza/vim-snippets'
+Plugin 'digitaltoad/vim-jade'
 
 call vundle#end()
 filetype plugin indent on " required for vundle
@@ -284,8 +284,8 @@ au BufNewFile,BufRead *.soy set filetype=soy
 
 " => Html, Xml
 au BufNewFile,BufRead *.ejs set filetype=html
-autocmd FileType html,xhtml,xml setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
-autocmd FileType html noremap <buffer> <c-f> :call HtmlBeautify()<cr>
+autocmd FileType html,xhtml,xml,jade setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
+autocmd FileType html,jade noremap <buffer> <c-f> :call HtmlBeautify()<cr>
 
 " => css
 autocmd FileType css noremap <buffer> <c-f> :call CSSBeautify()<cr>
