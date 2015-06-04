@@ -284,8 +284,8 @@ au BufNewFile,BufRead *.soy set filetype=soy
 
 " => Html, Xml
 au BufNewFile,BufRead *.ejs set filetype=html
-autocmd FileType html,xhtml,xml,jade setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
-autocmd FileType html,jade noremap <buffer> <c-f> :call HtmlBeautify()<cr>
+autocmd FileType html,xhtml,xml,jade,jst setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
+autocmd FileType html,jade,jst noremap <buffer> <c-f> :call HtmlBeautify()<cr>
 
 " => css
 autocmd FileType css noremap <buffer> <c-f> :call CSSBeautify()<cr>
