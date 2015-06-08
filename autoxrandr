@@ -1,0 +1,32 @@
+#!/bin/bash
+LAPTOP_MONITOR=$( cat ~/.LAPTOP_MONITOR )
+EXTERNAL_MONITORS="xrandr --output $LAPTOP_MONITOR --auto --primary"
+LAST_ADDED_MONITOR=$LAPTOP_MONITOR
+
+# Add Xsettings
+[ -f ~/.Xresources ] && xrdb -merge ~/.Xresources
+
+# for HIDPI support
+if [ -f  ~/.DPI ]; then
+    # Allow DPI file settings for high resolution screens
+    EXTERNAL_MONITORS+=" --dpi $( cat ~/.DPI )"
+
+    # HiDPI seetings
+    [ -f ~/.XresourcesHIDPI ] && xrdb -merge ~/.XresourcesHIDPI
+fi
+
+for output in $(xrandr | grep '\Wconnected' | awk '{ print $1 }'); do
+    if [[ $output != $LAPTOP_MONITOR ]]; then
+       EXTERNAL_MONITORS+=" --output $output --auto --right-of $LAST_ADDED_MONITOR"
+       LAST_ADDED_MONITOR="$output"
+    fi
+done
+
+for output in $(xrandr | grep '\Wdisconnected' | awk '{ print $1 }'); do
+    if [[ $output != $LAPTOP_MONITOR ]]; then
+       EXTERNAL_MONITORS+=" --output $output --off"
+       LAST_ADDED_MONITOR="$output"
+    fi
+done
+
+$EXTERNAL_MONITORS

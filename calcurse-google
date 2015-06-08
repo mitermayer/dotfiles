@@ -1,0 +1,29 @@
+#!/bin/bash
+#
+#
+# Calcurse integration for google calendar gmail
+#
+# Assumes that $GOOGLE_CALENDAR_URL and $CALENDAR_FILE are set as environment variables
+
+
+function updateCal() {
+    # update every 10 min
+    sleep 600
+
+    # download calendar
+    wget $GOOGLE_CALENDAR_URL -O $CALENDAR_FILE > /dev/null 2>&1
+
+    # clear old calendar
+    rm ~/.calcurse/apts
+
+    # re-import calcurse
+    calcurse -i $CALENDAR_FILE > /dev/null 2>&1
+
+    # kill any previously running calcurse
+    kill $(cat ~/.calcurse/.calcurse.pid)
+}
+
+while true; do
+    updateCal &
+    calcurse
+done;
