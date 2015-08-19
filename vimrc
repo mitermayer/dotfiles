@@ -39,6 +39,7 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'vim-scripts/JSON.vim'
 Plugin 'honza/vim-snippets'
 Plugin 'digitaltoad/vim-jade'
+Plugin 'mxw/vim-jsx.git'
 
 call vundle#end()
 filetype plugin indent on " required for vundle
