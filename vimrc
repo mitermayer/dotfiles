@@ -101,6 +101,9 @@ let g:ultisnips_java_brace_style = "nl"
 " Sets working directory to the nearest source control files .git .hg .svn .bzr _darcs
 let g:ctrlp_working_path_mode = 'ra'
 
+" Set eslint as defaul syntax checker for javascript
+let g:syntastic_javascript_checkers = ['eslint']
+
 """""""""""""""""""""""""""""""""""""
 " => Bootstrap
 """"""""""""""""""""""""""""""""""""
@@ -159,7 +162,10 @@ function! UpdateTags()
 endfunction
 
 syntax on
-set foldmethod=syntax
+set foldmethod=indent
+set foldnestmax=10
+set nofoldenable
+set foldlevel=2
 
 " more colors for vim when in X server
 if !has('gui_running')
