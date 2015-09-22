@@ -16,30 +16,34 @@ call vundle#begin()
 
 Plugin 'LargeFile'
 Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'SirVer/ultisnips'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'bling/vim-airline'
 Plugin 'briancollins/vim-jst'
 Plugin 'cakebaker/scss-syntax.vim'
+Plugin 'digitaltoad/vim-jade'
 Plugin 'duganchen/vim-soy'
 Plugin 'einars/js-beautify'
 Plugin 'gmarik/vundle'
 Plugin 'heavenshell/vim-jsdoc'
+Plugin 'honza/vim-snippets'
 Plugin 'kien/ctrlp.vim'
 Plugin 'majutsushi/tagbar'
 Plugin 'maksimr/vim-jsbeautify'
 Plugin 'marijnh/tern_for_vim'
 Plugin 'mattn/emmet-vim'
+Plugin 'mxw/vim-jsx.git'
+Plugin 'rking/ag.vim'
+Plugin 'rosenfeld/conque-term'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
-Plugin 'SirVer/ultisnips'
-Plugin 'rking/ag.vim'
 Plugin 'tomtom/tlib_vim'
+Plugin 'tpope/vim-dispatch'
+Plugin 'tpope/vim-fireplace'
 Plugin 'tpope/vim-fugitive'
+Plugin 'jpalardy/vim-slime'
 Plugin 'vim-scripts/JSON.vim'
-Plugin 'honza/vim-snippets'
-Plugin 'digitaltoad/vim-jade'
-Plugin 'mxw/vim-jsx.git'
 
 call vundle#end()
 filetype plugin indent on " required for vundle
@@ -103,6 +107,9 @@ let g:ctrlp_working_path_mode = 'ra'
 
 " Set eslint as defaul syntax checker for javascript
 let g:syntastic_javascript_checkers = ['eslint']
+
+" This is the default value for slime, but better being explicit
+let g:slime_target = "screen"
 
 """""""""""""""""""""""""""""""""""""
 " => Bootstrap
