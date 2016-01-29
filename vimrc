@@ -136,9 +136,17 @@ function! PopulateTagsFile(f)
   let resp     = system('touch "' . filepath . '"')
   let lines    = system('wc -l "' . filepath . '"')
   let linescnt = substitute(lines, '\D', '', 'g')
+  let my_filetype = &ft
+
   if linescnt == 0
     let cwd  = getcwd()
-    let cmd  = 'ctags -Rf "'. filepath . '" "' . cwd . '"'
+
+    if my_filetype == "javascript"
+        let cmd  = 'echo "$(find . -type f -iregex .*\.js$ ! -name "*.min.js" ! -path "./node_modules/*" -exec jsctags {} -f \; | sed "/^$/d" | sort)" > tags &'
+    else
+        let cmd  = 'ctags -Rf "'. filepath . '" "' . cwd . '"'
+    endif
+
     let resp = system(cmd)
   endif
 endfunction
@@ -162,10 +170,18 @@ function! UpdateTags()
   let f           = expand("%:p")
   let cwd         = getcwd()
   let tagfilename = cwd . "/tags"
+  let my_filetype = &ft
+
   call InitTagsFileWithSymlink(tagfilename)
   call PopulateTagsFile(tagfilename)
   call DelTagOfFile(f)
-  let cmd  = 'ctags -a -f ' . tagfilename . ' "' . f . '"'
+
+  if my_filetype == "javascript"
+      let cmd  = 'cat '. f .' | jsctags --dir=' . cwd . ' --file=' . f . ' -f | sed "/^$/d" | sort  >> ' . tagfilename
+  else
+      let cmd  = 'ctags -a -f ' . tagfilename . ' "' . f . '"'
+  endif
+
   let resp = system(cmd)
 endfunction
 

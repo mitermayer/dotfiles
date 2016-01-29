@@ -66,6 +66,10 @@ source ~/.nvm/nvm.sh
 echo "Installing global node modules"
 npm install -g tern gulp grunt-cli karma phantomjs jslint
 
+echo "Installing jsctags from the private repo: https://github.com/ramitos/jsctags.git"
+npm install -g git+https://github.com/ramitos/jsctags.git
+
+
 echo "Installing VIM plugging tern dependencies"
 cd ~/.vim/bundle/tern_for_vim
 nvm install stable
