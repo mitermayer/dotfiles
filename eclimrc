@@ -2,5 +2,5 @@
 -Xmx1024m
 
 # increase perm gen size
--XX:PermSize=512m
--XX:MaxPermSize=1024m
+-XX:PermSize=2048m
+-XX:MaxPermSize=4096m
