@@ -50,7 +50,7 @@ ln -s $DIR/i3config ~/.i3/config
 ln -s $DIR/autoxrandr ~/bin/autoxrandr
 
 # Installing dependencies
-sudo apt-get update && sudo apt-get install curl exuberant-ctags git cmake vim-nox clang-3.5 python-dev libboost-dev python-py++ verse cowsay uuid-runtime silversearcher-ag i3 i3lock i3status pm-utils keychain ssh mutt calcurse -y
+sudo apt-get update && sudo apt-get install curl exuberant-ctags git cmake vim-nox clang-3.5 python-dev libboost-dev python-py++ verse cowsay uuid-runtime silversearcher-ag i3 i3lock i3status pm-utils keychain ssh mutt calcurse tidy -y
 
 # installing vundle
 echo "Installing vundle"
@@ -64,7 +64,7 @@ curl https://raw.githubusercontent.com/creationix/nvm/v0.23.3/install.sh | bash
 source ~/.nvm/nvm.sh
 
 echo "Installing global node modules"
-npm install -g tern gulp grunt-cli karma phantomjs jslint
+npm install -g tern gulp grunt-cli karma phantomjs eslint jscs js-beautify
 
 echo "Installing jsctags from the private repo: https://github.com/ramitos/jsctags.git"
 npm install -g git+https://github.com/ramitos/jsctags.git

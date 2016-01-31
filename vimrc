@@ -18,12 +18,12 @@ Plugin 'LargeFile'
 Plugin 'MarcWeber/vim-addon-mw-utils'
 Plugin 'SirVer/ultisnips'
 Plugin 'Valloric/YouCompleteMe'
-Plugin 'bling/vim-airline'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 Plugin 'briancollins/vim-jst'
 Plugin 'cakebaker/scss-syntax.vim'
 Plugin 'digitaltoad/vim-jade'
 Plugin 'duganchen/vim-soy'
-Plugin 'einars/js-beautify'
 Plugin 'gmarik/vundle'
 Plugin 'heavenshell/vim-jsdoc'
 Plugin 'honza/vim-snippets'
@@ -31,7 +31,7 @@ Plugin 'jpalardy/vim-slime'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'kien/ctrlp.vim'
 Plugin 'majutsushi/tagbar'
-Plugin 'maksimr/vim-jsbeautify'
+Plugin 'Chiel92/vim-autoformat'
 Plugin 'marijnh/tern_for_vim'
 Plugin 'mattn/emmet-vim'
 Plugin 'mxw/vim-jsx.git'
@@ -144,7 +144,7 @@ function! PopulateTagsFile(f)
     if my_filetype == "javascript"
         let cmd  = 'echo "$(find . -type f -iregex .*\.js$ ! -name "*.min.js" ! -path "./node_modules/*" -exec jsctags {} -f \; | sed "/^$/d" | sort)" > tags &'
     else
-        let cmd  = 'ctags -Rf "'. filepath . '" "' . cwd . '"'
+        let cmd  = 'ctags -Rf "'. filepath . '" "' . cwd . '" &'
     endif
 
     let resp = system(cmd)
@@ -229,7 +229,7 @@ set nowb
 
 set hidden
 
-set tags=~/tags,./tags,tags;
+set tags=~/tags,./tags,tags,js-tags,java-tags;
 
 """"""""""""""""""""""""""""""""""""
 " => Text, tab and indent related
@@ -292,6 +292,8 @@ nnoremap <C-h> :bprevious<CR>
 nnoremap <C-l> :bnext<CR>
 nnoremap <C-d> :bd<CR>
 
+" auto format
+noremap <C-f> :Autoformat<CR>
 
 """"""""""""""""""""""""""""""""""""
 " => Filetype specifics
@@ -316,16 +318,9 @@ au BufNewFile,BufRead *.soy set filetype=soy
 " => Html, Xml
 au BufNewFile,BufRead *.ejs set filetype=html
 autocmd FileType html,xhtml,xml,jade,jst setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
-autocmd FileType html,jade,jst noremap <buffer> <c-f> :call HtmlBeautify()<cr>
-
-" => css
-autocmd FileType css noremap <buffer> <c-f> :call CSSBeautify()<cr>
 
 " => Javascript
-autocmd FileType javascript noremap <buffer> <c-f> :call JsBeautify()<cr>
 autocmd FileType javascript noremap <silent> <buffer> <leader> <cr>:JsDoc<cr>
-
-" for css or scss
 
 " => Java auto complete with eclim
 autocmd FileType java compiler javac
