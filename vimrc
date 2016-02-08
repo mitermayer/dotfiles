@@ -343,7 +343,7 @@ autocmd FileType java map <silent> <F8>
     \ mvn eclipse:eclipse;
     \ ctags -R --languages=java .; <CR>
 
-command UpdateTags call UpdateTags()
-autocmd BufWritePost *.js,*.java call UpdateTags()
+"command UpdateTags call UpdateTags()
+"autocmd BufWritePost *.js,*.java call UpdateTags()
 
 """"""""""""""""""""""""""""""""""""
