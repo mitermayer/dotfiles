@@ -142,12 +142,16 @@ function! PopulateTagsFile(f)
     let cwd  = getcwd()
 
     if my_filetype == "javascript"
-        let cmd  = 'echo "$(find . -type f -iregex .*\.js$ ! -name "*.min.js" ! -path "./node_modules/*" -exec jsctags {} -f \; | sed "/^$/d" | sort)" > tags &'
+        let cmd = 'find . -type f -iregex .*\.js$ ! -name "*\.min\.js" ! -name "*test*\.js" ! -path "**/bower_components/*" ! -path "./node_modules/*" ! -path "**/target/*" -exec jsctags {} -f \; | sed "/^$/d" | sort > tags'
     else
-        let cmd  = 'ctags -Rf "'. filepath . '" "' . cwd . '" &'
+        let cmd  = 'ctags -Rf "'. filepath . '" "' . cwd . '"'
     endif
 
+    echo strftime("%c")
+    echo 'Generating c-tags file for the first time...'
     let resp = system(cmd)
+    echo 'Completed'
+    echo strftime("%c")
   endif
 endfunction
 
@@ -343,7 +347,7 @@ autocmd FileType java map <silent> <F8>
     \ mvn eclipse:eclipse;
     \ ctags -R --languages=java .; <CR>
 
-"command UpdateTags call UpdateTags()
-"autocmd BufWritePost *.js,*.java call UpdateTags()
+command UpdateTags call UpdateTags()
+autocmd BufWritePost *.js,*.java call UpdateTags()
 
 """"""""""""""""""""""""""""""""""""
