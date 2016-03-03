@@ -142,7 +142,7 @@ function! PopulateTagsFile(f)
     let cwd  = getcwd()
 
     if my_filetype == "javascript"
-        let cmd = 'find . -type f -iregex .*\.js$ ! -name "*\.min\.js" ! -name "*test*\.js" ! -path "**/bower_components/*" ! -path "./node_modules/*" ! -path "**/target/*" -exec jsctags {} -f \; | sed "/^$/d" | sort > tags'
+        let cmd = 'find . -name "*.js" -type f | grep -vE "test|node_modules/|bin/|bower_components|.min|target|public|third-party/|dist/" | xargs jsctags -f | sed "/^$/d" | sort > tags'
     else
         let cmd  = 'ctags -Rf "'. filepath . '" "' . cwd . '"'
     endif
@@ -185,7 +185,6 @@ function! UpdateTags()
   else
       let cmd  = 'ctags -a -f ' . tagfilename . ' "' . f . '"'
   endif
-
   let resp = system(cmd)
 endfunction
 
