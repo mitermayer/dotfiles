@@ -44,6 +44,7 @@ Plugin 'tomtom/tlib_vim'
 Plugin 'tpope/vim-dispatch'
 Plugin 'tpope/vim-fireplace'
 Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-surround'
 Plugin 'vim-scripts/JSON.vim'
 
 call vundle#end()
@@ -84,7 +85,7 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
 
 " Ignore matches on those folders
-let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist|target|bin)|(\.(swp|ico|git|svn))$'
+let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist|bin)|(\.(swp|ico|git|svn))$'
 
 " We dont want the preview window to be open with the definition
 let g:ycm_autoclose_preview_window_after_completion = 1
@@ -219,17 +220,6 @@ set visualbell
 set number
 set scrolloff=5
 
-set hlsearch
-set ignorecase
-set incsearch
-set mat=2
-set ruler
-set showmatch
-
-set nobackup
-set noswapfile
-set nowb
-
 set hidden
 
 set tags=~/tags,./tags,tags,js-tags,java-tags;
@@ -261,6 +251,9 @@ set noswapfile
 set nowb
 set ruler
 set showmatch
+
+highlight OverLength ctermbg=darkred ctermfg=white guibg=#592929
+match OverLength /\%81v.\+/
 
 """"""""""""""""""""""""""""""""""""
 " => Keys shortcuts mapping
