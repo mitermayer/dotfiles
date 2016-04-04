@@ -142,8 +142,13 @@ function! PopulateTagsFile(f)
   if linescnt == 0
     let cwd  = getcwd()
 
-    if my_filetype == "javascript"
-        let cmd = 'find . -name "*.js" -type f | grep -vE "test|node_modules/|bin/|bower_components|.min|target|public|third-party/|dist/" | xargs jsctags -f | sed "/^$/d" | sort > tags'
+
+    echo 'filetype is ' . my_filetype
+
+    if my_filetype == 'javascript'
+        let cmd = 'find . -name "*.js" -type f | grep -vE "test|node_modules/|bin/|bower_components|.min|target|public|third-party/|dist/" | xargs jsctags -f | sed "/^$/d" | sort > ' . filepath
+    elseif my_filetype == 'java'
+        let cmd  = 'ctags --languages=java -Rf "'. filepath . '" "' . cwd . '"'
     else
         let cmd  = 'ctags -Rf "'. filepath . '" "' . cwd . '"'
     endif
@@ -157,10 +162,10 @@ function! PopulateTagsFile(f)
 endfunction
 
 " Remove tags for saved file from tags file
-function! DelTagOfFile(file)
+function! DelTagOfFile(file, tagfile)
   let fullpath    = a:file
+  let tagfilename = a:tagfile
   let cwd         = getcwd()
-  let tagfilename = cwd . "/tags"
   let f           = substitute(fullpath, cwd . "/", "", "")
   let f           = escape(f, './')
   let cmd         = 'sed --follow-symlinks -i "/' . f . '/d" "' . tagfilename . '"'
@@ -174,12 +179,12 @@ endfunction
 function! UpdateTags()
   let f           = expand("%:p")
   let cwd         = getcwd()
-  let tagfilename = cwd . "/tags"
   let my_filetype = &ft
+  let tagfilename = cwd . "/" . my_filetype . "-tags"
 
   call InitTagsFileWithSymlink(tagfilename)
   call PopulateTagsFile(tagfilename)
-  call DelTagOfFile(f)
+  call DelTagOfFile(f, tagfilename)
 
   if my_filetype == "javascript"
       let cmd  = 'cat '. f .' | jsctags --dir=' . cwd . ' --file=' . f . ' -f | sed "/^$/d" | sort  >> ' . tagfilename
@@ -222,7 +227,7 @@ set scrolloff=5
 
 set hidden
 
-set tags=~/tags,./tags,tags,js-tags,java-tags;
+set tags=~/tags,./tags,tags;
 
 """"""""""""""""""""""""""""""""""""
 " => Text, tab and indent related
@@ -317,11 +322,13 @@ autocmd FileType html,xhtml,xml,jade,jst setlocal expandtab shiftwidth=2 tabstop
 
 " => Javascript
 autocmd FileType javascript noremap <silent> <buffer> <leader> <cr>:JsDoc<cr>
+autocmd FileType javascript set tags=~/.javascript-tags,./javascript-tags,javascript-tags;
 
 " => Java auto complete with eclim
 autocmd FileType java compiler javac
 autocmd FileType java set makeprg=mvn\ compile
 autocmd FileType java set errorformat=\[ERROR]\ %f:%l:\ %m,%-G%.%#
+autocmd FileType java set tags=~/.java-tags,./java-tags,java-tags;
 
 " Import the class under the cursor
 autocmd FileType java nnoremap <silent> <buffer> <leader>i :JavaImport<cr>
@@ -336,7 +343,6 @@ autocmd FileType java nnoremap <silent> <buffer> <cr> :JavaSearchContext<cr>
 autocmd FileType java map <silent> <F8>
     \ :ProjectLCD <CR>
     \ :!mvn dependency:unpack-dependencies -Dclassifier=sources -Dmdep.failOnMissingClassifierArtifact=false;
-    \ mvn eclipse:eclipse;
     \ ctags -R --languages=java .; <CR>
 
 command UpdateTags call UpdateTags()
