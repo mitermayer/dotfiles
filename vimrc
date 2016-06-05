@@ -14,24 +14,24 @@ filetype off " required for vundle
 set rtp+=~/.vim/bundle/vundle/
 call vundle#begin()
 
+Plugin 'Chiel92/vim-autoformat'
 Plugin 'LargeFile'
 Plugin 'MarcWeber/vim-addon-mw-utils'
 Plugin 'SirVer/ultisnips'
 Plugin 'Valloric/YouCompleteMe'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
 Plugin 'briancollins/vim-jst'
 Plugin 'cakebaker/scss-syntax.vim'
 Plugin 'digitaltoad/vim-jade'
 Plugin 'duganchen/vim-soy'
+Plugin 'editorconfig/editorconfig-vim'
 Plugin 'gmarik/vundle'
 Plugin 'heavenshell/vim-jsdoc'
 Plugin 'honza/vim-snippets'
 Plugin 'jpalardy/vim-slime'
+Plugin 'junegunn/vim-easy-align'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'kien/ctrlp.vim'
 Plugin 'majutsushi/tagbar'
-Plugin 'Chiel92/vim-autoformat'
 Plugin 'marijnh/tern_for_vim'
 Plugin 'mattn/emmet-vim'
 Plugin 'mxw/vim-jsx.git'
@@ -45,6 +45,8 @@ Plugin 'tpope/vim-dispatch'
 Plugin 'tpope/vim-fireplace'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 Plugin 'vim-scripts/JSON.vim'
 
 call vundle#end()
@@ -112,6 +114,9 @@ let g:syntastic_javascript_checkers = ['eslint']
 
 " This is the default value for slime, but better being explicit
 let g:slime_target = "screen"
+
+" To ensure that this plugin works well with Tim Pope's fugitive, use the following patterns array:
+let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
 
 """""""""""""""""""""""""""""""""""""
 " => Bootstrap

@@ -5,6 +5,8 @@ alias update='sudo apt-get update && sudo apt-get upgrade -y'
 alias svnreloc='svn switch --relocate'
 alias desligar='sudo shutdown -h now'
 alias reiniciar='sudo shutdown -r now'
+alias setclip='xclip -selection c'
+alias getclip='xclip -selection clipboard -o'
 
 #colors
 txtred=$(tput setaf 1) # Red
