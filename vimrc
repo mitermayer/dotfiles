@@ -122,6 +122,12 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
 " => Bootstrap
 """"""""""""""""""""""""""""""""""""
 
+" copy text to clipboard
+function ToClipboard() range
+  echo system('echo '.shellescape(join(getline(a:firstline, a:lastline), "\n")).'| xclip -selection c')
+endfunction
+com -range=% -nargs=0 ToClipboard :<line1>,<line2>call ToClipboard()
+
 " If tags file does not exist initializes it with symlink to tmp with UUID in
 " filename
 function! InitTagsFileWithSymlink(f)

@@ -9,15 +9,15 @@ alias setclip='xclip -selection c'
 alias getclip='xclip -selection clipboard -o'
 
 #colors
-txtred=$(tput setaf 1) # Red
-txtgrn=$(tput setaf 2) # Green
-txtylw=$(tput setaf 3) # Yellow
-txtblu=$(tput setaf 4) # Blue
-txtpur=$(tput setaf 5) # Purple
-txtcyn=$(tput setaf 6) # Cyan
-txtwht=$(tput setaf 7) # White
-txtrst=$(tput sgr0) # Text reset
+alias txtred=$(tput setaf 1) # Red
+alias txtgrn=$(tput setaf 2) # Green
+alias txtylw=$(tput setaf 3) # Yellow
+alias txtblu=$(tput setaf 4) # Blue
+alias txtpur=$(tput setaf 5) # Purple
+alias txtcyn=$(tput setaf 6) # Cyan
+alias txtwht=$(tput setaf 7) # White
+alias txtrst=$(tput sgr0) # Text reset
 
-txtund=$(tput sgr 0 1)          # Underline
-txtbld=$(tput bold)             # Bold
+alias txtund=$(tput sgr 0 1)          # Underline
+alias txtbld=$(tput bold)             # Bold
 
