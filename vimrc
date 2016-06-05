@@ -126,7 +126,13 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
 function ToClipboard() range
   echo system('echo '.shellescape(join(getline(a:firstline, a:lastline), "\n")).'| xclip -selection c')
 endfunction
-com -range=% -nargs=0 ToClipboard :<line1>,<line2>call ToClipboard()
+command -range=% -nargs=0 ToClipboard :<line1>,<line2>call ToClipboard()
+
+" insert text from clipboard
+function FromClipboard()
+  read !xclip -selection clipboard -o
+endfunction
+command FromClipboard call FromClipboard()
 
 " If tags file does not exist initializes it with symlink to tmp with UUID in
 " filename
