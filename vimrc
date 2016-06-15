@@ -124,7 +124,7 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
 
 " copy text to clipboard
 function ToClipboard() range
-  echo system('echo '.shellescape(join(getline(a:firstline, a:lastline), "\n")).'| xclip -selection c')
+  echo system('echo '.shellescape(join(getline(a:firstline, a:lastline), "\r")).'| xclip -selection c')
 endfunction
 command -range=% -nargs=0 ToClipboard :<line1>,<line2>call ToClipboard()
 
