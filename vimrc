@@ -14,9 +14,12 @@ filetype off " required for vundle
 set rtp+=~/.vim/bundle/vundle/
 call vundle#begin()
 
+Plugin 'moll/vim-node'
 Plugin 'Chiel92/vim-autoformat'
 Plugin 'LargeFile'
 Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'Quramy/tsuquyomi'
+Plugin 'Shougo/vimproc.vim', {'do' : 'make'}
 Plugin 'SirVer/ultisnips'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'briancollins/vim-jst'
@@ -31,8 +34,9 @@ Plugin 'jpalardy/vim-slime'
 Plugin 'junegunn/vim-easy-align'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'kien/ctrlp.vim'
+Plugin 'leafgarland/typescript-vim'
 Plugin 'majutsushi/tagbar'
-Plugin 'marijnh/tern_for_vim'
+Plugin 'marijnh/tern_for_vim', {'do' : 'npm install'}
 Plugin 'mattn/emmet-vim'
 Plugin 'mxw/vim-jsx.git'
 Plugin 'rking/ag.vim'
@@ -117,6 +121,21 @@ let g:slime_target = "screen"
 
 " To ensure that this plugin works well with Tim Pope's fugitive, use the following patterns array:
 let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
+
+" Add support for typecript
+let g:tagbar_type_typescript = {
+  \ 'ctagstype': 'typescript',
+  \ 'kinds': [
+    \ 'c:classes',
+    \ 'n:modules',
+    \ 'f:functions',
+    \ 'v:variables',
+    \ 'v:varlambdas',
+    \ 'm:members',
+    \ 'i:interfaces',
+    \ 'e:enums',
+  \ ]
+  \ }
 
 """""""""""""""""""""""""""""""""""""
 " => Bootstrap
@@ -253,10 +272,10 @@ set tags=~/tags,./tags,tags;
 set ai "Auto indent
 set expandtab
 set lbr
-set shiftwidth=4
+set shiftwidth=2
 set si "Smart indet
 set smarttab
-set tabstop=4
+set tabstop=2
 set tw=500
 set wrap "Wrap lines
 
@@ -340,6 +359,8 @@ autocmd FileType html,xhtml,xml,jade,jst setlocal expandtab shiftwidth=2 tabstop
 " => Javascript
 autocmd FileType javascript noremap <silent> <buffer> <leader> <cr>:JsDoc<cr>
 autocmd FileType javascript set tags=~/.javascript-tags,./javascript-tags,javascript-tags;
+autocmd Filetype javascript set shiftwidth=2
+autocmd Filetype javascript set tabstop=2
 
 " => Java auto complete with eclim
 autocmd FileType java compiler javac
