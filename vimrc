@@ -216,7 +216,8 @@ function! UpdateTags()
   let f           = expand("%:p")
   let cwd         = getcwd()
   let my_filetype = &ft
-  let tagfilename = cwd . "/" . my_filetype . "-tags"
+  let tagfilename = cwd . "/tags"
+  " let tagfilename = cwd . "/" . my_filetype . "-tags"
 
   call InitTagsFileWithSymlink(tagfilename)
   call PopulateTagsFile(tagfilename)
@@ -358,7 +359,7 @@ autocmd FileType html,xhtml,xml,jade,jst setlocal expandtab shiftwidth=2 tabstop
 
 " => Javascript
 autocmd FileType javascript noremap <silent> <buffer> <leader> <cr>:JsDoc<cr>
-autocmd FileType javascript set tags=~/.javascript-tags,./javascript-tags,javascript-tags;
+" autocmd FileType javascript set tags=~/.javascript-tags,./javascript-tags,javascript-tags;
 autocmd Filetype javascript set shiftwidth=2
 autocmd Filetype javascript set tabstop=2
 
@@ -366,7 +367,7 @@ autocmd Filetype javascript set tabstop=2
 autocmd FileType java compiler javac
 autocmd FileType java set makeprg=mvn\ compile
 autocmd FileType java set errorformat=\[ERROR]\ %f:%l:\ %m,%-G%.%#
-autocmd FileType java set tags=~/.java-tags,./java-tags,java-tags;
+"autocmd FileType java set tags=~/.java-tags,./java-tags,java-tags;
 
 " Import the class under the cursor
 autocmd FileType java nnoremap <silent> <buffer> <leader>i :JavaImport<cr>
