@@ -124,18 +124,18 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
 
 " Add support for typecript
 let g:tagbar_type_typescript = {
-  \ 'ctagstype': 'typescript',
-  \ 'kinds': [
-    \ 'c:classes',
-    \ 'n:modules',
-    \ 'f:functions',
-    \ 'v:variables',
-    \ 'v:varlambdas',
-    \ 'm:members',
-    \ 'i:interfaces',
-    \ 'e:enums',
-  \ ]
-  \ }
+    \ 'ctagstype': 'typescript',
+    \ 'kinds': [
+        \ 'c:classes',
+        \ 'n:modules',
+        \ 'f:functions',
+        \ 'v:variables',
+        \ 'v:varlambdas',
+        \ 'm:members',
+        \ 'i:interfaces',
+        \ 'e:enums',
+    \ ]
+\ }
 
 """""""""""""""""""""""""""""""""""""
 " => Bootstrap
@@ -143,69 +143,57 @@ let g:tagbar_type_typescript = {
 
 " copy text to clipboard
 function ToClipboard() range
-  echo system('echo '.shellescape(join(getline(a:firstline, a:lastline), "\r")).'| xclip -selection c')
+    echo system('echo '.shellescape(join(getline(a:firstline, a:lastline), "\r")).'| xclip -selection c')
 endfunction
 command -range=% -nargs=0 ToClipboard :<line1>,<line2>call ToClipboard()
 
 " insert text from clipboard
 function FromClipboard()
-  read !xclip -selection clipboard -o
+    read !xclip -selection clipboard -o
 endfunction
 command FromClipboard call FromClipboard()
 
 " If tags file does not exist initializes it with symlink to tmp with UUID in
 " filename
 function! InitTagsFileWithSymlink(f)
-  let filepath = a:f
-  let issymlink = system("find '" . filepath . "' -type l | wc -l")
-  if issymlink == 0
-    let uuid = system('uuidgen')
-    let cmd  = 'ln -s "/tmp/ctags-for-vim-' . uuid . '" "' . filepath . '"'
-    let cmd  = substitute(cmd, '\n', '', 'g')
-    let resp = system(cmd)
-  endif
+    let filepath = a:f
+    let issymlink = system("find '" . filepath . "' -type l | wc -l")
+    if issymlink == 0
+        let uuid = system('uuidgen')
+        let cmd  = 'ln -s "/tmp/ctags-for-vim-' . uuid . '" "' . filepath . '"'
+        let cmd  = substitute(cmd, '\n', '', 'g')
+        let resp = system(cmd)
+    endif
 endfunction
 
 " Populates tags file if lines count is equal to 0
 " with `ctags -R .`
 function! PopulateTagsFile(f)
-  let filepath = a:f
-  let resp     = system('touch "' . filepath . '"')
-  let lines    = system('wc -l "' . filepath . '"')
-  let linescnt = substitute(lines, '\D', '', 'g')
-  let my_filetype = &ft
+    let filepath = a:f
+    let my_filetype = &ft
 
-  if linescnt == 0
-    let cwd  = getcwd()
-
-
-    echo 'filetype is ' . my_filetype
+    let cwd = getcwd()
 
     if my_filetype == 'javascript'
         let cmd = 'find . -name "*.js" -type f | grep -vE "test|node_modules/|bin/|bower_components|.min|target|public|third-party/|dist/" | xargs jsctags -f | sed "/^$/d" | sort > ' . filepath
     elseif my_filetype == 'java'
-        let cmd  = 'ctags --languages=java -Rf "'. filepath . '" "' . cwd . '"'
+        let cmd = 'ctags --languages=java -Rf "'. filepath . '" "' . cwd . '"'
     else
-        let cmd  = 'ctags -Rf "'. filepath . '" "' . cwd . '"'
+        let cmd = 'ctags -Rf "'. filepath . '" "' . cwd . '"'
     endif
 
-    echo strftime("%c")
-    echo 'Generating c-tags file for the first time...'
     let resp = system(cmd)
-    echo 'Completed'
-    echo strftime("%c")
-  endif
 endfunction
 
 " Remove tags for saved file from tags file
 function! DelTagOfFile(file, tagfile)
-  let fullpath    = a:file
-  let tagfilename = a:tagfile
-  let cwd         = getcwd()
-  let f           = substitute(fullpath, cwd . "/", "", "")
-  let f           = escape(f, './')
-  let cmd         = 'sed --follow-symlinks -i "/' . f . '/d" "' . tagfilename . '"'
-  let resp        = system(cmd)
+    let fullpath    = a:file
+    let tagfilename = a:tagfile
+    let cwd         = getcwd()
+    let f           = substitute(fullpath, cwd . "/", "", "")
+    let f           = escape(f, './')
+    let cmd         = 'sed --follow-symlinks -i "/' . f . '/d" "' . tagfilename . '"'
+    let resp        = system(cmd)
 endfunction
 
 " Init tags file
@@ -213,22 +201,29 @@ endfunction
 " Remove data related to saved file
 " Append it with data for saved file
 function! UpdateTags()
-  let f           = expand("%:p")
-  let cwd         = getcwd()
-  let my_filetype = &ft
-  let tagfilename = cwd . "/tags"
-  " let tagfilename = cwd . "/" . my_filetype . "-tags"
+    let f           = expand("%:p")
+    let cwd         = getcwd()
+    let my_filetype = &ft
+    let tagfilename = cwd . "/tags"
+    " let tagfilename = cwd . "/" . my_filetype . "-tags"
 
-  call InitTagsFileWithSymlink(tagfilename)
-  call PopulateTagsFile(tagfilename)
-  call DelTagOfFile(f, tagfilename)
+    if filereadable(tagfilename) == 0
+        call InitTagsFileWithSymlink(tagfilename)
+        echo strftime("%c")
+        echo 'Generating c-tags file for the first time...'
+        call PopulateTagsFile(tagfilename)
+        echo 'Completed'
+        echo strftime("%c")
+    else
+        call DelTagOfFile(f, tagfilename)
 
-  if my_filetype == "javascript"
-      let cmd  = 'cat '. f .' | jsctags --dir=' . cwd . ' --file=' . f . ' -f | sed "/^$/d" | sort  >> ' . tagfilename
-  else
-      let cmd  = 'ctags -a -f ' . tagfilename . ' "' . f . '"'
-  endif
-  let resp = system(cmd)
+        if my_filetype == "javascript"
+            let cmd = 'cat '. f .' | jsctags --dir=' . cwd . ' --file=' . f . ' -f | sed "/^$/d" | sort  >> ' . tagfilename
+        else
+            let cmd = 'ctags -a -f ' . tagfilename . ' "' . f . '"'
+        endif
+        let resp = system(cmd)
+    endif
 endfunction
 
 syntax on
@@ -239,7 +234,7 @@ set foldlevel=2
 
 " more colors for vim when in X server
 if !has('gui_running')
-  set t_Co=256
+    set t_Co=256
 endif
 
 """"""""""""""""""""""""""""""""""""
@@ -380,9 +375,9 @@ autocmd FileType java nnoremap <silent> <buffer> <cr> :JavaSearchContext<cr>
 
 " Download sources and create tags file
 autocmd FileType java map <silent> <F8>
-    \ :ProjectLCD <CR>
-    \ :!mvn dependency:unpack-dependencies -Dclassifier=sources -Dmdep.failOnMissingClassifierArtifact=false;
-    \ ctags -R --languages=java .; <CR>
+            \ :ProjectLCD <CR>
+            \ :!mvn dependency:unpack-dependencies -Dclassifier=sources -Dmdep.failOnMissingClassifierArtifact=false;
+            \ ctags -R --languages=java .; <CR>
 
 command UpdateTags call UpdateTags()
 autocmd BufWritePost *.js,*.java call UpdateTags()
