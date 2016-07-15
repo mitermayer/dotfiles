@@ -137,9 +137,26 @@ let g:tagbar_type_typescript = {
     \ ]
 \ }
 
+" typescript tsconfig compatibility check
+let g:syntastic_typescript_checks=['tsc', 'tslint']
+" typescript: find tsconfig.json
+function! FindTypescriptRoot()
+    return fnamemodify(findfile('tsconfig.json', './;'), ':h')
+endfunction
+let g:syntastic_typescript_tsc_args=['-p', FindTypescriptRoot()]
+let g:syntastic_typescript_tsc_fname = ''
+
 """""""""""""""""""""""""""""""""""""
 " => Bootstrap
-""""""""""""""""""""""""""""""""""""
+
+" Source vim sript range or file
+function! SourceRange() range
+  let tmpsofile = tempname()
+  call writefile(getline(a:firstline, a:lastline), l:tmpsofile)
+  execute "source " . l:tmpsofile
+  call delete(l:tmpsofile)
+endfunction
+command! -range Source <line1>,<line2>call SourceRange()
 
 " copy text to clipboard
 function ToClipboard() range
@@ -295,6 +312,9 @@ match OverLength /\%81v.\+/
 """"""""""""""""""""""""""""""""""""
 " => Keys shortcuts mapping
 """"""""""""""""""""""""""""""""""""
+
+" source current vim script file
+nmap <C-A> :w<CR>:so %<CR>
 
 " => Press from insert mode to exit
 imap jk <Esc>
