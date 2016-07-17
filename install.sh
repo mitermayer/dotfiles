@@ -5,7 +5,6 @@
 ############################
 
 ########## Variables
-
 SOURCE="${BASH_SOURCE[0]}"
 while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
   DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
@@ -50,11 +49,15 @@ ln -s $DIR/i3config ~/.i3/config
 ln -s $DIR/autoxrandr ~/bin/autoxrandr
 
 # Installing dependencies
-sudo apt-get update && sudo apt-get install curl exuberant-ctags git cmake vim-nox clang-3.5 python-dev libboost-dev python-py++ verse cowsay uuid-runtime silversearcher-ag i3 i3lock i3status pm-utils keychain ssh mutt calcurse tidy xclip -y
+sudo apt-get update && sudo apt-get install curl exuberant-ctags git cmake vim-nox clang-3.5 python-dev libboost-dev python-py++ verse cowsay uuid-runtime silversearcher-ag i3 i3lock i3status pm-utils keychain ssh mutt calcurse tidy xclip autotools -y
 
 # installing vundle
 echo "Installing vundle"
 git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/vundle
+
+echo "Installing universal ctags"
+mkdir -p ~/opt/
+(cd ~/opt && git clone git@github.com:universal-ctags/ctags.git && ./autogen.sh && ./configure && make && sudo make install)
 
 echo "Installing vim plugins and updating it"
 vim +BundleInstall! +qall

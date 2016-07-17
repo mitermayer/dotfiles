@@ -191,11 +191,7 @@ function! PopulateTagsFile(f)
 
     let cwd = getcwd()
 
-    if my_filetype == 'javascript'
-        let cmd = 'find . -name "*.js" -type f | grep -vE "test|node_modules/|bin/|bower_components|.min|target|public|third-party/|dist/" | xargs jsctags -f | sed "/^$/d" | sort > ' . filepath
-    else
-        let cmd = 'ctags --languages=' . &ft . ' -Rf "'. filepath . '" "' . cwd . '"'
-    endif
+    let cmd = 'ctags --languages=' . &ft . ' -Rf "'. filepath . '" "' . cwd . '"'
 
     let resp = system(cmd)
 endfunction
@@ -231,11 +227,7 @@ function! UpdateTags()
     else
         call DelTagOfFile(f, tagfilename)
 
-        if my_filetype == "javascript"
-            let cmd = 'cat '. f .' | jsctags --dir=' . cwd . ' --file=' . f . ' -f | sed "/^$/d" | sort  >> ' . tagfilename
-        else
-            let cmd = 'ctags -a -f ' . tagfilename . ' "' . f . '"'
-        endif
+        let cmd = 'ctags -a -f ' . tagfilename . ' "' . f . '"'
         let resp = system(cmd)
     endif
 endfunction
@@ -395,6 +387,6 @@ autocmd FileType java map <silent> <F8>
             \ ctags -R --languages=java .; <CR>
 
 command UpdateTags call UpdateTags()
-autocmd BufWritePost *.js,*.java call UpdateTags()
+autocmd BufWritePost *.* call UpdateTags()
 
 """"""""""""""""""""""""""""""""""""
