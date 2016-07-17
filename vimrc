@@ -193,10 +193,8 @@ function! PopulateTagsFile(f)
 
     if my_filetype == 'javascript'
         let cmd = 'find . -name "*.js" -type f | grep -vE "test|node_modules/|bin/|bower_components|.min|target|public|third-party/|dist/" | xargs jsctags -f | sed "/^$/d" | sort > ' . filepath
-    elseif my_filetype == 'java'
-        let cmd = 'ctags --languages=java -Rf "'. filepath . '" "' . cwd . '"'
     else
-        let cmd = 'ctags -Rf "'. filepath . '" "' . cwd . '"'
+        let cmd = 'ctags --languages=' . &ft . ' -Rf "'. filepath . '" "' . cwd . '"'
     endif
 
     let resp = system(cmd)
@@ -221,8 +219,7 @@ function! UpdateTags()
     let f           = expand("%:p")
     let cwd         = getcwd()
     let my_filetype = &ft
-    let tagfilename = cwd . "/tags"
-    " let tagfilename = cwd . "/" . my_filetype . "-tags"
+    let tagfilename = cwd . "/" . my_filetype . "-tags"
 
     if filereadable(tagfilename) == 0
         call InitTagsFileWithSymlink(tagfilename)
@@ -275,8 +272,6 @@ set number
 set scrolloff=5
 
 set hidden
-
-set tags=~/tags,./tags,tags;
 
 """"""""""""""""""""""""""""""""""""
 " => Text, tab and indent related
@@ -351,6 +346,8 @@ noremap <C-f> :Autoformat<CR>
 """"""""""""""""""""""""""""""""""""
 " => Filetype specifics
 """"""""""""""""""""""""""""""""""""
+" set the tag files to be used based on the language
+autocmd BufRead,BufNewFile * execute 'set tags=~/.' . &ft . '-tags,' . &ft . '-tags'
 
 " Removes whitespace when saving the file
 autocmd BufWritePre * :%s/\s\+$//e
@@ -374,7 +371,6 @@ autocmd FileType html,xhtml,xml,jade,jst setlocal expandtab shiftwidth=2 tabstop
 
 " => Javascript
 autocmd FileType javascript noremap <silent> <buffer> <leader> <cr>:JsDoc<cr>
-" autocmd FileType javascript set tags=~/.javascript-tags,./javascript-tags,javascript-tags;
 autocmd Filetype javascript set shiftwidth=2
 autocmd Filetype javascript set tabstop=2
 
@@ -382,7 +378,6 @@ autocmd Filetype javascript set tabstop=2
 autocmd FileType java compiler javac
 autocmd FileType java set makeprg=mvn\ compile
 autocmd FileType java set errorformat=\[ERROR]\ %f:%l:\ %m,%-G%.%#
-"autocmd FileType java set tags=~/.java-tags,./java-tags,java-tags;
 
 " Import the class under the cursor
 autocmd FileType java nnoremap <silent> <buffer> <leader>i :JavaImport<cr>
