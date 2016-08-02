@@ -156,8 +156,8 @@ bar {
 for_window [class="^.*"] border pixel 1
 
 # Volume contols
-bindsym XF86AudioRaiseVolume exec amixer -q -c 0 set Speaker 2+ unmute
-bindsym XF86AudioLowerVolume exec amixer -q -c 0 set Speaker 2- unmute
+bindsym XF86AudioRaiseVolume exec amixer -q -c 0 set Master 2+ unmute
+bindsym XF86AudioLowerVolume exec amixer -q -c 0 set Master 2- unmute
 bindsym XF86AudioMute exec amixer -q set Master toggle
 
 # brightness control
