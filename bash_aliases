@@ -64,6 +64,6 @@ if [ -f $KEYCHAIN_KEYS_FILE ]; then
     source $HOME/.keychain/$HOSTNAME-sh 2>/dev/null
 
     while read line; do
-        keychain $line 2>/dev/null
+        eval `keychain --eval --agents ssh $line 2>/dev/null`
     done < $KEYCHAIN_KEYS_FILE
 fi
