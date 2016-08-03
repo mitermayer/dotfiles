@@ -83,7 +83,7 @@ echo "Installing VIM plugging YCM dependencies"
 cd ~/.vim/bundle/YouCompleteMe
 
 echo "Compiling dependencies"
-./install.sh
+./install.py --all
 
 cd $DIR
 
