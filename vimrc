@@ -315,17 +315,14 @@ map <F3> :NERDTreeToggle <CR>
 " => Toggle buffers
 map <F4> :CtrlPBuffer<CR>
 
+" => Toggle buffers
+map <F6> :UpdateTags<CR>
+
 " => Search for all occurances of the word
 map <F7> :execute 'Ag '.expand('<cword>') <Bar> cw<CR>
 
 " => Allow to paste without auto indent
 se pastetoggle=<F5>
-
-" => locate file
-map <F9> :LocateFile  <CR>
-
-" => removed unused imports
-map <F10> :JavaImportOrganize  <CR>
 
 " navigate buffers
 nnoremap <C-h> :bprevious<CR>
@@ -387,6 +384,6 @@ autocmd FileType java map <silent> <F8>
             \ ctags -R --languages=java .; <CR>
 
 command UpdateTags call UpdateTags()
-autocmd BufWritePost *.* call UpdateTags()
+"autocmd BufWritePost *.* call UpdateTags()
 
 """"""""""""""""""""""""""""""""""""

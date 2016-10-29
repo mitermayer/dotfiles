@@ -49,7 +49,7 @@ ln -s $DIR/i3config ~/.i3/config
 ln -s $DIR/autoxrandr ~/bin/autoxrandr
 
 # Installing dependencies
-sudo apt-get update && sudo apt-get install Xorg consolekit vim curl exuberant-ctags git cmake vim-nox clang-3.5 python-dev libboost-dev python-py++ verse cowsay uuid-runtime silversearcher-ag i3 i3lock i3status pm-utils keychain ssh mutt calcurse tidy xclip autotools-dev -y
+# sudo apt-get update && sudo apt-get install Xorg consolekit vim curl exuberant-ctags git cmake vim-nox clang-3.5 python-dev libboost-dev python-py++ verse cowsay uuid-runtime silversearcher-ag i3 i3lock i3status pm-utils keychain ssh mutt calcurse tidy xclip autotools-dev -y
 
 # installing vundle
 echo "Installing vundle"
@@ -63,7 +63,7 @@ echo "Installing vim plugins and updating it"
 vim +BundleInstall! +qall
 
 # installing node
-curl https://raw.githubusercontent.com/creationix/nvm/v0.23.3/install.sh | bash
+curl https://raw.githubusercontent.com/creationix/nvm/v0.32.0/install.sh | bash
 source ~/.nvm/nvm.sh
 
 echo "Installing global node modules"
@@ -75,8 +75,8 @@ npm install -g git+https://github.com/ramitos/jsctags.git
 
 echo "Installing VIM plugging tern dependencies"
 cd ~/.vim/bundle/tern_for_vim
-nvm install stable
-nvm use stable
+nvm install node
+nvm use node
 npm install
 
 echo "Installing VIM plugging YCM dependencies"

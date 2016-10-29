@@ -9,15 +9,12 @@ HISTCONTROL=ignoredups:ignorespace
 shopt -s histappend
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=1000
-HISTFILESIZE=2000
+HISTSIZE=2000
+HISTFILESIZE=4000
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
-
-# make less more friendly for non-text input files, see lesspipe(1)
-[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 case "$TERM" in
 *-256color)
@@ -45,21 +42,10 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
-# virtualenv settings
-#export WORKON_HOME=$HOME/.virtualenvs
-
-source ~/.nvm/nvm.sh
-source ~/.aliases
-source ~/.functions
-
-nvm use node &> /dev/null
-
-verse | cowsay -n -f ~/.banner_art
-
 set bell-style none
-
 # setup keychain for ssh key management
-KEYCHAIN_KEYS_FILE=~/.key_chain_key
+
+KEYCHAIN_KEYS_FILE=$HOME/.key_chain_key
 if [ -f $KEYCHAIN_KEYS_FILE ]; then
     source $HOME/.keychain/$HOSTNAME-sh 2>/dev/null
 
@@ -67,3 +53,9 @@ if [ -f $KEYCHAIN_KEYS_FILE ]; then
         eval `keychain --eval --agents ssh $line 2>/dev/null`
     done < $KEYCHAIN_KEYS_FILE
 fi
+
+source $HOME/.aliases
+source $HOME/.functions
+
+# display some banner art
+cat $HOME/.banner_art

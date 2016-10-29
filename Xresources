@@ -7,10 +7,12 @@ URxvt*saveLines: 12000
 URxvt*scrollBar: false
 URxvt*scrollstyle: rxvt
 URxvt*perl-ext-common: default,matcher
-URxvt*urlLauncher: chrome
+URxvt*urlLauncher: firefox
 URxvt*matcher.button: 1
 URxvt*colorUL: #86a2be
 URxvt*urgentOnBell:False
+urxvt*internalBorder: 0
+urxvt*externalBorder: 0
 
 ! black
 URxvt*color0  : #2E3436
