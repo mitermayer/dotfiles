@@ -52,6 +52,7 @@ Plugin 'tpope/vim-surround'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'vim-scripts/JSON.vim'
+Plugin 'vitalk/vim-simple-todo'
 
 call vundle#end()
 filetype plugin indent on " required for vundle
