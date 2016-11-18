@@ -1,1 +1,10 @@
 set bell-style none
+
+# Remap ESC to use my double 'i' keypress to toggle insert or movement
+# mode.
+$if mode=vi
+    set keymap vi-command
+    "jk": vi-insertion-mode
+    set keymap vi-insert
+    "jk": vi-movement-mode
+$endif
