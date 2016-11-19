@@ -326,9 +326,9 @@ map <F7> :execute 'Ag '.expand('<cword>') <Bar> cw<CR>
 se pastetoggle=<F5>
 
 " navigate buffers
-nnoremap <C-h> :bprevious<CR>
-nnoremap <C-l> :bnext<CR>
-nnoremap <C-d> :bd<CR>
+nnoremap <C-j> :bprevious<CR>
+nnoremap <C-k> :bnext<CR>
+nnoremap <C-x> :bd<CR>
 
 " auto format
 noremap <C-f> :Autoformat<CR>

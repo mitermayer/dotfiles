@@ -54,8 +54,14 @@ if [ -f $KEYCHAIN_KEYS_FILE ]; then
     done < $KEYCHAIN_KEYS_FILE
 fi
 
+# vill shell
+set -o vi
+
 source $HOME/.aliases
 source $HOME/.functions
 
 # display some banner art
 cat $HOME/.banner_art
+
+# export custom bin
+export PATH=$PATH:$HOME/bin
