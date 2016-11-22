@@ -11,7 +11,7 @@ while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symli
 done
 DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 olddir=~/dotfiles_old             # old dotfiles backup directory
-files="vimrc bash_aliases aliases functions screenrc banner_art i3status.conf ctags eclimrc xinitrc Xresources inputrc XresourcesHIDPI gitignore"    # list of files/folders to symlink in homedir
+files="vimrc bash_aliases aliases functions screenrc banner_art i3status.conf tmux.conf ctags eclimrc xinitrc Xresources inputrc XresourcesHIDPI gitignore"    # list of files/folders to symlink in homedir
 
 ##########
 
