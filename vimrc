@@ -118,7 +118,7 @@ let g:ctrlp_working_path_mode = 'ra'
 let g:syntastic_javascript_checkers = ['eslint']
 
 " This is the default value for slime, but better being explicit
-let g:slime_target = "screen"
+let g:slime_target = "tmux"
 
 " To ensure that this plugin works well with Tim Pope's fugitive, use the following patterns array:
 let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
