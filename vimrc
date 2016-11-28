@@ -350,26 +350,6 @@ autocmd FileType javascript noremap <silent> <buffer> <leader> <cr>:JsDoc<cr>
 autocmd Filetype javascript set shiftwidth=2
 autocmd Filetype javascript set tabstop=2
 
-" => Java auto complete with eclim
-autocmd FileType java compiler javac
-autocmd FileType java set makeprg=mvn\ compile
-autocmd FileType java set errorformat=\[ERROR]\ %f:%l:\ %m,%-G%.%#
-
-" Import the class under the cursor
-autocmd FileType java nnoremap <silent> <buffer> <leader>i :JavaImport<cr>
-
-" Search for the javadocs of the element under the cursor
-autocmd FileType java nnoremap <silent> <buffer> <leader>d :JavaDocSearch -x declarations<cr>
-
-" Perform a context sensitive search of the element under the cursor
-autocmd FileType java nnoremap <silent> <buffer> <cr> :JavaSearchContext<cr>
-
-" Download sources and create tags file
-autocmd FileType java map <silent> <F8>
-            \ :ProjectLCD <CR>
-            \ :!mvn dependency:unpack-dependencies -Dclassifier=sources -Dmdep.failOnMissingClassifierArtifact=false;
-            \ ctags -R --languages=java .; <CR>
-
 command UpdateTags call UpdateTags()
 "autocmd BufWritePost *.* call UpdateTags()
 
