@@ -65,3 +65,6 @@ cat $HOME/.banner_art
 
 # export custom bin
 export PATH=$PATH:$HOME/bin
+
+# making sure the colors will work for some weird servers
+alias tmux="tmux -2"
