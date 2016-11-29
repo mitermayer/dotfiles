@@ -33,13 +33,11 @@ Plugin 'honza/vim-snippets'
 Plugin 'jpalardy/vim-slime'
 Plugin 'junegunn/vim-easy-align'
 Plugin 'kchmck/vim-coffee-script'
-Plugin 'kien/ctrlp.vim'
 Plugin 'leafgarland/typescript-vim'
 Plugin 'majutsushi/tagbar'
 Plugin 'marijnh/tern_for_vim', {'do' : 'npm install'}
 Plugin 'mattn/emmet-vim'
 Plugin 'mxw/vim-jsx.git'
-Plugin 'rking/ag.vim'
 Plugin 'rosenfeld/conque-term'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
@@ -53,6 +51,8 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'vim-scripts/JSON.vim'
 Plugin 'vitalk/vim-simple-todo'
+Plugin 'wincent/command-t'
+Plugin 'wincent/ferret'
 
 call vundle#end()
 filetype plugin indent on " required for vundle
@@ -74,15 +74,6 @@ let g:mapleader = ","
 " Large files are any file over 10 megabytes
 let g:LargeFile=10
 
-" Required for eclim compatibility
-let g:EclimMakeLCD = 1
-let g:EclimShowCurrentError = 1
-let g:EclimCompletionMethod = 'omnifunc'
-
-" Used for ctrp
-let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlP'
-
 let g:ycm_path_to_python_interpreter = '/usr/bin/python'
 
 " Buffer bar
@@ -90,9 +81,6 @@ let g:airline#extensions#tabline#enabled = 1
 
 " Show just the filename
 let g:airline#extensions#tabline#fnamemod = ':t'
-
-" Ignore matches on those folders
-let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist|bin)|(\.(swp|ico|git|svn))$'
 
 " We dont want the preview window to be open with the definition
 let g:ycm_autoclose_preview_window_after_completion = 1
@@ -111,14 +99,11 @@ let g:UltiSnipsJumpBackwardTrigger = "<c-z>"
 " New line bracers for java snippets
 let g:ultisnips_java_brace_style = "nl"
 
-" Sets working directory to the nearest source control files .git .hg .svn .bzr _darcs
-let g:ctrlp_working_path_mode = 'ra'
-
 " Set eslint as defaul syntax checker for javascript
 let g:syntastic_javascript_checkers = ['eslint']
 
 " This is the default value for slime, but better being explicit
-let g:slime_target = "screen"
+let g:slime_target = "tmux"
 
 " To ensure that this plugin works well with Tim Pope's fugitive, use the following patterns array:
 let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
@@ -314,20 +299,21 @@ map <F2> :TagbarToggle<CR>
 map <F3> :NERDTreeToggle <CR>
 
 " => Toggle buffers
-map <F4> :CtrlPBuffer<CR>
+map <F4> :CommandT<CR>
 
 " => Toggle buffers
 map <F6> :UpdateTags<CR>
 
 " => Search for all occurances of the word
-map <F7> :execute 'Ag '.expand('<cword>') <Bar> cw<CR>
+map <F7> :execute 'Ack '.expand('<cword>') <Bar> cw<CR>
 
 " => Allow to paste without auto indent
 se pastetoggle=<F5>
 
 " navigate buffers
-nnoremap <C-j> :bprevious<CR>
-nnoremap <C-k> :bnext<CR>
+nnoremap <C-p> :CommandT<CR>
+nnoremap <C-h> :bprevious<CR>
+nnoremap <C-l> :bnext<CR>
 nnoremap <C-x> :bd<CR>
 
 " auto format
@@ -363,26 +349,6 @@ autocmd FileType html,xhtml,xml,jade,jst setlocal expandtab shiftwidth=2 tabstop
 autocmd FileType javascript noremap <silent> <buffer> <leader> <cr>:JsDoc<cr>
 autocmd Filetype javascript set shiftwidth=2
 autocmd Filetype javascript set tabstop=2
-
-" => Java auto complete with eclim
-autocmd FileType java compiler javac
-autocmd FileType java set makeprg=mvn\ compile
-autocmd FileType java set errorformat=\[ERROR]\ %f:%l:\ %m,%-G%.%#
-
-" Import the class under the cursor
-autocmd FileType java nnoremap <silent> <buffer> <leader>i :JavaImport<cr>
-
-" Search for the javadocs of the element under the cursor
-autocmd FileType java nnoremap <silent> <buffer> <leader>d :JavaDocSearch -x declarations<cr>
-
-" Perform a context sensitive search of the element under the cursor
-autocmd FileType java nnoremap <silent> <buffer> <cr> :JavaSearchContext<cr>
-
-" Download sources and create tags file
-autocmd FileType java map <silent> <F8>
-            \ :ProjectLCD <CR>
-            \ :!mvn dependency:unpack-dependencies -Dclassifier=sources -Dmdep.failOnMissingClassifierArtifact=false;
-            \ ctags -R --languages=java .; <CR>
 
 command UpdateTags call UpdateTags()
 "autocmd BufWritePost *.* call UpdateTags()
