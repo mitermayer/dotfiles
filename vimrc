@@ -132,6 +132,9 @@ endfunction
 let g:syntastic_typescript_tsc_args=['-p', FindTypescriptRoot()]
 let g:syntastic_typescript_tsc_fname = ''
 
+" increase maximum amount of files
+let g:CommandTMaxFiles = 1500000
+
 """""""""""""""""""""""""""""""""""""
 " => Bootstrap
 
