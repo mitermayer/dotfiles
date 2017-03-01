@@ -68,13 +68,11 @@ let g:jsdoc_default_mapping = 0
 let g:jsdoc_allow_input_prompt = 1
 
 " Leader key Mapping
-let mapleader = ","
-let g:mapleader = ","
+let mapleader = " "
+let g:mapleader = " "
 
 " Large files are any file over 10 megabytes
 let g:LargeFile=10
-
-let g:ycm_path_to_python_interpreter = '/usr/bin/python'
 
 " Buffer bar
 let g:airline#extensions#tabline#enabled = 1
@@ -283,7 +281,7 @@ set ruler
 set showmatch
 
 highlight OverLength ctermbg=darkred ctermfg=white guibg=#592929
-match OverLength /\%81v.\+/
+match OverLength /\%121v.\+/
 
 """"""""""""""""""""""""""""""""""""
 " => Keys shortcuts mapping
