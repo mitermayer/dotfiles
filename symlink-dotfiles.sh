@@ -47,15 +47,15 @@ ln -s $DIR/i3config ~/.i3/config
 ln -s $DIR/autoxrandr ~/bin/autoxrandr
 
 # installing vundle
-echo "Installing vundle"
-git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/vundle
+echo "Installing vim-plug"
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 echo "Installing universal ctags"
 mkdir -p ~/opt/
 (cd ~/opt && git clone git@github.com:universal-ctags/ctags.git && ./autogen.sh && ./configure && make && sudo make install)
 
 echo "Installing vim plugins and updating it"
-vim +BundleInstall! +qall
+vim +PlugInstall +qall
 
 # installing node
 curl https://raw.githubusercontent.com/creationix/nvm/v0.32.0/install.sh | bash

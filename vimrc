@@ -3,76 +3,39 @@
 "
 " mitermayer.reis@gmail.com
 " ---------------------------------
-" Using vundle to manage Plugins.
+" Using Vim-plug to manage Plugins.
 """"""""""""""""""""""""""""""""""""
 " => Plugins
 """"""""""""""""""""""""""""""""""""
-
 set nocompatible " be IMproved, required for vundle
-filetype off " required for vundle
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#begin()
-
-Plugin 'moll/vim-node'
-Plugin 'Chiel92/vim-autoformat'
-Plugin 'LargeFile'
-Plugin 'MarcWeber/vim-addon-mw-utils'
-Plugin 'Quramy/tsuquyomi'
-Plugin 'Shougo/vimproc.vim', {'do' : 'make'}
-Plugin 'SirVer/ultisnips'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'briancollins/vim-jst'
-Plugin 'cakebaker/scss-syntax.vim'
-Plugin 'digitaltoad/vim-jade'
-Plugin 'duganchen/vim-soy'
-Plugin 'editorconfig/editorconfig-vim'
-Plugin 'gmarik/vundle'
-Plugin 'heavenshell/vim-jsdoc'
-Plugin 'honza/vim-snippets'
-Plugin 'jpalardy/vim-slime'
-Plugin 'junegunn/vim-easy-align'
-Plugin 'kchmck/vim-coffee-script'
-Plugin 'leafgarland/typescript-vim'
-Plugin 'majutsushi/tagbar'
-Plugin 'marijnh/tern_for_vim', {'do' : 'npm install'}
-Plugin 'mattn/emmet-vim'
-Plugin 'mxw/vim-jsx.git'
-Plugin 'rosenfeld/conque-term'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/syntastic'
-Plugin 'tomtom/tlib_vim'
-Plugin 'tpope/vim-dispatch'
-Plugin 'tpope/vim-fireplace'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-surround'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'vim-scripts/JSON.vim'
-Plugin 'vitalk/vim-simple-todo'
-Plugin 'wincent/command-t'
-Plugin 'wincent/ferret'
-
-call vundle#end()
-filetype plugin indent on " required for vundle
+call plug#begin('~/.vim/plugged')
+Plug 'SirVer/ultisnips'
+Plug 'Valloric/YouCompleteMe'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'jpalardy/vim-slime'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'majutsushi/tagbar'
+Plug 'mattn/emmet-vim'
+Plug 'rking/ag.vim'
+Plug 'sbdchd/neoformat'
+Plug 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/syntastic'
+Plug 'tpope/vim-dispatch'
+Plug 'tpope/vim-fireplace'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-surround'
+Plug 'vim-airline/vim-airline'
+call plug#end()
 
 """"""""""""""""""""""""""""""""""""
 " => Plugin settings
 """"""""""""""""""""""""""""""""""""
 
-" Disable default mapping to avoind CTRL+L to trigger doc when trying to navigate buffers
-let g:jsdoc_default_mapping = 0
-
-" Allow jsdoc prompts
-let g:jsdoc_allow_input_prompt = 1
-
 " Leader key Mapping
 let mapleader = " "
 let g:mapleader = " "
-
-" Large files are any file over 10 megabytes
-let g:LargeFile=10
 
 " Buffer bar
 let g:airline#extensions#tabline#enabled = 1
@@ -105,33 +68,6 @@ let g:slime_target = "tmux"
 
 " To ensure that this plugin works well with Tim Pope's fugitive, use the following patterns array:
 let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
-
-" Add support for typecript
-let g:tagbar_type_typescript = {
-    \ 'ctagstype': 'typescript',
-    \ 'kinds': [
-        \ 'c:classes',
-        \ 'n:modules',
-        \ 'f:functions',
-        \ 'v:variables',
-        \ 'v:varlambdas',
-        \ 'm:members',
-        \ 'i:interfaces',
-        \ 'e:enums',
-    \ ]
-\ }
-
-" typescript tsconfig compatibility check
-let g:syntastic_typescript_checks=['tsc', 'tslint']
-" typescript: find tsconfig.json
-function! FindTypescriptRoot()
-    return fnamemodify(findfile('tsconfig.json', './;'), ':h')
-endfunction
-let g:syntastic_typescript_tsc_args=['-p', FindTypescriptRoot()]
-let g:syntastic_typescript_tsc_fname = ''
-
-" increase maximum amount of files
-let g:CommandTMaxFiles = 1500000
 
 """""""""""""""""""""""""""""""""""""
 " => Bootstrap
@@ -280,6 +216,7 @@ set nowb
 set ruler
 set showmatch
 
+" max line length 120 chars
 highlight OverLength ctermbg=darkred ctermfg=white guibg=#592929
 match OverLength /\%121v.\+/
 
@@ -300,25 +237,26 @@ map <F2> :TagbarToggle<CR>
 map <F3> :NERDTreeToggle <CR>
 
 " => Toggle buffers
-map <F4> :CommandT<CR>
+map <F4> :CtrlPBuffer<CR>
 
 " => Toggle buffers
 map <F6> :UpdateTags<CR>
 
 " => Search for all occurances of the word
-map <F7> :execute 'Ack '.expand('<cword>') <Bar> cw<CR>
+map <F7> :execute 'Ag '.expand('<cword>') <Bar> cw<CR>
 
 " => Allow to paste without auto indent
 se pastetoggle=<F5>
 
+nnoremap <C-p> :CtrlP<CR>
+
 " navigate buffers
-nnoremap <C-p> :CommandT<CR>
 nnoremap <C-h> :bprevious<CR>
 nnoremap <C-l> :bnext<CR>
 nnoremap <C-x> :bd<CR>
 
 " auto format
-noremap <C-f> :Autoformat<CR>
+noremap <C-f> :Neoformat<CR>
 
 """"""""""""""""""""""""""""""""""""
 " => Filetype specifics
@@ -337,19 +275,11 @@ au FileType python inoremap <buffer> $r return
 au FileType python inoremap <buffer> $i import
 au FileType python inoremap <buffer> $p print
 
-" => Scss, Less, soy
-au BufRead,BufNewFile *.scss set filetype=scss
-au BufNewFile,BufRead *.less set filetype=scss
-au BufNewFile,BufRead *.soy set filetype=soy
-
 " => Html, Xml
-au BufNewFile,BufRead *.ejs set filetype=html
 autocmd FileType html,xhtml,xml,jade,jst setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
 
 " => Javascript
-autocmd FileType javascript noremap <silent> <buffer> <leader> <cr>:JsDoc<cr>
-autocmd Filetype javascript set shiftwidth=2
-autocmd Filetype javascript set tabstop=2
+autocmd Filetype javascript setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
 
 command UpdateTags call UpdateTags()
 "autocmd BufWritePost *.* call UpdateTags()
