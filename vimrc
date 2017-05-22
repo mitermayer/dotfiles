@@ -188,12 +188,12 @@ function! SourceRange() range
 endfunction
 
 " copy text to clipboard
-function ToClipboard() range
+function! ToClipboard() range
     echo system('echo '.shellescape(join(getline(a:firstline, a:lastline), "\r")).'| xclip -selection c')
 endfunction
 
 " insert text from clipboard
-function FromClipboard()
+function! FromClipboard()
     read !xclip -selection clipboard -o
 endfunction
 
@@ -264,7 +264,7 @@ endfunction
 """"""""""""""""""""""""""""""""""""
 
 command! -range Source <line1>,<line2>call SourceRange()
-command -range=% -nargs=0 ToClipboard :<line1>,<line2>call ToClipboard()
-command FromClipboard call FromClipboard()
-command UpdateTags call UpdateTags()
+command! -range=% -nargs=0 ToClipboard :<line1>,<line2>call ToClipboard()
+command! FromClipboard call FromClipboard()
+command! UpdateTags call UpdateTags()
 "autocmd BufWritePost *.* call UpdateTags()
