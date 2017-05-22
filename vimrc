@@ -11,8 +11,6 @@ set nocompatible " be IMproved, required for vundle
 
 call plug#begin('~/.vim/plugged')
 Plug 'SirVer/ultisnips'
-Plug 'Valloric/YouCompleteMe'
-Plug 'editorconfig/editorconfig-vim'
 Plug 'jpalardy/vim-slime'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'majutsushi/tagbar'
@@ -20,13 +18,15 @@ Plug 'mattn/emmet-vim'
 Plug 'rking/ag.vim'
 Plug 'sbdchd/neoformat'
 Plug 'scrooloose/nerdcommenter'
-Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'scrooloose/syntastic'
 Plug 'tpope/vim-dispatch'
-Plug 'tpope/vim-fireplace'
 Plug 'tpope/vim-fugitive'
+Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+Plug 'mxw/vim-jsx', { 'for': 'javascript' }
 Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
+Plug 'flowtype/vim-flow', { 'for': 'javascript' }
 call plug#end()
 
 """"""""""""""""""""""""""""""""""""
@@ -43,13 +43,6 @@ let g:airline#extensions#tabline#enabled = 1
 " Show just the filename
 let g:airline#extensions#tabline#fnamemod = ':t'
 
-" We dont want the preview window to be open with the definition
-let g:ycm_autoclose_preview_window_after_completion = 1
-let g:ycm_add_preview_to_completeopt = 1
-
-" Allow ymc to use tags
-let g:ycm_collect_identifiers_from_tags_files = 1
-
 " Triggers selected option from menu
 let g:UltiSnipsExpandTrigger = "<c-b>"
 
@@ -57,20 +50,134 @@ let g:UltiSnipsExpandTrigger = "<c-b>"
 let g:UltiSnipsJumpForwardTrigger = "<c-b>"
 let g:UltiSnipsJumpBackwardTrigger = "<c-z>"
 
-" New line bracers for java snippets
-let g:ultisnips_java_brace_style = "nl"
-
 " Set eslint as defaul syntax checker for javascript
 let g:syntastic_javascript_checkers = ['eslint']
 
 " This is the default value for slime, but better being explicit
 let g:slime_target = "tmux"
 
-" To ensure that this plugin works well with Tim Pope's fugitive, use the following patterns array:
-let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
+let g:flow#timeout = 15
+let g:flow#autoclose = 1
+let g:flow#enable = 0 
 
 """""""""""""""""""""""""""""""""""""
 " => Bootstrap
+
+syntax on
+set foldmethod=indent
+set foldnestmax=10
+set nofoldenable
+set foldlevel=2
+
+" more colors for vim when in X server
+if !has('gui_running')
+    set t_Co=256
+endif
+
+""""""""""""""""""""""""""""""""""""
+" => General settings
+""""""""""""""""""""""""""""""""""""
+
+" Ensures that colorscheme is the same on terminal and X servers
+colorscheme desert
+
+" always have the status bar visible
+set laststatus=2
+
+set encoding=utf-8
+scriptencoding utf-8
+
+set autoread
+set backspace=indent,eol,start
+set history=1000
+set noerrorbells
+set visualbell
+set number
+set scrolloff=5
+
+set hidden
+
+""""""""""""""""""""""""""""""""""""
+" => Text, tab and indent related
+""""""""""""""""""""""""""""""""""""
+
+set ai "Auto indent
+set expandtab
+set lbr
+set shiftwidth=2
+set si "Smart indet
+set smarttab
+set tabstop=2
+set softtabstop=2
+set tw=500
+set wrap "Wrap lines
+
+""""""""""""""""""""""""""""""""""""
+" => VIM user interface
+""""""""""""""""""""""""""""""""""""
+
+set hlsearch
+set ignorecase
+set incsearch
+set mat=2
+set nobackup
+set noswapfile
+set nowb
+set ruler
+set showmatch
+
+" max line length 120 chars
+highlight OverLength ctermbg=darkred ctermfg=white guibg=#592929
+match OverLength /\%121v.\+/
+
+""""""""""""""""""""""""""""""""""""
+" => Keys shortcuts mapping
+""""""""""""""""""""""""""""""""""""
+
+" source current vim script file
+nmap <C-A> :w<CR>:so %<CR>
+
+" => Press from insert mode to exit
+imap jk <Esc>
+
+" => Toggle tags
+map <F2> :TagbarToggle<CR>
+
+" => Toggle file tree
+map <F3> :NERDTreeToggle <CR>
+
+" => Toggle buffers
+map <F4> :CtrlPBuffer<CR>
+
+" => Toggle buffers
+map <F6> :UpdateTags<CR>
+
+" => Search for all occurances of the word
+map <F7> :execute 'Ag '.expand('<cword>') <Bar> cw<CR>
+
+" => Allow to paste without auto indent
+se pastetoggle=<F5>
+
+nnoremap <C-p> :CtrlP<CR>
+
+" navigate buffers
+nnoremap <C-h> :bprevious<CR>
+nnoremap <C-l> :bnext<CR>
+nnoremap <C-x> :bd<CR>
+
+" auto format
+noremap <C-f> :Neoformat<CR>
+
+""""""""""""""""""""""""""""""""""""
+" => Filetype specifics
+""""""""""""""""""""""""""""""""""""
+
+" set the tag files to be used based on the language
+autocmd BufRead,BufNewFile * execute 'set tags=~/.' . &ft . '-tags,' . &ft . '-tags'
+
+""""""""""""""""""""""""""""""""""""
+" => User defined functions
+""""""""""""""""""""""""""""""""""""
 
 " Source vim sript range or file
 function! SourceRange() range
@@ -79,19 +186,16 @@ function! SourceRange() range
   execute "source " . l:tmpsofile
   call delete(l:tmpsofile)
 endfunction
-command! -range Source <line1>,<line2>call SourceRange()
 
 " copy text to clipboard
 function ToClipboard() range
     echo system('echo '.shellescape(join(getline(a:firstline, a:lastline), "\r")).'| xclip -selection c')
 endfunction
-command -range=% -nargs=0 ToClipboard :<line1>,<line2>call ToClipboard()
 
 " insert text from clipboard
 function FromClipboard()
     read !xclip -selection clipboard -o
 endfunction
-command FromClipboard call FromClipboard()
 
 " If tags file does not exist initializes it with symlink to tmp with UUID in
 " filename
@@ -155,133 +259,12 @@ function! UpdateTags()
     endif
 endfunction
 
-syntax on
-set foldmethod=indent
-set foldnestmax=10
-set nofoldenable
-set foldlevel=2
-
-" more colors for vim when in X server
-if !has('gui_running')
-    set t_Co=256
-endif
-
 """"""""""""""""""""""""""""""""""""
-" => General settings
-""""""""""""""""""""""""""""""""""""
-" Ensures that colorscheme is the same on terminal and X servers
-colorscheme desert
-
-" always have the status bar visible
-set laststatus=2
-
-set encoding=utf-8
-scriptencoding utf-8
-
-set autoread
-set backspace=indent,eol,start
-set history=1000
-set noerrorbells
-set visualbell
-set number
-set scrolloff=5
-
-set hidden
-
-""""""""""""""""""""""""""""""""""""
-" => Text, tab and indent related
+" => User defined commands
 """"""""""""""""""""""""""""""""""""
 
-set ai "Auto indent
-set expandtab
-set lbr
-set shiftwidth=2
-set si "Smart indet
-set smarttab
-set tabstop=2
-set tw=500
-set wrap "Wrap lines
-
-""""""""""""""""""""""""""""""""""""
-" => VIM user interface
-""""""""""""""""""""""""""""""""""""
-
-set hlsearch
-set ignorecase
-set incsearch
-set mat=2
-set nobackup
-set noswapfile
-set nowb
-set ruler
-set showmatch
-
-" max line length 120 chars
-highlight OverLength ctermbg=darkred ctermfg=white guibg=#592929
-match OverLength /\%121v.\+/
-
-""""""""""""""""""""""""""""""""""""
-" => Keys shortcuts mapping
-""""""""""""""""""""""""""""""""""""
-
-" source current vim script file
-nmap <C-A> :w<CR>:so %<CR>
-
-" => Press from insert mode to exit
-imap jk <Esc>
-
-" => Toggle tags
-map <F2> :TagbarToggle<CR>
-
-" => Toggle file tree
-map <F3> :NERDTreeToggle <CR>
-
-" => Toggle buffers
-map <F4> :CtrlPBuffer<CR>
-
-" => Toggle buffers
-map <F6> :UpdateTags<CR>
-
-" => Search for all occurances of the word
-map <F7> :execute 'Ag '.expand('<cword>') <Bar> cw<CR>
-
-" => Allow to paste without auto indent
-se pastetoggle=<F5>
-
-nnoremap <C-p> :CtrlP<CR>
-
-" navigate buffers
-nnoremap <C-h> :bprevious<CR>
-nnoremap <C-l> :bnext<CR>
-nnoremap <C-x> :bd<CR>
-
-" auto format
-noremap <C-f> :Neoformat<CR>
-
-""""""""""""""""""""""""""""""""""""
-" => Filetype specifics
-""""""""""""""""""""""""""""""""""""
-" set the tag files to be used based on the language
-autocmd BufRead,BufNewFile * execute 'set tags=~/.' . &ft . '-tags,' . &ft . '-tags'
-
-" Removes whitespace when saving the file
-autocmd BufWritePre * :%s/\s\+$//e
-
-" => Python
-autocmd FileType python compiler pylint
-autocmd BufWritePre *.py normal m`:%s/\s\+$//e ``
-autocmd BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
-au FileType python inoremap <buffer> $r return
-au FileType python inoremap <buffer> $i import
-au FileType python inoremap <buffer> $p print
-
-" => Html, Xml
-autocmd FileType html,xhtml,xml,jade,jst setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
-
-" => Javascript
-autocmd Filetype javascript setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
-
+command! -range Source <line1>,<line2>call SourceRange()
+command -range=% -nargs=0 ToClipboard :<line1>,<line2>call ToClipboard()
+command FromClipboard call FromClipboard()
 command UpdateTags call UpdateTags()
 "autocmd BufWritePost *.* call UpdateTags()
-
-""""""""""""""""""""""""""""""""""""
