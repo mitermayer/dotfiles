@@ -27,6 +27,8 @@ Plug 'mxw/vim-jsx', { 'for': 'javascript' }
 Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
 Plug 'flowtype/vim-flow', { 'for': 'javascript' }
+Plug 'mitermayer/vim-prettier', { 'do': 'yarn install', 'for': 'javascript' } 
+
 call plug#end()
 
 """"""""""""""""""""""""""""""""""""
