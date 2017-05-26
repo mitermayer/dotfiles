@@ -10,7 +10,6 @@
 set nocompatible " be IMproved, required for vundle
 
 call plug#begin('~/.vim/plugged')
-Plug 'SirVer/ultisnips'
 Plug 'jpalardy/vim-slime'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'majutsushi/tagbar'
@@ -44,13 +43,6 @@ let g:airline#extensions#tabline#enabled = 1
 
 " Show just the filename
 let g:airline#extensions#tabline#fnamemod = ':t'
-
-" Triggers selected option from menu
-let g:UltiSnipsExpandTrigger = "<c-b>"
-
-" Navigation between variables from the snippet
-let g:UltiSnipsJumpForwardTrigger = "<c-b>"
-let g:UltiSnipsJumpBackwardTrigger = "<c-z>"
 
 " Set eslint as defaul syntax checker for javascript
 let g:syntastic_javascript_checkers = ['eslint']
