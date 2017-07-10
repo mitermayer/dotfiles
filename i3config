@@ -169,3 +169,6 @@ bindsym Control+Mod1+l exec "sudo pm-suspend | sudo i3lock -c 000000"
 
 # toggle mult monitor
 bindsym $mod +m exec "autoxrandr"
+
+# make all new windows fullscreen by default
+for_window [class=".*"] fullscreen enable
