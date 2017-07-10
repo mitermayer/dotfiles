@@ -28,7 +28,7 @@ floating_modifier $mod
 
 # start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
-bindsym $mod+t exec i3-sensible-terminal -e tmux new-session -A -s main
+bindsym $mod+Shift+Return exec i3-sensible-terminal -e tmux new-session -A -s main
 
 # kill focused window
 bindsym $mod+Shift+q kill
