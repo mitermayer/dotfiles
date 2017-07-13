@@ -47,7 +47,9 @@ let g:airline#extensions#tabline#fnamemod = ':t'
 let g:syntastic_javascript_checkers = ['eslint']
 
 " This is the default value for slime, but better being explicit
-let g:slime_target = "tmux"
+let g:slime_target = 'tmux'
+let g:slime_default_config = { 'socket_name': 'default',  'target_pane': ':.2' }
+
 
 let g:flow#timeout = 15
 let g:flow#autoclose = 1
