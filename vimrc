@@ -27,6 +27,7 @@ Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
 Plug 'flowtype/vim-flow', { 'for': 'javascript' }
 Plug 'mitermayer/vim-prettier', { 'do': 'yarn install', 'for': ['javascript', 'css', 'typescript', 'json','graphql'] } 
+Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
 
 call plug#end()
 """"""""""""""""""""""""""""""""""""
