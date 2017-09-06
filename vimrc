@@ -130,9 +130,6 @@ match OverLength /\%121v.\+/
 " => Keys shortcuts mapping
 """"""""""""""""""""""""""""""""""""
 
-" source current vim script file
-"nmap <C-A> :w<CR>:so %<CR>
-
 " => Press from insert mode to exit
 imap jk <Esc>
 
