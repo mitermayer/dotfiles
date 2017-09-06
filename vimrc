@@ -131,7 +131,7 @@ match OverLength /\%121v.\+/
 """"""""""""""""""""""""""""""""""""
 
 " source current vim script file
-nmap <C-A> :w<CR>:so %<CR>
+"nmap <C-A> :w<CR>:so %<CR>
 
 " => Press from insert mode to exit
 imap jk <Esc>
