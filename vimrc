@@ -51,7 +51,10 @@ let g:syntastic_javascript_checkers = ['eslint']
 let g:slime_target = 'tmux'
 let g:slime_default_config = { 'socket_name': 'default',  'target_pane': ':.2' }
 
+" Ctrl-p configuration
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn|target|build|buck-out)$'
 
+" vim-flow configuration
 let g:flow#timeout = 15
 let g:flow#autoclose = 1
 let g:flow#enable = 0 
@@ -261,3 +264,4 @@ command! -range=% -nargs=0 ToClipboard :<line1>,<line2>call ToClipboard()
 command! FromClipboard call FromClipboard()
 command! UpdateTags call UpdateTags()
 "autocmd BufWritePost *.* call UpdateTags()
+
