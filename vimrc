@@ -12,6 +12,7 @@ set nocompatible " be IMproved, required for vundle
 call plug#begin('~/.vim/plugged')
 Plug 'jpalardy/vim-slime'
 Plug 'ctrlpvim/ctrlp.vim'
+Plug 'FelikZ/ctrlp-py-matcher'
 Plug 'majutsushi/tagbar'
 Plug 'mattn/emmet-vim'
 Plug 'rking/ag.vim'
@@ -51,13 +52,60 @@ let g:syntastic_javascript_checkers = ['eslint']
 let g:slime_target = 'tmux'
 let g:slime_default_config = { 'socket_name': 'default',  'target_pane': ':.2' }
 
-" Ctrl-p configuration
-let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn|target|build|buck-out)$'
-
 " vim-flow configuration
 let g:flow#timeout = 15
 let g:flow#autoclose = 1
 let g:flow#enable = 0 
+
+" Ctrl-p configuration
+" https://github.com/junegunn/vim-plug/issues/380#issuecomment-172135013 
+if executable('ag')
+  let &grepprg = 'ag --nogroup --nocolor'
+  let s:ctrlp_fallback = 'ag %s
+      \ --nocolor --nogroup --depth 20 
+      \ --hidden --follow --smart-case
+      \ --ignore .bazaar
+      \ --ignore .bzr
+      \ --ignore .git
+      \ --ignore .hg
+      \ --ignore .svn
+      \ --ignore .ccache
+      \ --ignore .DS_Store
+      \ --ignore .opt1
+      \ --ignore .pylint.d
+      \ --ignore .shell
+      \ --ignore .wine
+      \ --ignore .wine-pipelight
+      \ --ignore target
+      \ --ignore build
+      \ --ignore buck-out
+      \ --ignore "**/*.pyc"
+      \ --ignore "**/*.class"
+      \ --ignore "**/*.o"
+      \ -g ""'
+elseif g:win_shell
+  let s:ctrlp_fallback = 'dir %s /-n /b /s /a-d'
+else
+  let s:ctrlp_fallback = 'find %s -type f'
+endif
+
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/](build|target|.[git|hg|svn])$',
+  \ 'file': '\v\.(exe|so|dll|class)$'
+\ }
+
+let g:ctrlp_user_command = {
+    \ 'types': {
+      \ 1: ['.git', 'cd %s && git ls-files . --cached --others --exclude-standard'],
+      \ 2: ['.hg', 'hg --cwd %s locate -I .'],
+    \ },
+    \ 'fallback': s:ctrlp_fallback
+\ }
+
+" Faster matcher
+if has('python')
+  let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
+endif
 
 """""""""""""""""""""""""""""""""""""
 " => Bootstrap
