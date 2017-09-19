@@ -89,17 +89,13 @@ else
   let s:ctrlp_fallback = 'find %s -type f'
 endif
 
+let g:ctrlp_user_command = s:ctrlp_fallback
+
+let g:ctrlp_working_path_mode = 'a'
+
 let g:ctrlp_custom_ignore = {
   \ 'dir':  '\v[\/](build|target|.[git|hg|svn])$',
   \ 'file': '\v\.(exe|so|dll|class)$'
-\ }
-
-let g:ctrlp_user_command = {
-    \ 'types': {
-      \ 1: ['.git', 'cd %s && git ls-files . --cached --others --exclude-standard'],
-      \ 2: ['.hg', 'hg --cwd %s locate -I .'],
-    \ },
-    \ 'fallback': s:ctrlp_fallback
 \ }
 
 " Faster matcher
