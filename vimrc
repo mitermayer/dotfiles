@@ -61,7 +61,7 @@ let g:flow#enable = 0
 " https://github.com/junegunn/vim-plug/issues/380#issuecomment-172135013 
 if executable('ag')
   let &grepprg = 'ag --nogroup --nocolor'
-  let s:ctrlp_fallback = 'ag %s
+  let s:ctrlp_cmd = 'ag %s
       \ --nocolor --nogroup --depth 20 
       \ --hidden --follow --smart-case
       \ --ignore .bazaar
@@ -84,19 +84,16 @@ if executable('ag')
       \ --ignore "**/*.o"
       \ -g ""'
 elseif g:win_shell
-  let s:ctrlp_fallback = 'dir %s /-n /b /s /a-d'
+  let s:ctrlp_cmd = 'dir %s /-n /b /s /a-d'
 else
-  let s:ctrlp_fallback = 'find %s -type f'
+  let s:ctrlp_cmd = 'find %s -type f'
 endif
 
-let g:ctrlp_user_command = s:ctrlp_fallback
+" Add command
+let g:ctrlp_user_command = s:ctrlp_cmd
 
+" Index based on the vim CWD
 let g:ctrlp_working_path_mode = 'a'
-
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/](build|target|.[git|hg|svn])$',
-  \ 'file': '\v\.(exe|so|dll|class)$'
-\ }
 
 " Faster matcher
 if has('python')
