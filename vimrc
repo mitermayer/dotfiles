@@ -34,10 +34,12 @@ call plug#end()
 """"""""""""""""""""""""""""""""""""
 " => Plugin settings
 """"""""""""""""""""""""""""""""""""
-
 " Leader key Mapping
 let mapleader = " "
 let g:mapleader = " "
+
+" Forces to use the prettier CLI from `vim-prettier` over local and global installs
+let g:prettier#exec_cmd_path='~/.vim/plugged/vim-prettier/node_modules/.bin/prettier'
 
 " Buffer bar
 let g:airline#extensions#tabline#enabled = 1
