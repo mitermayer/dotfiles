@@ -10,6 +10,7 @@
 set nocompatible " be IMproved, required for vundle
 
 call plug#begin('~/.vim/plugged')
+Plug 'w0rp/ale'
 Plug 'jpalardy/vim-slime'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'FelikZ/ctrlp-py-matcher'
@@ -19,7 +20,6 @@ Plug 'rking/ag.vim'
 Plug 'sbdchd/neoformat'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-Plug 'scrooloose/syntastic'
 Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-fugitive'
 Plug 'goldfeld/ctrlr.vim'
