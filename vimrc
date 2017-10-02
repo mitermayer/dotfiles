@@ -10,6 +10,7 @@
 set nocompatible " be IMproved, required for vundle
 
 call plug#begin('~/.vim/plugged')
+Plug 'tpope/vim-projectionist'
 Plug 'w0rp/ale'
 Plug 'jpalardy/vim-slime'
 Plug 'ctrlpvim/ctrlp.vim'
@@ -48,8 +49,14 @@ let g:airline#extensions#tabline#enabled = 1
 " Show just the filename
 let g:airline#extensions#tabline#fnamemod = ':t'
 
+" Ale enabled
+let g:airline#extensions#ale#enable = 1
+
 " Set eslint as defaul syntax checker for javascript
 let g:syntastic_javascript_checkers = ['eslint']
+
+" Ale lint when going back to normal mode
+let g:ale_lint_on_text_changed = 'normal'
 
 " This is the default value for slime, but better being explicit
 let g:slime_target = 'tmux'
@@ -59,6 +66,57 @@ let g:slime_default_config = { 'socket_name': 'default',  'target_pane': ':.2' }
 let g:flow#timeout = 15
 let g:flow#autoclose = 1
 let g:flow#enable = 0 
+
+"" --- vim-projectionist ---
+let g:projectionist_heuristics = {
+      \  '*': {
+      \    '*.c': {
+      \      'alternate': '{}.h',
+      \      'type': 'source',
+      \    },
+      \    '*.cpp': {
+      \      'alternate': [
+      \        '{}.h',
+      \        '{}.hpp',
+      \      ],
+      \      'type': 'source',
+      \    },
+      \    '*.h': {
+      \      'alternate': [
+      \         '{}.c',
+      \         '{}.cpp',
+      \      ],
+      \      'type': 'header',
+      \    },
+      \    '*.hpp': {
+      \      'alternate': '{}.cpp',
+      \      'type': 'header',
+      \    },
+      \    '*.js': {
+      \      'alternate': [
+      \        '{dirname}/{basename}.test.js',
+      \        '{dirname}/__tests__/{basename}-test.js',
+      \       ],
+      \       'type': 'source',
+      \    },
+      \    'src/main/java/*.java': {
+      \      'alternate': 'src/test/java/{}Test.java',
+      \      'type': 'source',
+      \    },
+      \    'src/test/java/*Test.java': {
+      \      'alternate': 'src/main/java/{}.java',
+      \      'type': 'test',
+      \    },
+      \    '**/*.test.js': {
+      \      'alternate': '{dirname}/{basename}.js',
+      \      'type': 'test',
+      \    },
+      \    '**/__tests__/*-test.js': {
+      \      'alternate': '{dirname}/{basename}.js',
+      \      'type': 'test',
+      \    },
+      \  },
+      \}
 
 " Ctrl-p configuration
 " https://github.com/junegunn/vim-plug/issues/380#issuecomment-172135013 
