@@ -144,7 +144,7 @@ if executable('ag')
       \ --ignore "**/*.class"
       \ --ignore "**/*.o"
       \ -g ""'
-elseif g:win_shell
+elseif exists("g:win_shell")
   let s:ctrlp_cmd = 'dir %s /-n /b /s /a-d'
 else
   let s:ctrlp_cmd = 'find %s -type f'
