@@ -31,6 +31,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'flowtype/vim-flow', { 'for': 'javascript' }
 Plug 'mitermayer/vim-prettier', { 'do': 'yarn install', 'for': ['javascript', 'css', 'typescript', 'json','graphql'] } 
 Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
+Plug 'janko-m/vim-test'
 
 call plug#end()
 """"""""""""""""""""""""""""""""""""
@@ -39,6 +40,8 @@ call plug#end()
 " Leader key Mapping
 let mapleader = " "
 let g:mapleader = " "
+
+let test#strategy = "dispatch"
 
 " Forces to use the prettier CLI from `vim-prettier` over local and global installs
 let g:prettier#exec_cmd_path='~/.vim/plugged/vim-prettier/node_modules/.bin/prettier'
@@ -144,7 +147,7 @@ if executable('ag')
       \ --ignore "**/*.class"
       \ --ignore "**/*.o"
       \ -g ""'
-elseif g:win_shell
+elseif exists("g:win_shell")
   let s:ctrlp_cmd = 'dir %s /-n /b /s /a-d'
 else
   let s:ctrlp_cmd = 'find %s -type f'
