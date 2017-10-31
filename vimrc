@@ -141,6 +141,8 @@ if executable('ag')
       \ --ignore .wine
       \ --ignore .wine-pipelight
       \ --ignore target
+      \ --ignore lib
+      \ --ignore node_modules
       \ --ignore build
       \ --ignore buck-out
       \ --ignore "**/*.pyc"
