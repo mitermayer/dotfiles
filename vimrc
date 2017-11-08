@@ -255,7 +255,7 @@ map <F4> :CtrlPBuffer<CR>
 " => Toggle buffers
 map <F6> :UpdateTags<CR>
 
-" => Search for all occurances of the word
+" => Search for all occurrences of the word
 map <F7> :execute 'Ag '.expand('<cword>') <Bar> cw<CR>
 
 " => Allow to paste without auto indent
