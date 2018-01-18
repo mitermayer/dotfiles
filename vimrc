@@ -32,6 +32,8 @@ Plug 'flowtype/vim-flow', { 'for': 'javascript' }
 Plug 'mitermayer/vim-prettier', { 'do': 'yarn install' }
 Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
 Plug 'janko-m/vim-test'
+Plug 'yuratomo/w3m.vim'
+Plug 'junegunn/goyo.vim'
 
 call plug#end()
 """"""""""""""""""""""""""""""""""""
