@@ -10,30 +10,33 @@
 set nocompatible " be IMproved, required for vundle
 
 call plug#begin('~/.vim/plugged')
-Plug 'tpope/vim-projectionist'
-Plug 'w0rp/ale'
-Plug 'jpalardy/vim-slime'
-Plug 'ctrlpvim/ctrlp.vim'
+
 Plug 'FelikZ/ctrlp-py-matcher'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'flowtype/vim-flow', { 'for': 'javascript' }
+Plug 'goldfeld/ctrlr.vim'
+Plug 'janko-m/vim-test'
+Plug 'jpalardy/vim-slime'
+Plug 'junegunn/goyo.vim'
+Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
 Plug 'majutsushi/tagbar'
 Plug 'mattn/emmet-vim'
+Plug 'mitermayer/vim-prettier', { 'do': 'yarn install' }
+Plug 'mxw/vim-jsx', { 'for': 'javascript' }
+Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 Plug 'rking/ag.vim'
 Plug 'sbdchd/neoformat'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree', { 'on':  ['NERDTreeToggle', 'NERDTreeFind'] }
+Plug 'scrooloose/vim-slumlord'
+Plug 'aklt/plantuml-syntax'
 Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-fugitive'
-Plug 'goldfeld/ctrlr.vim'
-Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
-Plug 'mxw/vim-jsx', { 'for': 'javascript' }
+Plug 'tpope/vim-projectionist'
 Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
-Plug 'flowtype/vim-flow', { 'for': 'javascript' }
-Plug 'mitermayer/vim-prettier', { 'do': 'yarn install' }
-Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
-Plug 'janko-m/vim-test'
+Plug 'w0rp/ale'
 Plug 'yuratomo/w3m.vim'
-Plug 'junegunn/goyo.vim'
 
 call plug#end()
 """"""""""""""""""""""""""""""""""""
