@@ -167,9 +167,13 @@ bindsym XF86MonBrightnessUp exec xbacklight -steps 1 -time 0 -inc 5
 
 # lock computer
 bindsym Control+Mod1+l exec "sudo pm-suspend | sudo i3lock -c 000000"
+# bindsym Control+Mod1+l exec "systemctl suspend | i3lock -c 000000"
 
 # toggle mult monitor
 bindsym $mod +m exec "autoxrandr"
 
 # make all new windows fullscreen by default
 for_window [class=".*"] fullscreen enable
+
+# compatibility with gnome network manager
+# exec "/usr/bin/nm-applet"
