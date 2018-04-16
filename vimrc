@@ -35,6 +35,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-projectionist'
 Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'w0rp/ale'
 Plug 'yuratomo/w3m.vim'
 
@@ -54,14 +55,14 @@ let g:prettier#exec_cmd_path='~/.vim/plugged/vim-prettier/node_modules/.bin/pret
 " Buffer bar
 let g:airline#extensions#tabline#enabled = 1
 
+" Setting up airline theme
+let g:airline_theme='base16color'
+
 " Show just the filename
 let g:airline#extensions#tabline#fnamemod = ':t'
 
 " Ale enabled
 let g:airline#extensions#ale#enable = 1
-
-" Set eslint as defaul syntax checker for javascript
-let g:syntastic_javascript_checkers = ['eslint']
 
 " Ale lint when going back to normal mode
 let g:ale_lint_on_text_changed = 'normal'
