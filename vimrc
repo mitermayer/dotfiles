@@ -21,7 +21,7 @@ Plug 'junegunn/goyo.vim'
 Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
 Plug 'majutsushi/tagbar'
 Plug 'mattn/emmet-vim'
-Plug 'mitermayer/vim-prettier', { 'do': 'yarn install' }
+Plug 'mitermayer/vim-prettier', { 'do': 'yarn install', 'branch': 'release/1.x'}
 Plug 'mxw/vim-jsx', { 'for': 'javascript' }
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 Plug 'rking/ag.vim'
