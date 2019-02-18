@@ -11,8 +11,8 @@ set nocompatible " be IMproved, required for vundle
 
 call plug#begin('~/.vim/plugged')
 
-Plug 'FelikZ/ctrlp-py-matcher'
-Plug 'ctrlpvim/ctrlp.vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 Plug 'flowtype/vim-flow', { 'for': 'javascript' }
 Plug 'goldfeld/ctrlr.vim'
 Plug 'janko-m/vim-test'
@@ -47,6 +47,8 @@ let mapleader = " "
 let g:mapleader = " "
 
 let test#strategy = "dispatch"
+
+let g:fzf_tags_command = 'ctags -R'
 
 " Forces to use the prettier CLI from `vim-prettier` over local and global installs
 let g:prettier#exec_cmd_path='~/.vim/plugged/vim-prettier/node_modules/.bin/prettier'
@@ -122,51 +124,6 @@ let g:projectionist_heuristics = {
       \    },
       \  },
       \}
-
-" Ctrl-p configuration
-" https://github.com/junegunn/vim-plug/issues/380#issuecomment-172135013 
-if executable('ag')
-  let &grepprg = 'ag --nogroup --nocolor'
-  let s:ctrlp_cmd = 'ag %s
-      \ --nocolor --nogroup --depth 20 
-      \ --hidden --follow --smart-case
-      \ --ignore .bazaar
-      \ --ignore .bzr
-      \ --ignore .git
-      \ --ignore .hg
-      \ --ignore .svn
-      \ --ignore .ccache
-      \ --ignore .DS_Store
-      \ --ignore .opt1
-      \ --ignore .pylint.d
-      \ --ignore .shell
-      \ --ignore .wine
-      \ --ignore .wine-pipelight
-      \ --ignore target
-      \ --ignore lib
-      \ --ignore node_modules
-      \ --ignore build
-      \ --ignore buck-out
-      \ --ignore "**/*.pyc"
-      \ --ignore "**/*.class"
-      \ --ignore "**/*.o"
-      \ -g ""'
-elseif exists("g:win_shell")
-  let s:ctrlp_cmd = 'dir %s /-n /b /s /a-d'
-else
-  let s:ctrlp_cmd = 'find %s -type f'
-endif
-
-" Add command
-let g:ctrlp_user_command = s:ctrlp_cmd
-
-" Index based on the vim CWD
-let g:ctrlp_working_path_mode = 'a'
-
-" Faster matcher
-if has('python')
-  let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
-endif
 
 """""""""""""""""""""""""""""""""""""
 " => Bootstrap
@@ -252,10 +209,10 @@ map <F2> :TagbarToggle<CR>
 map <F3> :NERDTreeToggle <CR>
 
 " => Toggle buffers
-map <F4> :CtrlPBuffer<CR>
+map <F4> :Buffers<CR>
 
 " => Toggle buffers
-map <F6> :UpdateTags<CR>
+map <F6> :Tags<CR>
 
 " => Search for all occurrences of the word
 map <F7> :execute 'Ag '.expand('<cword>') <Bar> cw<CR>
@@ -263,7 +220,7 @@ map <F7> :execute 'Ag '.expand('<cword>') <Bar> cw<CR>
 " => Allow to paste without auto indent
 se pastetoggle=<F5>
 
-nnoremap <C-p> :CtrlP<CR>
+nnoremap <C-p> :FZF<CR>
 
 " navigate buffers
 nnoremap <C-h> :bprevious<CR>
@@ -272,13 +229,6 @@ nnoremap <C-x> :bd<CR>
 
 " auto format
 noremap <C-f> :Neoformat<CR>
-
-""""""""""""""""""""""""""""""""""""
-" => Filetype specifics
-""""""""""""""""""""""""""""""""""""
-
-" set the tag files to be used based on the language
-autocmd BufRead,BufNewFile * execute 'set tags=~/.' . &ft . '-tags,' . &ft . '-tags'
 
 """"""""""""""""""""""""""""""""""""
 " => User defined functions
@@ -302,68 +252,6 @@ function! FromClipboard()
     read !xclip -selection clipboard -o
 endfunction
 
-" If tags file does not exist initializes it with symlink to tmp with UUID in
-" filename
-function! InitTagsFileWithSymlink(f)
-    let filepath = a:f
-    let issymlink = system("find '" . filepath . "' -type l | wc -l")
-    if issymlink == 0
-        let uuid = system('uuidgen')
-        let cmd  = 'ln -s "/tmp/ctags-for-vim-' . uuid . '" "' . filepath . '"'
-        let cmd  = substitute(cmd, '\n', '', 'g')
-        let resp = system(cmd)
-    endif
-endfunction
-
-" Populates tags file if lines count is equal to 0
-" with `ctags -R .`
-function! PopulateTagsFile(f)
-    let filepath = a:f
-    let my_filetype = &ft
-
-    let cwd = getcwd()
-
-    let cmd = 'ctags --languages=' . &ft . ' -Rf "'. filepath . '" "' . cwd . '"'
-
-    let resp = system(cmd)
-endfunction
-
-" Remove tags for saved file from tags file
-function! DelTagOfFile(file, tagfile)
-    let fullpath    = a:file
-    let tagfilename = a:tagfile
-    let cwd         = getcwd()
-    let f           = substitute(fullpath, cwd . "/", "", "")
-    let f           = escape(f, './')
-    let cmd         = 'sed --follow-symlinks -i "/' . f . '/d" "' . tagfilename . '"'
-    let resp        = system(cmd)
-endfunction
-
-" Init tags file
-" Populate it
-" Remove data related to saved file
-" Append it with data for saved file
-function! UpdateTags()
-    let f           = expand("%:p")
-    let cwd         = getcwd()
-    let my_filetype = &ft
-    let tagfilename = cwd . "/" . my_filetype . "-tags"
-
-    if filereadable(tagfilename) == 0
-        call InitTagsFileWithSymlink(tagfilename)
-        echo strftime("%c")
-        echo 'Generating c-tags file for the first time...'
-        call PopulateTagsFile(tagfilename)
-        echo 'Completed'
-        echo strftime("%c")
-    else
-        call DelTagOfFile(f, tagfilename)
-
-        let cmd = 'ctags -a -f ' . tagfilename . ' "' . f . '"'
-        let resp = system(cmd)
-    endif
-endfunction
-
 """"""""""""""""""""""""""""""""""""
 " => User defined commands
 """"""""""""""""""""""""""""""""""""
@@ -371,6 +259,3 @@ endfunction
 command! -range Source <line1>,<line2>call SourceRange()
 command! -range=% -nargs=0 ToClipboard :<line1>,<line2>call ToClipboard()
 command! FromClipboard call FromClipboard()
-command! UpdateTags call UpdateTags()
-"autocmd BufWritePost *.* call UpdateTags()
-

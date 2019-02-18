@@ -67,7 +67,7 @@ source $HOME/.functions
 cat $HOME/.banner_art
 
 # export custom bin
-export PATH=$PATH:$HOME/bin
+export PATH=$PATH:$HOME/bin:$HOME/.local/bin
 
 # making sure the colors will work for some weird servers
 alias tmux="tmux -2"
