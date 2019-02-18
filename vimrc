@@ -245,7 +245,7 @@ nnoremap <C-l> :bnext<CR>
 nnoremap <C-x> :bd<CR>
 
 " jump to tag definition
-nnoremap <CR> <C-W>g}
+nnoremap <leader><CR> <C-W>g}
 
 " auto format
 noremap <C-f> :Neoformat<CR>
