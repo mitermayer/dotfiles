@@ -176,4 +176,4 @@ bindsym $mod +m exec "autoxrandr"
 for_window [class=".*"] fullscreen enable
 
 # compatibility with gnome network manager
-# exec "/usr/bin/nm-applet"
+exec "/usr/bin/nm-applet"
