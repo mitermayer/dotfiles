@@ -244,8 +244,11 @@ nnoremap <C-h> :bprevious<CR>
 nnoremap <C-l> :bnext<CR>
 nnoremap <C-x> :bd<CR>
 
+" preview jump to tag definition
+nnoremap <leader><TAB><CR> <C-W>g}
+
 " jump to tag definition
-nnoremap <leader><CR> <C-W>g}
+nnoremap <leader><CR> g<C-]>
 
 " auto format
 noremap <C-f> :Neoformat<CR>
