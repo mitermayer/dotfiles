@@ -51,6 +51,9 @@ let test#strategy = "dispatch"
 " Forces to use the prettier CLI from `vim-prettier` over local and global installs
 let g:prettier#exec_cmd_path='~/.vim/plugged/vim-prettier/node_modules/.bin/prettier'
 
+" Forces preset to be facebook
+let g:prettier#preset#config='fb'
+
 " Buffer bar
 let g:airline#extensions#tabline#enabled = 1
 
