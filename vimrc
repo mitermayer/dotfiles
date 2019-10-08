@@ -42,7 +42,6 @@ Plug 'prettier/vim-prettier', {
 Plug 'mxw/vim-jsx', { 'for': 'javascript' }
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 Plug 'rking/ag.vim'
-Plug 'sbdchd/neoformat'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree', { 'on':  ['NERDTreeToggle', 'NERDTreeFind'] }
 Plug 'scrooloose/vim-slumlord'
@@ -59,6 +58,10 @@ call plug#end()
 """"""""""""""""""""""""""""""""""""
 " => Plugin settings
 """"""""""""""""""""""""""""""""""""
+" only lint on normal mode
+let g:ale_lint_on_text_changed = 'normal'
+
+
 " Leader key Mapping
 let mapleader = " "
 let g:mapleader = " "
@@ -251,14 +254,28 @@ nnoremap <C-x> :bd<CR>
 nnoremap <TAB><CR> <C-W>g}
 
 " jump to tag definition
-nnoremap <leader><CR> g<C-]>
+noremap <leader><CR> :NavigateToTagOrFile<CR>
 
 " auto format
-noremap <C-f> :Neoformat<CR>
+noremap <C-f> :Prettier<CR>
 
 """"""""""""""""""""""""""""""""""""
 " => User defined functions
 """"""""""""""""""""""""""""""""""""
+
+function! NavigateToTagOrFile()
+  try
+    " try assuming its a tag
+    execute "normal! \g\<C-]>"
+  catch
+    try
+      " try assume its a file path
+      execute "normal! \<C-W>\gf"
+    catch
+      echom "NavigateToTagOrFile => not a tag/path"
+    endtry
+  endtry
+endfunction
 
 " Source vim sript range or file
 function! SourceRange() range
@@ -285,3 +302,4 @@ endfunction
 command! -range Source <line1>,<line2>call SourceRange()
 command! -range=% -nargs=0 ToClipboard :<line1>,<line2>call ToClipboard()
 command! FromClipboard call FromClipboard()
+command! NavigateToTagOrFile call NavigateToTagOrFile()
