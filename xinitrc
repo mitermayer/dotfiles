@@ -11,4 +11,4 @@ if [ -f  ~/.DPI ]; then
     [ -f ~/.XresourcesHIDPI ] && xrdb -merge ~/.XresourcesHIDPI
 fi
 
-exec ck-launch-session dbus-launch --sh-syntax --exit-with-session i3
+i3

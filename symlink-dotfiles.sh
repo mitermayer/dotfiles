@@ -62,23 +62,7 @@ curl https://raw.githubusercontent.com/creationix/nvm/v0.32.0/install.sh | bash
 source ~/.nvm/nvm.sh
 
 echo "Installing global node modules"
-npm install -g tern gulp grunt-cli karma phantomjs eslint jscs js-beautify
-
-echo "Installing jsctags from the private repo: https://github.com/ramitos/jsctags.git"
-npm install -g git+https://github.com/ramitos/jsctags.git
-
-
-echo "Installing VIM plugging tern dependencies"
-cd ~/.vim/bundle/tern_for_vim
-nvm install node
-nvm use node
-npm install
-
-echo "Installing VIM plugging YCM dependencies"
-cd ~/.vim/bundle/YouCompleteMe
-
-echo "Compiling dependencies"
-./install.py --all
+npm install -g eslint prettier
 
 cd $DIR
 
