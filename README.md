@@ -1,6 +1,8 @@
 dotfiles
 ========
 
+**NOTE**: This is for my personal use only and is a bit outdated, use at your own risk.
+
 This is a set of tools and helpers to get started with a new Linux Laptop.
 
 The support for DEBIAN has been phased out in favour to gentoo, and will no
