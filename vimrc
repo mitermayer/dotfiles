@@ -217,6 +217,9 @@ set nowb
 set ruler
 set showmatch
 
+" Enables omnicomplete
+set omnifunc=syntaxcomplete#Complete
+
 " max line length 120 chars
 highlight OverLength ctermbg=darkred ctermfg=white guibg=#592929
 match OverLength /\%121v.\+/
