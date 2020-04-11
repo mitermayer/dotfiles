@@ -1,0 +1,54 @@
+#!/bin/bash
+
+TEMPLATE_DIR=$HOME/.git_template
+CTAGS_IGNORE=$HOME/.ctags_ignore
+HOOKS_DIR=$TEMPLATE_DIR/hooks
+CTAGS_HOOK=$HOOKS_DIR/ctags
+POST_REWRITE_HOOK=$HOOKS_DIR/post-rewrite
+POST_COMMIT_HOOK=$HOOKS_DIR/post-commit
+POST_MERGE_HOOK=$HOOKS_DIR/post-merge
+POST_CHECKOUT_HOOK=$HOOKS_DIR/post-checkout
+
+echo "Setting up global ctags ignore"
+
+echo ".git
+node_modules
+*.json
+target" > $CTAGS_IGNORE 
+
+echo "Setting git hooks for handling CTAGS - https://tbaggery.com/2011/08/08/effortless-ctags-with-git.html"
+
+echo "Setup global template directory"
+
+git config --global init.templatedir $TEMPLATE_DIR
+
+mkdir -p $HOOKS_DIR
+
+echo "Defining ctags alias"
+
+git config --global alias.ctags '!.git/hooks/ctags'
+
+echo "Setting up global hooks"
+
+echo "#!/bin/sh
+set -e
+PATH=\"/usr/local/bin:\$PATH\"
+trap 'rm -f \"\$$.tags\"' EXIT
+git ls-files | \\
+  ctags --tag-relative -L - -f\"\$$.tags\" --exclude=@$CTAGS_IGNORE --languages=-javascript,sql,php,rust,python,c,c++ 
+mv \"\$$.tags\" \"tags\"" > $CTAGS_HOOK
+
+chmod +x $CTAGS_HOOK
+
+echo "#!/bin/sh
+case "$1" in
+  rebase) exec .git/hooks/post-merge ;;
+esac" > $POST_REWRITE_HOOK
+
+chmod +x $POST_REWRITE_HOOK
+
+echo "#!/bin/sh
+#.git/hooks/ctags >/dev/null 2>&1 &" > $POST_COMMIT_HOOK
+chmod +x $POST_COMMIT_HOOK
+cp $POST_COMMIT_HOOK $POST_CHECKOUT_HOOK
+cp $POST_COMMIT_HOOK $POST_MERGE_HOOK
