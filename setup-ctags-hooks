@@ -35,7 +35,7 @@ set -e
 PATH=\"/usr/local/bin:\$PATH\"
 trap 'rm -f \"\$$.tags\"' EXIT
 git ls-files | \\
-  ctags --tag-relative -L - -f\"\$$.tags\" --exclude=@$CTAGS_IGNORE --languages=-javascript,sql,php,rust,python,c,c++ 
+  ctags --tag-relative -L - -f\"\$$.tags\" --exclude=@$CTAGS_IGNORE --languages=javascript,sql,php,rust,python,c,c++,vim
 mv \"\$$.tags\" \"tags\"" > $CTAGS_HOOK
 
 chmod +x $CTAGS_HOOK
