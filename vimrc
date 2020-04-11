@@ -76,6 +76,10 @@ let g:prettier#exec_cmd_path='~/.vim/plugged/vim-prettier/node_modules/.bin/pret
 " Forces preset to be facebook
 let g:prettier#preset#config='fb'
 
+" trigger auto format
+let g:prettier#autoformat = 1 
+let g:prettier#autoformat_require_pragma = 0
+
 " Buffer bar
 let g:airline#extensions#tabline#enabled = 1
 
