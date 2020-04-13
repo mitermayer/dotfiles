@@ -13,6 +13,7 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+Plug 'rust-lang/rust.vim'
 Plug 'flowtype/vim-flow', { 'for': 'javascript' }
 Plug 'goldfeld/ctrlr.vim'
 Plug 'janko-m/vim-test'
@@ -301,6 +302,11 @@ function! FromClipboard()
     read !xclip -selection clipboard -o
 endfunction
 
+" Clears over length highlight
+function! ClearOverLength()
+    hi clear OverLength
+endfunction
+
 """"""""""""""""""""""""""""""""""""
 " => User defined commands
 """"""""""""""""""""""""""""""""""""
@@ -309,3 +315,4 @@ command! -range Source <line1>,<line2>call SourceRange()
 command! -range=% -nargs=0 ToClipboard :<line1>,<line2>call ToClipboard()
 command! FromClipboard call FromClipboard()
 command! NavigateToTagOrFile call NavigateToTagOrFile()
+command! ClearOverLength call ClearOverLength()
