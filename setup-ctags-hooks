@@ -26,7 +26,8 @@ mkdir -p $HOOKS_DIR
 
 echo "Defining ctags alias"
 
-git config --global alias.ctags '!.git/hooks/ctags'
+# ensures it plays well with git worktrees that exist in different directory
+git config --global alias.ctags '!`git rev-parse --git-common-dir`/hooks/ctags'
 
 echo "Setting up global hooks"
 
