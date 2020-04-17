@@ -1,0 +1,47 @@
+#!/bin/sh
+##
+## Creates symlinks for git hooks
+##
+
+########## Variables
+
+TEMPLATE_DIR=$HOME/.git_template
+SOURCE="${BASH_SOURCE[0]}"
+while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
+  DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+  SOURCE="$(readlink "$SOURCE")"
+  [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
+done
+DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"/hooks
+BACKUP=~/git_hooks_old             # old dotfiles backup directory
+files="wtclean wtclean-full wtnew"    # list of files/folders to symlink in homedir
+LOC=`pwd`
+
+##########
+
+echo "Setup global template directory"
+
+mkdir -p $TEMPLATE_DIR
+
+echo "Setup global template directory"
+
+git config --global init.templatedir $TEMPLATE_DIR
+
+# change to the dotfiles directory
+echo "Changing to hooks $DIR directory"
+cd $DIR
+echo "...done"
+
+# move any existing dotfiles in homedir to dotfiles_old directory, then create symlinks
+for file in $files; do
+    echo "Moving any existing hooks from $TEMPLATE_DIR to $BACKUP"
+    mv $TEMPLATE_DIR/hooks/$file $BACKUP
+    echo "Creating symlink to $file in home directory."
+    ln -s $DIR/$file $TEMPLATE_DIR/hooks/$file
+    echo "Setup git alias"
+    git config --global "alias.$file" '!`git rev-parse --git-common-dir`/hooks/'$file
+done
+
+cd $LOC 
+
+echo "Setup completed"

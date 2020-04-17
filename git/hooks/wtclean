@@ -1,0 +1,27 @@
+#!/bin/sh
+
+WORKTREE_ROOT=`git rev-parse --git-common-dir`/../
+
+echo "Deleting merged branches"
+
+cd $WORKTREE_ROOT
+
+worktrees=$(git branch --merged | egrep -v "(^\*|master|dev)" | sed -E 's/\+ issue\/(.*)/\1/g')
+
+echo "Deleting worktrees"
+
+for branch_name in $worktrees
+do
+    echo "Running command: \$ git worktree remove ../$branch"
+    git worktree remove "../$branch_name" -f
+done
+
+echo "Deleting branches"
+
+for branch in $worktrees
+do
+    echo "Running command: \$ git branch -d issue/$branch"
+    git branch -d "issue/$branch" 
+done
+
+echo "Done!"

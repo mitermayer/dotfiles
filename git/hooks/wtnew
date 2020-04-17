@@ -1,0 +1,33 @@
+#!/bin/sh
+
+set -e
+
+BRANCH=$1
+
+if [ -z "$BRANCH" ]
+then
+  echo "=> ERROR: \$BRANCH environment variable is not set."
+  exit 1
+fi
+
+WORKTREE_ROOT=`git rev-parse --git-common-dir`/../
+ROOT=${GIT_BRANCH_ROOT:-$WORKTREE_ROOT}
+PREFIX=${GIT_BRANCH_PREFIX:-issue}
+
+echo "Creating new branch $1 from $ROOT"
+
+cd $ROOT
+
+echo "Running command: \$git worktree add -b $PREFIX/$BRANCH ../$BRANCH"
+
+echo $PREFIX
+
+git worktree add -b $PREFIX/$BRANCH ../$BRANCH
+
+cd ../$BRANCH
+
+LOC=`pwd`
+
+echo "Branch created in directory: $LOC" 
+
+echo "Done!"
