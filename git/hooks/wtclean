@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 WORKTREE_ROOT=`git rev-parse --git-common-dir`/../
 
 echo "Deleting merged branches"
