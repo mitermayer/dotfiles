@@ -162,8 +162,8 @@ bindsym XF86AudioLowerVolume exec amixer -q -c 0 set Master 2- unmute
 bindsym XF86AudioMute exec amixer -q set Master toggle
 
 # brightness control
-bindsym XF86MonBrightnessDown exec xbacklight -steps 1 -time 0 -dec 5 && echo `xbacklight` > /home/mreis/.config/brightness && $refresh_i3status
-bindsym XF86MonBrightnessUp exec xbacklight -steps 1 -time 0 -inc 5 && echo `xbacklight` > /home/mreis/.config/brightness && $refresh_i3status
+bindsym XF86MonBrightnessDown exec xbacklight -steps 1 -time 0 -dec 5 && echo `xbacklight` > /home/miter/.config/brightness && $refresh_i3status
+bindsym XF86MonBrightnessUp exec xbacklight -steps 1 -time 0 -inc 5 && echo `xbacklight` > /home/miter/.config/brightness && $refresh_i3status
 
 # lock computer
 #bindsym Control+Mod1+l exec "sudo pm-suspend | sudo i3lock -c 000000"
