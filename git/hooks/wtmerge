@@ -1,0 +1,19 @@
+#!/bin/sh
+
+set -e
+
+BRANCH=${1-master}
+LOC=`pwd`
+WORKTREE_ROOT=`git rev-parse --git-common-dir`/../
+
+cd $WORKTREE_ROOT
+
+echo "Pulling from upstream"
+
+git pull origin $BRANCH
+
+cd $LOC
+
+echo "Merging with branch: $BRANCH"
+
+git merge $BRANCH
