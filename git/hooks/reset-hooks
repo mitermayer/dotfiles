@@ -1,0 +1,21 @@
+#!/bin/sh
+
+set -e
+
+WORKTREE_ROOT=`git rev-parse --git-common-dir`/../
+
+cd $WORKTREE_ROOT
+
+echo "Deleting old hooks"
+
+rm $WORKTREE_ROOT/.git/hooks/*
+
+echo "Initializing hooks"
+
+git init
+
+echo "Listing hooks"
+
+ls -l $WORKTREE_ROOT/.git/hooks/
+
+echo "Done"

@@ -1,0 +1,17 @@
+#!/bin/sh
+
+set -e
+
+echo "Listing untracked files"
+
+git ls-files --others --exclude-standard
+
+echo "Cleaning untracked files"
+
+git clean -d -f
+
+echo "Listing untracked files after cleanup: "
+
+git ls-files --others --exclude-standard
+
+echo "Done"

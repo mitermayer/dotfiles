@@ -14,7 +14,7 @@ while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symli
 done
 DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"/hooks
 BACKUP=~/git_hooks_old             # old dotfiles backup directory
-files="wtclean wtclean-full wtnew wtrebase wtmerge"    # list of files/folders to symlink in homedir
+files="wtclean wtclean-full wtnew wtrebase wtmerge clean-untracked reset-hooks"    # list of files/folders to symlink in homedir
 LOC=`pwd`
 
 ##########
