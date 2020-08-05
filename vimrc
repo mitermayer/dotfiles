@@ -13,6 +13,7 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+Plug 'jremmen/vim-ripgrep'
 Plug 'rust-lang/rust.vim'
 Plug 'flowtype/vim-flow', { 'for': 'javascript' }
 Plug 'goldfeld/ctrlr.vim'
@@ -41,7 +42,6 @@ Plug 'prettier/vim-prettier', {
     \ 'swift' ] }
 Plug 'mxw/vim-jsx', { 'for': 'javascript' }
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
-Plug 'rking/ag.vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree', { 'on':  ['NERDTreeToggle', 'NERDTreeFind'] }
 Plug 'scrooloose/vim-slumlord'
@@ -77,7 +77,7 @@ let g:prettier#exec_cmd_path='~/.vim/plugged/vim-prettier/node_modules/.bin/pret
 let g:prettier#preset#config='fb'
 
 " trigger auto format
-let g:prettier#autoformat = 1 
+let g:prettier#autoformat = 0
 let g:prettier#autoformat_require_pragma = 0
 
 " Buffer bar
@@ -245,7 +245,7 @@ map <F4> :Buffers<CR>
 map <F6> :Tags<CR>
 
 " => Search for all occurrences of the word
-map <F7> :execute 'Ag '.expand('<cword>') <Bar> cw<CR>
+map <F7> :execute 'Rg '.expand('<cword>') <Bar> cw<CR>
 
 " => Allow to paste without auto indent
 se pastetoggle=<F5>
