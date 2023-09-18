@@ -11,18 +11,18 @@ set nocompatible " be IMproved, required for vundle
 
 call plug#begin('~/.vim/plugged')
 
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'jremmen/vim-ripgrep'
+Plug 'rust-lang/rust.vim'
 Plug 'flowtype/vim-flow', { 'for': 'javascript' }
 Plug 'goldfeld/ctrlr.vim'
 Plug 'janko-m/vim-test'
 Plug 'jpalardy/vim-slime'
+Plug 'neoclide/coc.nvim', {'branch': 'release', 'as': 'vim-coc'}
 Plug 'junegunn/goyo.vim'
 Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
-Plug 'majutsushi/tagbar'
-Plug 'mattn/emmet-vim'
+Plug 'liuchengxu/vista.vim'
 Plug 'prettier/vim-prettier', {
   \ 'do': 'yarn install',
   \ 'for': [
@@ -58,6 +58,7 @@ call plug#end()
 """"""""""""""""""""""""""""""""""""
 " => Plugin settings
 """"""""""""""""""""""""""""""""""""
+
 " only lint on normal mode
 let g:ale_lint_on_text_changed = 'normal'
 
@@ -91,6 +92,9 @@ let g:airline#extensions#ale#enable = 1
 
 " Ale lint when going back to normal mode
 let g:ale_lint_on_text_changed = 'normal'
+
+" Dont want to use ale with rust
+let g:ale_linters = {'rust': []}
 
 " This is the default value for slime, but better being explicit
 let g:slime_target = 'tmux'
@@ -189,12 +193,6 @@ set scrolloff=5
 
 set hidden
 
-
-
-" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
-" delays and poor user experience.
-set updatetime=300
-
 """"""""""""""""""""""""""""""""""""
 " => Text, tab and indent related
 """"""""""""""""""""""""""""""""""""
@@ -225,12 +223,17 @@ set nowb
 set ruler
 set showmatch
 
+" Enables omnicomplete
+set omnifunc=syntaxcomplete#Complete
+
+set updatetime=300
+
 " Always show the signcolumn, otherwise it would shift the text each time
 " diagnostics appear/become resolved.
 set signcolumn=yes
 
-" Enables omnicomplete
-set omnifunc=syntaxcomplete#Complete
+" coc status
+set statusline^=%{coc#status()}  
 
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: There's always complete item selected by default, you may want to enable
@@ -254,9 +257,12 @@ else
   inoremap <silent><expr> <c-@> coc#refresh()
 endif
 
-" max line length 120 chars
+" max line length 150 chars
 highlight OverLength ctermbg=darkred ctermfg=white guibg=#592929
-match OverLength /\%121v.\+/
+match OverLength /\%151v.\+/
+
+" enable mouse support
+set mouse=a
 
 """"""""""""""""""""""""""""""""""""
 " => Keys shortcuts mapping
@@ -266,7 +272,7 @@ match OverLength /\%121v.\+/
 imap jk <Esc>
 
 " => Toggle tags
-map <F2> :TagbarToggle<CR>
+map <F2> :Vista!!<CR>
 
 " => Toggle file tree
 map <F3> :NERDTreeToggle <CR>
@@ -299,57 +305,32 @@ noremap <leader><CR> :NavigateToTagOrFile<CR>
 " auto format
 noremap <C-f> :Prettier<CR>
 
-" Use K to show documentation in preview window.
-nnoremap <silent> K :call ShowDocumentation()<CR>
-
-" Mappings for CoCList
-" Show all diagnostics.
-nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
-" Manage extensions.
-nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
-" Show commands.
-nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
-" Find symbol of current document.
-nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
-" Search workspace symbols.
-nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
-" Do default action for next item.
-nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
-" Do default action for previous item.
-nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
-" Resume latest coc list.
-nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
-
-" Use `[g` and `]g` to navigate diagnostics
-" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
-
-" GoTo code navigation.
+" Coc
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
-" Symbol renaming.
-nmap <leader>rn <Plug>(coc-rename)
-
-" Formatting selected code.
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
-
-" Applying codeAction to the selected region.
+" Applying code actions to the selected code block
 " Example: `<leader>aap` for current paragraph
 xmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap <leader>a  <Plug>(coc-codeaction-selected)
 
-" Remap keys for applying codeAction to the current buffer.
-nmap <leader>ac  <Plug>(coc-codeaction)
+" Remap keys for applying code actions at the cursor position
+nmap <leader>ac  <Plug>(coc-codeaction-cursor)
+
+" Remap keys for apply code actions affect whole buffer
+nmap <leader>as  <Plug>(coc-codeaction-source)
+
 " Apply AutoFix to problem on the current line.
 nmap <leader>qf  <Plug>(coc-fix-current)
 
 " Run the Code Lens action on the current line.
 nmap <leader>cl  <Plug>(coc-codelens-action)
+
+" Use K to show documentation in preview window
+nnoremap <silent> K :call ShowDocumentation()<CR>
+
 
 " Map function and class text objects
 " NOTE: Requires 'textDocument.documentSymbol' support from the language server.
@@ -367,23 +348,41 @@ omap ac <Plug>(coc-classobj-a)
 nmap <silent> <C-s> <Plug>(coc-range-select)
 xmap <silent> <C-s> <Plug>(coc-range-select)
 
+" Edit vimr configuration file
+nnoremap <Leader>ve :e $MYVIMRC<CR>
+" Reload vimr configuration file
+nnoremap <Leader>vr :source $MYVIMRC<CR>
 
 """"""""""""""""""""""""""""""""""""
 " => User defined functions
 """"""""""""""""""""""""""""""""""""
 
-function! NavigateToTagOrFile()
-  try
-    " try assuming its a tag
-    execute "normal! \g\<C-]>"
-  catch
+function! ShowDocumentation()
+  if CocAction('hasProvider', 'hover')
+    call CocActionAsync('doHover')
+  else
+    call feedkeys('K', 'in')
+  endif
+endfunction
+
+function! NavigateToTagOrFileFallback(isErr, resp)
+  if !a:resp
     try
-      " try assume its a file path
-      execute "normal! \<C-W>\gf"
+      " try assuming its a tag
+      execute "normal! \g\<C-]>"
     catch
-      echom "NavigateToTagOrFile => not a tag/path"
+      try
+        " try assume its a file path
+        execute "normal! \<C-W>\gf"
+      catch
+        echom "NavigateToTagOrFile => not a tag/path"
+      endtry
     endtry
-  endtry
+  endif
+endfunction
+
+function! NavigateToTagOrFile()
+  call CocActionAsync('jumpDefinition', function("NavigateToTagOrFileFallback"))
 endfunction
 
 " Source vim sript range or file
@@ -392,11 +391,6 @@ function! SourceRange() range
   call writefile(getline(a:firstline, a:lastline), l:tmpsofile)
   execute "source " . l:tmpsofile
   call delete(l:tmpsofile)
-endfunction
-
-" copy text to clipboard
-function! ToClipboard() range
-    echo system('echo '.shellescape(join(getline(a:firstline, a:lastline), "\r")).'| xclip -selection c')
 endfunction
 
 " insert text from clipboard
@@ -421,6 +415,22 @@ function! ShowDocumentation()
     call feedkeys('K', 'in')
   endif
 endfunction
+
+""""""""""""""""""""""""""""""""""""
+" => OS Functions
+""""""""""""""""""""""""""""""""""""
+" Note: Favouring copy and paste of functions to make it easier to adapt to OS
+
+" copy text to clipboard
+if has('mac')
+  function! ToClipboard() range
+      echo system('echo '.shellescape(join(getline(a:firstline, a:lastline), "\r")).'| pbcopy')
+  endfunction
+else
+  function! ToClipboard() range
+      echo system('echo '.shellescape(join(getline(a:firstline, a:lastline), "\r")).'| xclip -selection c')
+  endfunction
+endif
 
 """"""""""""""""""""""""""""""""""""
 " => User defined commands
@@ -450,4 +460,6 @@ augroup mygroup
   autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
   " Update signature help on jump placeholder.
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+  " Redraw coc
+  autocmd User CocStatusChange redrawstatus 
 augroup end
